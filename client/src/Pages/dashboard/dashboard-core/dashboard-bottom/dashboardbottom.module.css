@@ -1,0 +1,13 @@
+.dashboard-bottom {
+    flex: 1;
+    background-color: aquamarine;
+}
+
+.header {
+    width: 100%;
+    background-color: white;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

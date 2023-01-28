@@ -1,0 +1,10 @@
+.header {
+    width: 100%;
+    background-color: aqua;
+    height: 10%;
+}
+
+.dashboard-top {
+    height: 40%;
+    background-color: antiquewhite;
+}

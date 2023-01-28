@@ -1,0 +1,29 @@
+body,
+.App {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+
+}
+
+:root {
+    --main-font: 'Poppins', sans-serif;
+    --dark-blue: #142d4c;
+    --light-green: #9fd3c7;
+
+}
+
+body * {
+    box-sizing: border-box;
+    font-family: var(--main-font);
+}
+
+.main-page-container {
+    color: #142d4c;
+    padding-left: 20rem;
+    padding-right: 20rem;
+    background-color: #9fd3c7;
+}

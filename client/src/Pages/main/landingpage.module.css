@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.container-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.container img {
+    width: 400px;
+}
+
+.header {
+    font-size: 4rem;
+    max-width: 20ch;
+}
+
+.button {
+    width: 50%;
+    padding: 1rem;
+    border: none;
+    font-size: 2vh;
+    border-radius: 50px;
+    color: #385170;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
