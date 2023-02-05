@@ -15,19 +15,3 @@
     display: flex;
     flex-direction: column;
 }
-
-.header {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem;
-    font-size: 2rem;
-    justify-content: center;
-}
-
-.header h2 {
-    margin: 0;
-}
-.header img {
-    width: 3vw;
-    margin-left: 0.3rem;
-}

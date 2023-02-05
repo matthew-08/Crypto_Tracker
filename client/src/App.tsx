@@ -6,7 +6,6 @@ import { LandingPage } from './Pages/main/LandingPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { SignUp } from './Pages/signup/SignUp'
 import { Dashboard } from './Pages/dashboard/Dashboard'
-import { SignTest } from './Pages/signup/SignTest'
 import { SignIn } from './Pages/signin/SignIn'
 
 function App() {

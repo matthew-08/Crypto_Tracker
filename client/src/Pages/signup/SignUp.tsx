@@ -1,138 +1,84 @@
-import React, { useEffect } from 'react'
+import React, { useEffect} from 'react'
 import styles from './signup.module.css'
-import wave from './assets/wave.svg'
-import { FormMethod, Link } from 'react-router-dom'
+import wave from '../../assets/wave.svg'
+import { FormMethod, Link, redirect } from 'react-router-dom'
 import { LandingPage } from '../main/LandingPage'
 import { useState } from 'react'
-import { WavePage } from '../../Components/wavePage/WavePage'
+import { FormComponent } from '../../Components/FormComponent/FormComponent'
 
-export type formFields = {
-    email: string | number
-    username: string | number
-    password: string | number
-    passwordConfirm: string | number
+interface FormFields {
+    [key: string]: string | Boolean
 }
 
+
 export const SignUp = () => {
-    const [formFields, setFormFields] = useState({
-        email: '',
-        username: '',
-        password: '',
-        passwordConfirm: '',
-    })
 
-    const [invalidInputs, setInvalidInputs] = useState({
-        email: false,
-        username: false,
-        password: false,
-        passwordConfirm: false,
-    })
-
-    useEffect(() => {
-        console.log(invalidInputs)
-    }, [invalidInputs]);
+    const [error, setError] = useState('')
 
 
-    const handleInvalidInput = (inputType: string) => {
-        console.log(inputType);
-        return setInvalidInputs(prevState => ({ ...prevState, [inputType]: true }))
-    }
-
-    const checkForm = () => {
-        let valid = true
-        for(let i in formFields) {
-            setInvalidInputs(prevState => ({...prevState, [i as keyof formFields]: false }))
-            if (!formFields[i as keyof formFields]) {
-                valid = false
-                handleInvalidInput(i)
-            }
+    const handleUserAlreadyExists = (type:string) => {
+        if('username') {
+            setError('Username already exist')
         }
-        return valid
-    }
-
-    const postNewUser = async () => {
-        const data = {
-            username: formFields.username,
-            email: formFields.email,
-            password: formFields.password
-        }
-        const newUser = await fetch('http://localhost:8000/auth/createUser', { 
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) 
-        
-        })
-    }
-
-    const handleSubmit = (e: React.SyntheticEvent) => {
-        e.preventDefault();
-        if(checkForm()){
-            postNewUser()
+        if('email') {
+            setError('Email already exists')
         }
     }
 
-    const handleInput = (e: string, input: string) => {
-        switch (input) {
-            case 'email':
-                return setFormFields({ ...formFields, [input]: e })
-            case 'username':
-                return setFormFields({ ...formFields, [input]: e })
-            case 'password':
-                return setFormFields({ ...formFields, [input]: e })
-            case 'passwordConfirm':
-                return setFormFields({ ...formFields, [input]: e })
+    const postNewUser = async (data:FormFields) => {
+        const { username, email, password } = data
+        const dataToPost = {
+            username,
+            email,
+            password
         }
-        return setFormFields
+        console.log(dataToPost);
+        try {
+            const newUser = await fetch('http://localhost:8000/auth/createUser', { 
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToPost) 
+            })
+            await newUser.json().then((r) => {
+                if(r.type === 'username') {
+                    handleUserAlreadyExists('username')
+                } else if (r.type === 'email') {
+                    handleUserAlreadyExists('email')
+                } else {
+                    redirect
+                }
+            })
+        } catch (error) {
+            console.error(error);
+            
+        }
     }
 
     return (
-        <WavePage>
-
-                <form action=""
-                    className={styles.form}
-                    onSubmit={handleSubmit}
-                >
-                    <header
-                        className={styles.header}
-                    >
-                        <h2>Sign Up</h2>
-                        <small>Please fill in this form to create an account</small>
-                    </header>
-                    <div className={styles.inputs}>
-                        <label htmlFor="email"></label>
-                        <input type="email" id="email"
-                            name="email" placeholder='Email'
-                            className={invalidInputs.email ? styles.invalid : styles.input}
-                            onChange={(e) => handleInput(e.target.value, 'email')}
-                        />
-                        <label htmlFor="name"></label>
-                        <input type="text" id='name'
-                            className={invalidInputs.username ? styles.invalid : styles.input}
-                            onChange={(e) => handleInput(e.target.value, 'username')}
-                            name='name' placeholder='Username' />
-                        <label htmlFor="password"></label>
-                        <input type="password" id="password"
-                            className={invalidInputs.password ? styles.invalid : styles.input}
-                            onChange={(e) => handleInput(e.target.value, 'password')}
-                            name='password' placeholder='Password' />
-                        <label htmlFor="confirm-password"></label>
-                        <input type="password" id="confirm-password"
-                            className={invalidInputs.passwordConfirm ? styles.invalid : styles.input}
-                            onChange={(e) => handleInput(e.target.value, 'passwordConfirm')}
-                            name='confirm-password' placeholder='Confirm Password' />
-                    </div>
-                    <button
-                        type='submit'
-                        className={styles['register-button']}
-                    >Register</button>
-                    <small>Already have an account?{' '}
-                        <Link
-                            to={'/'}
-                        >Sign in here.</Link></small>
-                </form>
-            </WavePage>
+        <main
+            className={styles.main}
+        >
+            <img src={wave}
+                className={styles.wave}
+            />
+            <div
+                className={styles.container}
+            >
+                <FormComponent 
+                apiCallback={postNewUser}
+                buttonText={'Register'}
+                linkPath={'/signIn'}
+                header={'Sign Up'}
+                headerSubtitle={'Please fill in this form to create an account'}
+                formInputFields={['email', 'username', 'password', 'confirm_Password']}
+                smallTextBottom={'Already have an account?'}
+                key={1}
+                errorMessage={error}
+                />
+            </div>
+        </main>
     )
 }

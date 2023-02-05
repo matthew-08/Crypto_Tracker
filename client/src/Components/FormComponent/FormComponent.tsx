@@ -2,39 +2,56 @@ import React from 'react'
 import styles from './formcomponent.module.css'
 import { useState, useEffect } from 'react'
 import { RouterProvider, Link } from 'react-router-dom'
+import { formFields } from '../../Pages/signup/SignUpOld'
+import currencyAdjust from '../../utils/currencyAdjust'
 
-interface FormProps {
+type FormInputFields = ['username', 'password'] | ['username', 'password', 'email', 'confirm_Password']
+
+type FormObject = {
+    [key in FormInputFields[number]]: string
+ }
+
+type FormObjectValidation =  {
+    [key in FormInputFields[number]]: boolean | string
+}
+
+interface FormProps<T, K> {
     header: string,
     headerSubtitle: string,
     buttonText: string,
     smallTextBottom: string,
     linkPath: string,
-    formInputFields: string[]
-    apiCallback: (data: FormFields) => Promise<void>
+    formInputFields: T[],
+    apiCallback: (data: FormObject) => void
     errorMessage: string
 }
 
-interface FormFields {
-    [key: string]: string | Boolean
-}
 
-export const FormComponent = ({header, headerSubtitle, buttonText, smallTextBottom, linkPath, formInputFields, apiCallback, errorMessage}: FormProps) => {
-    const [formFields, setFormFields] = useState<FormFields>({})
 
-    const [invalidInputs, setInvalidInputs] = useState<FormFields>({})
+
+
+
+export const FormComponent = <T extends FormInputFields[number], K extends keyof T>({header, headerSubtitle, buttonText, smallTextBottom, linkPath, formInputFields, apiCallback, errorMessage}: FormProps<T, K>) => {
+    
+    const [formFields, setFormFields] = useState<FormObject>({} as FormObject)
+
+    const [invalidInputs, setInvalidInputs] = useState<FormObjectValidation>({} as FormObjectValidation)
+
 
     useEffect(() => {
-        const formInputs = formInputFields.reduce((prev:FormFields, current) => {
-            prev[current] = '';
+        const formInputs = formInputFields.reduce((prev:FormObject, current: T) => {
+            prev[current] = ''
             return prev
-        }, {})
+        },{} as FormObject)
+    
        setFormFields(formInputs)
-       const formValidation = formInputFields.reduce((prev:FormFields, current) => {
+       const formValidation = formInputFields.reduce((prev:FormObjectValidation, current: T) => {
             prev[current] = false;
             return prev
-       }, {})
+       }, {} as FormObjectValidation)
        setInvalidInputs(formValidation);
 
+       
     }, []);
 
 
@@ -43,24 +60,25 @@ export const FormComponent = ({header, headerSubtitle, buttonText, smallTextBott
         return setInvalidInputs(prevState => ({ ...prevState, [inputType]: true }))
     }
 
-    const checkForm = () => {
+    const checkForm = (form: FormObject) => {
         let valid = true
-        for(let i in formFields) {
-            setInvalidInputs(prevState => ({...prevState, [i]: false }))
-            if (!formFields[i]) {
+        for(const key in formFields) {
+            setInvalidInputs(prevState => ({...prevState, [key]: false }))
+            if (!formFields[key as keyof FormObject]) {
                 valid = false
-                handleInvalidInput(i)
+                handleInvalidInput(key)
             }
         }
-        if (formFields.confirm_password) {
-            console.log('password check')
-            if(formFields.confirm_password !== formFields.password) {
+        if ('confirm_Password' in form) { 
+            if(form['confirm_Password'] !== form['password']) {
                 valid = false
-                setInvalidInputs(prevState => ({...prevState, confirm_password: true}))
+                setInvalidInputs(prevState  => ({...prevState, confirm_Password: true}))
             }
         }
+
+    
         return valid
-    }
+}
 
     /* const postNewUser = async () => {
         const data = {
@@ -81,9 +99,9 @@ export const FormComponent = ({header, headerSubtitle, buttonText, smallTextBott
 
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
-        if(checkForm()){
+        if(checkForm(formFields)){
             const data = formFields
-            apiCallback(data)
+            apiCallback(data!)
         }
     }
 
@@ -94,14 +112,14 @@ export const FormComponent = ({header, headerSubtitle, buttonText, smallTextBott
     const getType = (input:string):string => {
         if(input === 'email') {
             return 'email'
-        } else if (input === 'password' || input === 'confirm_password'){
+        } else if (input === 'password' || input === 'confirm_Password'){
             return 'password'
         } else {
             return 'text'
         }
     }
     const getPlaceholder = (input:string):string => {
-        if(input === 'confirm_password') {
+        if(input === 'confirm_Password') {
             return 'Confirm Password'
         } else {
         return input.charAt(0).toUpperCase() + input.slice(1)

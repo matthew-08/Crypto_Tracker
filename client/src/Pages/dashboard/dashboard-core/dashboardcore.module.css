@@ -2,6 +2,10 @@
     width: 100%;
     background-color: aqua;
     height: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0rem 1rem;
 }
 
 .dashboard-top {
