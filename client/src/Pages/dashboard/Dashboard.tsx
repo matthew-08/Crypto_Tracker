@@ -22,7 +22,7 @@ export function Dashboard() {
       }
     };
     getUserInfo();
-  });
+  }, []);
   return (
     <main
       className={styles['dashboard-main']}

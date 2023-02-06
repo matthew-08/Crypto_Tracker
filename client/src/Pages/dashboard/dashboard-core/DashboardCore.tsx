@@ -48,8 +48,17 @@ export default function DashboardCore({ userInfo }:{ userInfo: UserInfo }) {
         />
 
       </header>
-      <DashboardGraph />
-      <DashboardBottom />
+      {
+        userCoins.length >= 1
+        && (
+        <DashboardGraph
+          coinToGraph={userCoins[0].name}
+        />
+        )
+}
+      <DashboardBottom
+        userCoins={userCoins}
+      />
 
     </>
   );

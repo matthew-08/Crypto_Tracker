@@ -7,7 +7,6 @@ export type ButtonObject = {
   image: string,
 };
 export type DropdownButtons = ButtonObject[];
-
 interface MarketData {
   current: number | string,
   low24: number | string,
@@ -16,7 +15,7 @@ interface MarketData {
 }
 
 export interface CoinData {
-  name: string | number,
+  name: string
   id: string | number,
   symbol: string,
   image: string,
