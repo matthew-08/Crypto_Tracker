@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './cards.module.css';
-import { CoinData } from './Cards';
+import { CoinData } from '../../../../../types/types';
 
 interface CardProps {
   coinData: CoinData

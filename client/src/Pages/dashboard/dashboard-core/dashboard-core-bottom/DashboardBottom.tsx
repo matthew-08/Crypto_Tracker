@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './dashboardbottom.module.css';
 import { SearchBar } from '../../components/searchbar/SearchBar';
 import { Cards } from './Cards/Cards';
+import { CoinData } from '../../../../types/types';
 
-export function DashboardBottom() {
+export function DashboardBottom({ userCoins }: { userCoins: CoinData[] }) {
   return (
     <section
       className={styles['dashboard-bottom']}
@@ -13,7 +14,9 @@ export function DashboardBottom() {
       >
         <SearchBar />
       </header>
-      <Cards />
+      <Cards
+        userCoins={userCoins}
+      />
     </section>
   );
 }

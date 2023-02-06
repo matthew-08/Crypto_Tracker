@@ -2,24 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styles from './cards.module.css';
 import currencyAdjust from '../../../../../utils/currencyAdjust';
 import { Card } from './Card';
+import { CoinData } from '../../../../../types/types';
 
-interface MarketData {
-  current: number | string,
-  low24: number | string,
-  high24: number | string,
-  capPercentage: number | string,
-}
-
-export interface CoinData {
-  name: string | number,
-  id: string | number,
-  symbol: string,
-  image: string,
-  marketData: MarketData
-}
-
-export function Cards() {
-  const [userCoins, setUserCoins] = useState<CoinData[]>([] as CoinData[]);
+export function Cards({ userCoins }: { userCoins: CoinData }) {
+  const [passedUserCoins, setPassedUserCoins] = useState<CoinData[]>([] as CoinData[]);
 
   useEffect(() => {
     const defaultCoins = ['bitcoin', 'ethereum', 'dogecoin'];
