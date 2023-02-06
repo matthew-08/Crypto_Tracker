@@ -1,77 +1,69 @@
-import React from 'react'
-import styles from './cards.module.css'
-import { useEffect, useState } from 'react'
-import currencyAdjust from '../../../../../utils/currencyAdjust'
+import React, { useEffect, useState } from 'react';
+import styles from './cards.module.css';
+import currencyAdjust from '../../../../../utils/currencyAdjust';
+import { Card } from './Card';
 
 interface MarketData {
-    current: number | string,
-    low24: number | string,
-    high24: number | string,
+  current: number | string,
+  low24: number | string,
+  high24: number | string,
+  capPercentage: number | string,
 }
 
-interface CoinData {
-    name: string | number,
-    id: string | number,
-    symbol: string,
-    image: string,
-    marketData: MarketData
+export interface CoinData {
+  name: string | number,
+  id: string | number,
+  symbol: string,
+  image: string,
+  marketData: MarketData
 }
 
-export const Cards = () => {
+export function Cards() {
+  const [userCoins, setUserCoins] = useState<CoinData[]>([] as CoinData[]);
 
-    const [userCoins, setUserCoins] = useState<CoinData[]>([])
+  useEffect(() => {
+    const defaultCoins = ['bitcoin', 'ethereum', 'dogecoin'];
+    const fetchCoins = async () => {
+      try {
+        const result:CoinData[] = [];
+        const res = await Promise.all(defaultCoins.map((c) => fetch(`https://api.coingecko.com/api/v3/coins/${c}?localization=false&tickers=false&market_data=true&developer_data=true`)));
+        const resJson = await Promise.all(res.map((c) => c.json()))
+          .then((response) => response.forEach((c) => {
+            const coinData: CoinData = {
+              name: c.name,
+              id: c.id,
+              symbol: c.symbol.toUpperCase(),
+              image: c.image.large,
+              marketData: {
+                current: currencyAdjust(c.market_data.current_price.usd),
+                low24: currencyAdjust(c.market_data.low_24h.usd),
+                high24: currencyAdjust(c.market_data.high_24h.usd),
+                capPercentage: `${c.market_data.market_cap_change_percentage_24h}%`,
+              },
+            };
+            result.push(coinData);
+            setUserCoins(result);
+          }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCoins();
+  }, []);
 
-    useEffect(() => {
-        const defaultCoins = ['bitcoin', 'ethereum', 'dogecoin']
-        const fetchCoins = async () => {
-            try {
-                let result:CoinData[] = []
-                const res = 
-                await Promise.all(defaultCoins.map(c => 
-                    fetch(`https://api.coingecko.com/api/v3/coins/${c}?localization=false&tickers=false&market_data=true&developer_data=true`)))
-                const resJson = await Promise.all(res.map(c => c.json()))
-                .then(res => res.forEach(c => {
-                    const coinData: CoinData = {
-                        name: c.name,
-                        id: c.id,
-                        symbol: c.symbol,
-                        image: c.image.large,
-                        marketData: {
-                            current: c.market_data.current_price.usd,
-                            low24: c.market_data.low_24h.usd,
-                            high24: c.market_data.high_24h.usd,
-                        }
-                    }
-                   /*  for (const [key, value] of Object.entries(coinData.marketData)){
-                        coinData.marketData[key] = currencyAdjust(value);
-                    } */
-                    result.push(coinData)
-                    setUserCoins(result)
-                }))
-                const coinData = {
-                    name: resJson
-                    //market_data.current_price.usd = current price
-                    //low24 market_data.low_24.usd
-                    //high24 
-                    //
-                }
-                
-            } catch (error) {
-                
-            }
-        }
-        fetchCoins()
-    },[])
-
-    useEffect(() => {
-        console.log(userCoins)
-    }, [userCoins])
+  useEffect(() => {
+    console.log(userCoins);
+  }, [userCoins]);
 
   return (
     <section
-    className={styles.cards}
+      className={styles.cards}
     >
-
+      {userCoins && userCoins.map((coin) => (
+        <Card
+          coinData={coin}
+        />
+      ))}
     </section>
-  )
+  );
 }

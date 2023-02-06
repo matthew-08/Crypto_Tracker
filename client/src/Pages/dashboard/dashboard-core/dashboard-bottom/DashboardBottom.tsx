@@ -1,22 +1,19 @@
-import React from 'react'
-import styles from './dashboardbottom.module.css'
-import { SearchBar } from '../../components/searchbar/SearchBar'
-import { Cards } from './Cards/Cards'
+import React from 'react';
+import styles from './dashboardbottom.module.css';
+import { SearchBar } from '../../components/searchbar/SearchBar';
+import { Cards } from './Cards/Cards';
 
-export const DashboardBottom = () => {
-
+export function DashboardBottom() {
   return (
     <section
-    className={styles['dashboard-bottom']}
+      className={styles['dashboard-bottom']}
     >
-        <header
+      <header
         className={styles.header}
-        >
-            <SearchBar />   
-        </header>
-
-    <Cards />
-
+      >
+        <SearchBar />
+      </header>
+      <Cards />
     </section>
-  )
+  );
 }

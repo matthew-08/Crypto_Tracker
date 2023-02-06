@@ -1,28 +1,25 @@
-import React from 'react'
-import styles from './dashboardcore.module.css'
-import { DashboardBottom } from './dashboard-bottom/DashboardBottom'
-import { useState } from 'react'
-import { UserInfo } from '../Dashboard'
-import { UserInfoSection } from './UserInfo/UserInfoSection'
+import React, { useState } from 'react';
+import styles from './dashboardcore.module.css';
+import { DashboardBottom } from './dashboard-bottom/DashboardBottom';
+import { UserInfo } from '../../../types/types';
+import { UserInfoSection } from './UserInfo/UserInfoSection';
 
-export const DashboardCore = ({userInfo}:{userInfo: UserInfo} ) => {
-
+export default function DashboardCore({ userInfo }:{ userInfo: UserInfo }) {
   return (
     <>
-    <header
-    className={styles.header}
-    >
-      <UserInfoSection
-      userInfo = {userInfo}
-      />
+      <header
+        className={styles.header}
+      >
+        <UserInfoSection
+          userInfo={userInfo}
+        />
 
-    </header>
-    <section
-    className={styles['dashboard-top']}
-    >
-    </section>
-    <DashboardBottom />
-     
+      </header>
+      <section
+        className={styles['dashboard-top']}
+      />
+      <DashboardBottom />
+
     </>
-  )
+  );
 }

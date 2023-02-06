@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import styles from './signup.module.css'
 import wave from './assets/wave.svg'
 import { FormMethod, Link } from 'react-router-dom'

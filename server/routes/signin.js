@@ -2,6 +2,7 @@ const router = require('express').Router();
 const pool = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 router.post('/signIn', async (req, res) => {
   const { username, password } = req.body;
@@ -16,11 +17,15 @@ router.post('/signIn', async (req, res) => {
 
   const comparePassword = await bcrypt.compare(password, user.rows[0].password);
 
-  console.log(comparePassword);
-
   if (comparePassword) {
+    const token = jwt.sign({ username: username }, process.env.SECRETKEY, {
+      expiresIn: '1h',
+    });
+    res.cookie('token', token, {
+      httpOnly: true,
+    });
   }
-
+  return res.status(200).json({ username: username });
   /* res.send(200).json({ comparePassword }); */
 });
 
