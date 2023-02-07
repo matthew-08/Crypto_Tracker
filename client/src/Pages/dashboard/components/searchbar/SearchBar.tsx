@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import {
+  CoinData, ServerCoin, ServerResponse, ParsedCoins,
+} from '../../../../types/types';
 import searchIcon from '../../assets/search.svg';
 import styles from './searchbar.module.css';
 import { SearchDropdown } from './SearchDropdown';
 import { Coin } from './types/types';
 
-export function SearchBar() {
+export function SearchBar({ setOverlay }:{ setOverlay: (coin: ServerCoin | false) => void }) {
   const [input, setInput] = useState('');
-  const [coins, setCoins] = useState<Coin[]>([]);
-  const [filteredCoins, setFilteredCoins] = useState<Coin[]>([]);
+  const [coins, setCoins] = useState<ServerCoin[]>([]);
   const [dropdown, enableDropdown] = useState(false);
 
   const searchInput = useRef(null);
@@ -40,14 +42,14 @@ export function SearchBar() {
       const matchingCoins = await fetch(`http://localhost:8000/search/coins?coin=${input}`, {
         credentials: 'include',
       });
-      const parseCoins = await matchingCoins.json();
-      await console.log(parseCoins.rows);
+      const parseCoins: ParsedCoins = await matchingCoins.json();
+      const extractArray = await parseCoins.rows;
+      await setCoins(extractArray);
     };
+
     if (input) {
       searchCoins();
     }
-    setFilteredCoins(coins.filter((coin, i) => console.log(coin)));
-    console.log(filteredCoins);
   }, [input]);
 
   return (
@@ -63,7 +65,7 @@ export function SearchBar() {
         && (
         <SearchDropdown
           coins={coins}
-          searchInput={input}
+          setOverlay={setOverlay}
         />
         )}
       <img src={searchIcon} alt="" />
