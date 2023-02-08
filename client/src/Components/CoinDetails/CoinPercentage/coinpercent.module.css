@@ -1,0 +1,37 @@
+
+.negative {
+    color: var(--percent-red);
+}
+
+.positive {
+    color: var(--percent-green);
+}
+
+.container .negative-arrow,
+.container .positive-arrow {
+    width: 80%;
+    height: 80%;
+    max-width: 30px;
+    
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container span {
+    font-family: sans-serif;
+    font-size: 1rem;
+}
+
+.negative-arrow {
+    filter: invert(60%) sepia(62%) saturate(6090%) hue-rotate(336deg) brightness(93%) contrast(89%);
+    transform: rotate(180deg);
+}
+
+.positive-arrow {
+    filter: invert(47%) sepia(62%) saturate(1608%) hue-rotate(61deg) brightness(100%) contrast(92%);
+}
+

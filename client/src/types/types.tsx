@@ -14,13 +14,19 @@ interface SimpleMarketData {
   capPercentage: number | string,
 }
 
+export type PercentageCoins = {
+  btc: string | number,
+  eth: string | number,
+  usd: string | number,
+};
+
 export interface DetailedMarketData extends SimpleMarketData {
-  marketCap: string | number,
-  volume: string | number,
-  usd1h: string | number,
-  usd24h: string | number,
-  usd7d: string | number,
-  usd30d: string | number,
+  marketCap: number,
+  volume: number,
+  percent1h: PercentageCoins,
+  percent24h: PercentageCoins,
+  percent7d: PercentageCoins,
+  percent30d: PercentageCoins,
   description: string,
   links: {
     facebook: string,
@@ -30,10 +36,14 @@ export interface DetailedMarketData extends SimpleMarketData {
   socialMediaStats: {
     twitterFollowers: number | null,
     redditSubscribers: number | null,
-    facebookLikes: number | null
+    facebookLikes: number | null,
   }
-  totalSupply: string | number,
-  maxSupply: string | number
+  totalSupply: number,
+  maxSupply: number,
+  allTimeHigh: string | number,
+  allTimeLow: string | number,
+  circulating_supply: number,
+  market_cap_change_percentage_24h: string | number,
 
 }
 
@@ -63,3 +73,9 @@ export type ServerResponse = {
 };
 
 export type ParsedCoins = ServerResponse;
+
+export interface MarketPercentage {
+  label: string,
+  percentage: string | number,
+  type: 'number' | 'percentage'
+}

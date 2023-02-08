@@ -19,6 +19,7 @@ export function DashboardBottom({ userCoins }: { userCoins: CoinData[] }) {
       console.log(coin.coin_id);
       const fetchCoin = await fetch(`https://api.coingecko.com/api/v3/coins/${coin.coin_id}`).then((res) => res.json())
         .then((res: Record<string, any>) => {
+          console.log(res);
           const obj:DetailedCoinData = {
             id: res.id,
             image: res.image.large,
@@ -43,16 +44,38 @@ export function DashboardBottom({ userCoins }: { userCoins: CoinData[] }) {
                 twitterFollowers: res.community_data.twitter_followers,
               },
               totalSupply: res.market_data.total_supply,
-              usd1h: res.market_data.price_change_percentage_1h_in_currency.usd,
-              usd24h: res.market_data.price_change_percentage_24h_in_currency.usd,
-              usd30d: res.market_data.price_change_percentage_30d_in_currency.usd,
-              usd7d: res.market_data.price_change_percentage_7d_in_currency.usd,
+              percent1h: {
+                btc: res.market_data.price_change_percentage_1h_in_currency.btc,
+                eth: res.market_data.price_change_percentage_1h_in_currency.eth,
+                usd: res.market_data.price_change_percentage_1h_in_currency.usd,
+              },
+              percent24h: {
+                btc: res.market_data.price_change_percentage_24h_in_currency.btc,
+                eth: res.market_data.price_change_percentage_24h_in_currency.eth,
+                usd: res.market_data.price_change_percentage_24h_in_currency.usd,
+              },
+              percent30d: {
+                btc: res.market_data.price_change_percentage_30d_in_currency.btc,
+                eth: res.market_data.price_change_percentage_30d_in_currency.eth,
+                usd: res.market_data.price_change_percentage_30d_in_currency.usd,
+              },
+              percent7d: {
+                btc: res.market_data.price_change_percentage_7d_in_currency.btc,
+                eth: res.market_data.price_change_percentage_7d_in_currency.eth,
+                usd: res.market_data.price_change_percentage_7d_in_currency.usd,
+              },
               volume: res.market_data.total_volume.usd,
+              allTimeHigh: res.market_data.ath.usd,
+              allTimeLow: res.market_data.atl.usd,
+              circulating_supply: res.market_data.circulating_supply,
+              market_cap_change_percentage_24h: res.market_cap_change_percentage_24h,
             },
           };
-          console.log(obj);
+          setOverlay(true);
           return setCoinData(obj);
         });
+    } else {
+      return setOverlay(false);
     }
   };
 

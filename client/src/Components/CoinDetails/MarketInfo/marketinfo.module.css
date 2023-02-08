@@ -1,0 +1,15 @@
+.market-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: center;
+}
+
+.label {
+    color: gray;
+}
+.number {
+    font-size: 1.2rem;
+    font-family: sans-serif;
+    color: rgb(44, 41, 41, 0.8);
+}
