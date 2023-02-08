@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+}
+
+.container img {
+    width: 2.5vw;
+    height: 2.5vw;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-container input {
+    max-width: 4vw;
+    font-size: 1.3rem;
+    font-family: sans-serif;
+    height: 78%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgb(33, 31, 31, 0.1);
+    border: none;
+}
+
+.currency-wrapper {
+    font-size: 1.3rem;
+    background-color: rgb(25, 28, 28, 0.2);
+    padding: 0.3rem;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}

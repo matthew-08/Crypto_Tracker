@@ -9,8 +9,12 @@ import { MarketInfo } from './MarketInfo/MarketInfo';
 import { MarketInfoPercentage } from './MarketInfoPercentage/MarketInfoPercentage';
 import { Row } from './Row/Row';
 import { SocialLinks } from './SocialLinks/SocialLinks';
+import { CoinConverter } from '../CoinConverter/CoinConverter';
 
-export function CoinDetails({ coinDetails }: { coinDetails: DetailedCoinData }) {
+export function CoinDetails({ coinDetails, closeOverlay }:
+{ coinDetails: DetailedCoinData,
+  closeOverlay: (arg0: boolean) => void
+}) {
   const [percentageRows, setPercentageRows] = useState([] as MarketPercentage[][]);
 
   useEffect(() => {
@@ -92,8 +96,11 @@ export function CoinDetails({ coinDetails }: { coinDetails: DetailedCoinData }) 
           <div>
             <button
               type="button"
+              className={styles['exit-button']}
+              onClick={() => closeOverlay(false)}
+
             >
-              ok
+              &#215;
             </button>
 
           </div>
@@ -122,6 +129,7 @@ export function CoinDetails({ coinDetails }: { coinDetails: DetailedCoinData }) 
             />
 
           </div>
+          <CoinConverter />
         </div>
 
       </header>

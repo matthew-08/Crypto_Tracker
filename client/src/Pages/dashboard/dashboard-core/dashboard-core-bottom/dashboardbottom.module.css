@@ -1,6 +1,8 @@
 .dashboard-bottom {
     flex: 1;
-    background-color: aquamarine;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .header {
@@ -10,4 +12,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 2px solid gray;
+    padding: 1rem;
 }

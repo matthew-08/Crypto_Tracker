@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 import styles from './dropdown.module.css';
 import { UserInfo, DropdownButtons } from '../../types/types';
 
@@ -31,7 +32,7 @@ export function Dropdown({ dropDownButtons, textTop, textTopSub }: DropdownProps
             dropDownButtons.map((button, index) => (
               <button
                 type="button"
-                key={index}
+                key={uuid()}
               >
                 <img src={button.image} alt="button-icon" />
                 {button.buttonText}

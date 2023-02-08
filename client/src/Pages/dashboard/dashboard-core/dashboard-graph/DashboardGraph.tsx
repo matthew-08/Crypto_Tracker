@@ -52,6 +52,7 @@ export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
   }, []);
   const options = {
     responsive: true,
+    aspectRatio: 4,
   };
 
   const data = {

@@ -5,6 +5,7 @@ import coin from './assets/coin-logo.svg';
 import DashboardCore from './dashboard-core/DashboardCore';
 import { DashboardHeader } from './dashboard-header/DashboardHeader';
 import { UserInfo } from '../../types/types';
+import { Sidebar } from './Sidebar/Sidebar';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -27,11 +28,7 @@ export function Dashboard() {
     <main
       className={styles['dashboard-main']}
     >
-      <aside
-        className={styles.sidebar}
-      >
-        <DashboardHeader />
-      </aside>
+      <Sidebar />
       <section
         className={styles.main}
       >

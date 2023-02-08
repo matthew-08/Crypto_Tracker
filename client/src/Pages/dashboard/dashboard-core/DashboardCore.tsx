@@ -43,6 +43,7 @@ export default function DashboardCore({ userInfo }:{ userInfo: UserInfo }) {
       <header
         className={styles.header}
       >
+        <h1>Dashboard</h1>
         <UserInfoSection
           userInfo={userInfo}
         />

@@ -1,0 +1,30 @@
+.sidebar {
+    width: 15%;
+    background-color: var(--dark-blue);
+    color: white;
+} 
+
+
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem   ;
+}
+
+.buttons-container button {
+    font-size: 1.5rem;
+    color: white;
+    background: none;
+    border: none;
+    border-bottom: 2px solid white;
+    cursor: pointer;
+    padding: 0.5rem;
+    min-height: 3vw;
+    display: flex;
+    padding-left: 20px;
+}
+.buttons-container button:hover {
+    color: rgb(0, 255, 255, 0.6);
+}

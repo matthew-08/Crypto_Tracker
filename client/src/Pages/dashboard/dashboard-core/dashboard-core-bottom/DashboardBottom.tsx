@@ -11,6 +11,7 @@ export function DashboardBottom({ userCoins }: { userCoins: CoinData[] }) {
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
 
+  // eslint-disable-next-line consistent-return
   const handleOverlay = async (coin:ServerCoin | false) => {
     if (typeof coin === 'boolean') {
       return 'ok';
@@ -85,6 +86,7 @@ export function DashboardBottom({ userCoins }: { userCoins: CoinData[] }) {
       <Overlay>
         <CoinDetails
           coinDetails={coinData}
+          closeOverlay={() => setOverlay(false)}
         />
       </Overlay>
       ) }

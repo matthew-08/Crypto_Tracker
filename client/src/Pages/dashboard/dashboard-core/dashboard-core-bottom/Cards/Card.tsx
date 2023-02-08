@@ -1,18 +1,20 @@
 import React from 'react';
 import styles from './cards.module.css';
 import { CoinData } from '../../../../../types/types';
+import { MarketInfoPercentage } from '../../../../../Components/CoinDetails/MarketInfoPercentage/MarketInfoPercentage';
 
 interface CardProps {
   coinData: CoinData
 }
 
 export function Card({ coinData }: CardProps) {
+  console.log(coinData.marketData.high24);
   return (
     <div
       className={styles.card}
     >
-      <div
-        className={styles['card-left']}
+      <header
+        className={styles.header}
       >
         <div
           className={styles['coin-name']}
@@ -20,6 +22,19 @@ export function Card({ coinData }: CardProps) {
           {coinData.name}
 
         </div>
+        <div
+          className={styles['card-right']}
+        >
+          <MarketInfoPercentage
+            label=""
+            percentage={coinData.marketData.capPercentage}
+          />
+
+        </div>
+      </header>
+      <div
+        className={styles['card-middle']}
+      >
         <div
           className={styles['coin-icon']}
         >
@@ -45,9 +60,19 @@ export function Card({ coinData }: CardProps) {
         </div>
       </div>
       <div
-        className={styles['card-right']}
+        className={styles.footer}
       >
-        <p>{coinData.marketData.capPercentage}</p>
+        <div
+          className={styles['market-data-bottom']}
+        >
+          <b>24H Low / 24H High:</b>
+          {' '}
+          {coinData.marketData.low24}
+          {' '}
+          /
+          {' '}
+          {coinData.marketData.high24}
+        </div>
       </div>
 
     </div>

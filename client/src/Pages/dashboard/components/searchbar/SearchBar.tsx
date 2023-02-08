@@ -60,6 +60,7 @@ export function SearchBar({ setOverlay }:{ setOverlay: (coin: ServerCoin | false
         type="text"
         onChange={(e) => setInput(e.target.value)}
         ref={searchInput}
+        placeholder="Search for a coin..."
       />
       {dropdown
         && (
