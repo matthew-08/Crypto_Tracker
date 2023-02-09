@@ -11,9 +11,10 @@ import { Row } from './Row/Row';
 import { SocialLinks } from './SocialLinks/SocialLinks';
 import { CoinConverter } from '../CoinConverter/CoinConverter';
 
-export function CoinDetails({ coinDetails, closeOverlay }:
+export function CoinDetails({ coinDetails, closeOverlay, addToCoinList }:
 { coinDetails: DetailedCoinData,
   closeOverlay: (arg0: boolean) => void
+  addToCoinList: (coinId: string | number) => Promise<void>
 }) {
   const [percentageRows, setPercentageRows] = useState([] as MarketPercentage[][]);
 
@@ -75,7 +76,7 @@ export function CoinDetails({ coinDetails, closeOverlay }:
                 className={styles['coin-name-container']}
               >
                 <p>{coinDetails.name}</p>
-                <small>{coinDetails.symbol}</small>
+                <small>{coinDetails.symbol.toUpperCase()}</small>
               </div>
             </div>
             <div
@@ -260,6 +261,10 @@ export function CoinDetails({ coinDetails, closeOverlay }:
           </button>
           <button
             type="button"
+            onClick={() => {
+              closeOverlay(false);
+              addToCoinList(coinDetails.id);
+            }}
           >
             Add to collection
           </button>

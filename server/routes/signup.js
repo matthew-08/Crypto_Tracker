@@ -27,9 +27,20 @@ router.post('/createUser', async (req, res) => {
     const encryptedPass = await bcrypt.hash(password, salt);
 
     const a = await pool.query(
-      'INSERT INTO users (user_name, email, password) VALUES ($1, $2, $3) RETURNING email',
+      'INSERT INTO users (user_name, email, password) VALUES ($1, $2, $3) RETURNING email, user_id',
       [username, email, encryptedPass]
     );
+    const userId = await a.rows[0].user_id
+    
+    const setDefaultCoins = await pool.query(
+      'INSERT INTO user_coins(coins, user_id) VALUES (ARRAY[$1, $2, $3], $4)', [
+        'bitcoin',
+        'ethereum',
+        'dogecoin',
+        userId,
+      ]
+    )
+    console.log(setDefaultCoins);
     res.status(200).json({ a: a.rows[0] });
   }
 });

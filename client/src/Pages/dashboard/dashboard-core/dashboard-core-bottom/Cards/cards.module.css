@@ -3,7 +3,7 @@
     min-height: 200px;
     display: flex;
     width: 80%;
-    max-width: 400px;
+    max-width: 400px    ;
     border-radius: 20px;
     scale: 1;
     transition: scale 100ms ease-in-out;
@@ -26,9 +26,13 @@
 }
 
 .cards {
+    display: flex;  
+    flex-wrap: wrap;
     gap: 1rem;
-    display: flex;
-    padding: 1rem;
+    padding: 1.2rem;
+    margin-left: 3rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .card-middle {
@@ -42,7 +46,11 @@
 
 .coin-name {
     font-size: 2rem;
+    max-height: 50px;
+    white-space:nowrap;
     margin-bottom: 0.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
     
 }
 

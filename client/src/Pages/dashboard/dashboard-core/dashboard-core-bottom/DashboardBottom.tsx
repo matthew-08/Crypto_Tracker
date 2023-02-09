@@ -7,7 +7,10 @@ import { Overlay } from '../../../../Components/Overlay/Overlay';
 import { Coin } from '../../components/searchbar/types/types';
 import { CoinDetails } from '../../../../Components/CoinDetails/CoinDetails';
 
-export function DashboardBottom({ userCoins }: { userCoins: CoinData[] }) {
+export function DashboardBottom({
+  userCoins,
+  addToCoinList,
+}: { userCoins: CoinData[], addToCoinList: (coindId: string) => Promise<void> }) {
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
 
@@ -87,6 +90,7 @@ export function DashboardBottom({ userCoins }: { userCoins: CoinData[] }) {
         <CoinDetails
           coinDetails={coinData}
           closeOverlay={() => setOverlay(false)}
+          addToCoinList={addToCoinList}
         />
       </Overlay>
       ) }

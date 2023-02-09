@@ -1,6 +1,7 @@
 export interface UserInfo {
   user_name: string,
-  email: string
+  email: string,
+  coins: string[],
 }
 export type ButtonObject = {
   buttonText: string,

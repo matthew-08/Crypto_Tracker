@@ -38,6 +38,7 @@
 .header img {
     width: 100px;
     height: 100px;
+    margin-right: 1rem;
 }
 
 .coin-name-container p {
@@ -51,11 +52,12 @@
 
 
 .main-price-container {
+    margin-left: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     display: flex;
+    align-items: flex-start;
 }
 
 .main {
@@ -63,6 +65,7 @@
 }
 .price-main {
     font-size: 2rem;
+    font-family: sans-serif;
 }
 
 .header-bottom {
@@ -120,6 +123,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .exit-button {

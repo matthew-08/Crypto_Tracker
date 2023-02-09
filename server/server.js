@@ -40,6 +40,10 @@ app.use('/auth', require('./routes/signin'));
 
 app.use('/get', cookieJwtAuth, require('./routes/getDashboard'));
 
+app.use('/get', cookieJwtAuth, require('./routes/getCoins'));
+
+app.use('/add', cookieJwtAuth, require('./routes/addCoin'))
+
 app.use('/search', require('./routes/searchCoin'))
 
 app.listen(process.env.PORT, () =>

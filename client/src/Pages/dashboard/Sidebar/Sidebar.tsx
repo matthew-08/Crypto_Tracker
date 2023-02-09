@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './sidebar.module.css';
 import { DashboardHeader } from '../dashboard-header/DashboardHeader';
+import github from './assets/github.svg';
 
 export function Sidebar() {
   return (
@@ -39,6 +40,13 @@ export function Sidebar() {
           Blog
         </button>
       </div>
+      <footer
+        className={styles.footer}
+      >
+        <a href="https://github.com/matthew-08">
+          <img src={github} alt="githib-link" />
+        </a>
+      </footer>
     </aside>
   );
 }

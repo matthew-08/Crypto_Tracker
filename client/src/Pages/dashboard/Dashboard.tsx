@@ -1,5 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Grid } from 'react-loader-spinner';
+import { stringify } from 'uuid';
 import styles from './dashboard.module.css';
 import coin from './assets/coin-logo.svg';
 import DashboardCore from './dashboard-core/DashboardCore';
@@ -11,18 +14,39 @@ export function Dashboard() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({} as UserInfo);
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        const fetchUserInfo = await fetch('http://localhost:8000/get/dashboard', {
-          credentials: 'include',
-        });
-        const parseUserInfo = await fetchUserInfo.json().then((res: UserInfo) => setUserInfo(res));
-      } catch (error) {
-        navigate('/signIn');
+  const getUserInfo = async ():Promise<UserInfo | string> => {
+    try {
+      const fetchUserInfo = await fetch('http://localhost:8000/get/dashboard', {
+        credentials: 'include',
+      });
+      const parseUserInfo:UserInfo = await fetchUserInfo.json().then((res: UserInfo) => res);
+      return parseUserInfo;
+    } catch (error) {
+      return 'Problem fetching details';
+    }
+  };
+
+  const reRender = async () => {
+    getUserInfo().then((res: UserInfo | string) => {
+      if (typeof res === 'string') {
+        return console.log(res);
       }
-    };
-    getUserInfo();
+      return setUserInfo(res);
+    });
+  };
+
+  useEffect(() => {
+    try {
+      getUserInfo().then((res: UserInfo | string) => {
+        if (typeof res === 'string') {
+          console.log('Problem detected');
+        } else {
+          setUserInfo(res);
+        }
+      });
+    } catch (error) {
+      navigate('/signin');
+    }
   }, []);
   return (
     <main
@@ -32,9 +56,16 @@ export function Dashboard() {
       <section
         className={styles.main}
       >
-        <DashboardCore
-          userInfo={userInfo}
-        />
+        {
+          userInfo
+            ? (
+              <DashboardCore
+                userInfo={userInfo}
+                reRenderUser={reRender}
+              />
+            )
+            : <Grid />
+}
       </section>
     </main>
   );

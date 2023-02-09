@@ -5,3 +5,14 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL,
     PRIMARY KEY(user_id)
 )
+
+CREATE TABLE coins (
+    coin_id VARCHAR(255) NOT NULL,
+    coin_symbol VARCHAR(255) NOT NULL,
+    coin_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(coin_id)
+);
+
+alter table coins alter coin_id drop not null,
+                alter coin_symbol drop not null,
+                alter coin_name drop not null;

@@ -4,12 +4,6 @@
     display: flex;
 }
 
-.sidebar {
-    width: 15%;
-    background-color: var(--dark-blue);
-    color: white;
-} 
-
 .main {
     flex: 1;
     display: flex;
