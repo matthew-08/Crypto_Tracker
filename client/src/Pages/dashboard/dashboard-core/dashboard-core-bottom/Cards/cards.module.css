@@ -30,9 +30,10 @@
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1.2rem;
-    margin-left: 3rem;
     overflow-x: hidden;
     overflow-y: scroll;
+    width: 72%;
+    justify-content: center;
 }
 
 .card-middle {

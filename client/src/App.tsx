@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './global.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { callback } from 'chart.js/dist/helpers/helpers.core';
 import { Navbar } from './Components/Navbar';
 import { LandingPage } from './Pages/main/LandingPage';
 import reactLogo from './assets/react.svg';
@@ -9,8 +10,13 @@ import { Dashboard } from './Pages/dashboard/Dashboard';
 import { SignIn } from './Pages/signin/SignIn';
 
 function App() {
+  const [cNav, setCloseNav] = useState(false);
   const { pathname } = window.location;
   const isDashboard = pathname === '/Dashboard';
+
+  const closeNav = () => {
+    setCloseNav(!cNav);
+  };
 
   return (
     <div className="App">
@@ -31,7 +37,11 @@ function App() {
           />
           <Route
             path="/signIn"
-            element={<SignIn />}
+            element={(
+              <SignIn
+                closeNav={closeNav}
+              />
+)}
           />
         </Routes>
       </BrowserRouter>

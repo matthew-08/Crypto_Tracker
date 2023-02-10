@@ -6,6 +6,8 @@ import { CoinData, ServerCoin, DetailedCoinData } from '../../../../types/types'
 import { Overlay } from '../../../../Components/Overlay/Overlay';
 import { Coin } from '../../components/searchbar/types/types';
 import { CoinDetails } from '../../../../Components/CoinDetails/CoinDetails';
+import graph from './assets/graph.svg';
+import { Portfolio } from './Cards/portfolio/Portfolio';
 
 export function DashboardBottom({
   userCoins,
@@ -100,13 +102,33 @@ export function DashboardBottom({
         <header
           className={styles.header}
         >
+          <button
+            type="button"
+            className={styles['graph-button']}
+          >
+            <img
+              src={graph}
+              alt="graph-icon"
+            />
+            Change Graph
+
+          </button>
           <SearchBar
             setOverlay={(coin:ServerCoin | false) => handleOverlay(coin)}
           />
         </header>
-        <Cards
-          userCoins={userCoins}
-        />
+        <div
+          className={styles['main-container']}
+        >
+          <Cards
+            userCoins={userCoins}
+          />
+          <div
+            className={styles.portfolio}
+          >
+            <Portfolio />
+          </div>
+        </div>
       </section>
     </>
   );

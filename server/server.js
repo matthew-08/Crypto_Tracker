@@ -42,9 +42,17 @@ app.use('/get', cookieJwtAuth, require('./routes/getDashboard'));
 
 app.use('/get', cookieJwtAuth, require('./routes/getCoins'));
 
+app.use('/get', require('./routes/getTransactions'))
+
 app.use('/add', cookieJwtAuth, require('./routes/addCoin'))
 
+app.use('/add', require('./routes/addTransaction'));
+
 app.use('/search', require('./routes/searchCoin'))
+
+app.use('/delete', require('./routes/deleteTransaction'))
+
+app.use('/update', require('./routes/editTransaction'))
 
 app.listen(process.env.PORT, () =>
   console.log(`Sever listening on ${process.env.PORT}`)

@@ -6,7 +6,6 @@ const currencyAdjust = (price: number | null): string => {
     return '0';
   }
   const priceToString = price.toString();
-  console.log(priceToString);
   const hasDecimal = priceToString.includes('.');
   let index;
   let counter = 0;

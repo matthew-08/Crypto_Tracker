@@ -16,3 +16,33 @@
     border-bottom: 2px solid gray;
     padding: 1rem;
 }
+
+.header input {
+    margin-left: auto;
+}
+
+.header .graph-button {
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(51, 51, 51, 0.2);
+    border: 2px solid var(--dark-blue);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.header button img {
+    max-width: 3vh;
+}
+
+.main-container {
+    display: flex;
+}
+
+
+.portfolio {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
