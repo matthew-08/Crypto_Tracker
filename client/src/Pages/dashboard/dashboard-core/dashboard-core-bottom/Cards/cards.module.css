@@ -11,6 +11,7 @@
     padding: 1rem;
     flex-direction: column;
     padding-bottom: 0;
+    max-height: 200px;
 }
 
 .header {

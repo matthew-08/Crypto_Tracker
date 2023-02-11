@@ -7,12 +7,16 @@ import { Overlay } from '../../../../Components/Overlay/Overlay';
 import { Coin } from '../../components/searchbar/types/types';
 import { CoinDetails } from '../../../../Components/CoinDetails/CoinDetails';
 import graph from './assets/graph.svg';
-import { Portfolio } from './Cards/portfolio/Portfolio';
+import { Portfolio } from './portfolio/Portfolio';
 
 export function DashboardBottom({
   userCoins,
   addToCoinList,
-}: { userCoins: CoinData[], addToCoinList: (coindId: string) => Promise<void> }) {
+  userTransactions,
+}: { userCoins: CoinData[],
+  addToCoinList: (coindId: string) => Promise<void>,
+  userTransactions: object[]
+}) {
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
 
@@ -126,7 +130,10 @@ export function DashboardBottom({
           <div
             className={styles.portfolio}
           >
-            <Portfolio />
+            <Portfolio
+              userCoins={userCoins}
+              userTransactions={userTransactions}
+            />
           </div>
         </div>
       </section>

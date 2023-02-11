@@ -42,7 +42,7 @@ app.use('/get', cookieJwtAuth, require('./routes/getDashboard'));
 
 app.use('/get', cookieJwtAuth, require('./routes/getCoins'));
 
-app.use('/get', require('./routes/getTransactions'))
+app.use('/get', cookieJwtAuth, require('./routes/getTransactions'))
 
 app.use('/add', cookieJwtAuth, require('./routes/addCoin'))
 

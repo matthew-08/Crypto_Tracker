@@ -2,6 +2,7 @@ export interface UserInfo {
   user_name: string,
   email: string,
   coins: string[],
+  transactions: object[]
 }
 export type ButtonObject = {
   buttonText: string,
@@ -53,6 +54,7 @@ export interface BaseCoinInfo {
   id: string | number,
   symbol: string,
   image: string,
+  transactions: unknown,
 }
 
 export interface CoinData extends BaseCoinInfo {
@@ -80,3 +82,9 @@ export interface MarketPercentage {
   percentage: string | number,
   type: 'number' | 'percentage'
 }
+
+export type ReducerProps = {
+  price: string,
+  quantity: string,
+  date: string,
+};

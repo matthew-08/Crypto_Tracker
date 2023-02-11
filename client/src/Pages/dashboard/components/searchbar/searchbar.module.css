@@ -3,14 +3,19 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 30%;
-    margin-right: auto;
+    width: 27%;
+    margin-left: auto;
 }
 
 .container input {
     width: 100%;
     padding: 0.5rem;
-    border-radius: 20px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    background-color: rgb(148, 185, 219, 0.3);
+    color: black;   
+    font-size: 1.1rem;
 }
 
 .container img {

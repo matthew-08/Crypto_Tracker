@@ -74,6 +74,7 @@ export default function DashboardCore({ userInfo, reRenderUser }:
       <DashboardBottom
         userCoins={userCoins}
         addToCoinList={addToCoinList}
+        userTransactions={userInfo.transactions}
       />
 
     </>

@@ -17,7 +17,13 @@ router.get('/dashboard', async (req, res) => {
       [user_id]
     );
     const parseJSON = await coins.rows[0].coins
+    const getTransactions = await pool.query(
+    'SELECT * FROM user_transactions where user_id = $1',
+    [user_id]
+    );
+    const parseTransactions = await getTransactions.rows
     const combinedData = {
+      transactions: parseTransactions,
       coins: parseJSON,
       user_name: user.rows[0].user_name,
       email: user.rows[0].email,

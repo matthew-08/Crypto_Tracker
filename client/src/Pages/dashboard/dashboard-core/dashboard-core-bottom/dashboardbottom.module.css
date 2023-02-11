@@ -38,6 +38,7 @@
 
 .main-container {
     display: flex;
+    height: 100%;
 }
 
 
@@ -45,4 +46,8 @@
     display: flex;
     flex-grow: 1;
     flex-direction: column;
+}
+
+.coin-name-dt img {
+    max-width: 1vw;
 }

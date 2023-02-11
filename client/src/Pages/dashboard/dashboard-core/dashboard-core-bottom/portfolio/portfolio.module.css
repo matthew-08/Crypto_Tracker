@@ -3,13 +3,13 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
-    height: 20%;
+    height: 30%;
     padding: 1rem;
 }
 
 .stats-container {
     display: flex;
-    padding: 0.5rem;
+    padding: 1rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -86,4 +86,19 @@ border-collapse: collapse;
 .buttons button {
     border: none;
     background: none;
+}
+.coin-name-dt img {
+    max-width: 1vw;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 0.2rem;
+}
+
+.coin-name-dt {
+    height: 100%;
+}
+
+.coin-name-dt small {
+    margin-left: 0.2rem;
+    font-size: 0.7rem;
 }
