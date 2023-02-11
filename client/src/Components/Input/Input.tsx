@@ -27,12 +27,14 @@ export function Input({
       >
         {labelText}
         {' '}
+        {type !== 'note' && (
         <span
           className={styles.required}
         >
           *
 
         </span>
+        )}
         {type === 'price' ? (
           <span
             className={styles.usd}
@@ -52,6 +54,7 @@ export function Input({
           required
           name="input"
           id="input"
+          className={date ? styles.date : styles.input}
           value={value}
           onChange={(e) => sendInput(type, e.target.value)}
         />

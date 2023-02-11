@@ -3,18 +3,26 @@ import { v4 as uuid } from 'uuid';
 import { Input } from '../../../../../../Components/Input/Input';
 import { CoinData, ReducerProps } from '../../../../../../types/types';
 import styles from './modal.module.css';
+import { TransactionNote } from './TransactionNote/TransactionNote';
 
 const ACTIONS = {
   PRICE: 'price',
   QUANTITY: 'quantity',
   DATE: 'date',
+  NOTE: 'note',
 } as const;
 
 type Keys = keyof typeof ACTIONS;
 
-type Actions = typeof ACTIONS[Keys];
+type MirrorObject = typeof ACTIONS;
 
-const reducerFunc = (state: ReducerProps, action: { type: Actions, payload: string }) => {
+type ActionTypes = MirrorObject[Keys];
+
+type Actions = {
+  type: ActionTypes,
+  payload: string
+};
+function reducerFunc(state: ReducerProps, action: Actions) {
   switch (action.type) {
     case ACTIONS.PRICE:
       return { ...state, price: action.payload };
@@ -22,19 +30,22 @@ const reducerFunc = (state: ReducerProps, action: { type: Actions, payload: stri
       return { ...state, date: action.payload };
     case ACTIONS.QUANTITY:
       return { ...state, quantity: action.payload };
+    case ACTIONS.NOTE:
+      return { ...state, note: action.payload };
     default:
       return state;
   }
-};
+}
 
 export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
   const [state, dispatch] = useReducer(reducerFunc, {
     price: '',
     quantity: '',
     date: '',
-  } as ReducerProps);
+    note: '',
+  });
 
-  const updateField = (type: Actions, payload: string) => {
+  const updateField = (type: ActionTypes, payload: string) => {
     dispatch({
       type,
       payload,
@@ -70,11 +81,57 @@ export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
           value={state.quantity}
           coinType={coinData.symbol}
         />
-        <input
-          type="text"
-          disabled
-          value={state.quantity && state.price ? state.quantity * state.price : ''}
+        <label
+          htmlFor="text"
+          className={styles.label}
+        >
+          <span
+            className={styles.usd}
+          >
+            USD
+            {' '}
+            $
+          </span>
+          Total
+          <input
+            type="text"
+            disabled
+            className={styles['total-container']}
+            value={state.quantity && state.price ? Number(state.quantity) * Number(state.price) : ''}
+          />
+        </label>
+        <Input
+          date
+          labelText="Date:"
+          sendInput={updateField}
+          type="date"
+          value={state.date}
+          key="Date"
         />
+        <Input
+          labelText="Note (optional)"
+          sendInput={updateField}
+          value={state.note}
+          key="Note"
+          type="note"
+          date={false}
+        />
+        <div
+          className={styles['buttons-container']}
+        >
+          <button
+            type="button"
+            className={styles['cancel-button']}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className={styles['submit-button']}
+          >
+            Submit
+          </button>
+        </div>
       </section>
 
     </div>

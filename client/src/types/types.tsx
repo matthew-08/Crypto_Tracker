@@ -84,7 +84,8 @@ export interface MarketPercentage {
 }
 
 export type ReducerProps = {
-  price: string,
-  quantity: string,
-  date: string,
+  readonly price: string,
+  readonly quantity: string,
+  readonly date: string,
+  readonly note: string,
 };

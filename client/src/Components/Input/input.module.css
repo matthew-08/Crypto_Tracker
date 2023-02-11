@@ -30,3 +30,7 @@
 .required {
     color: red
 }
+
+input.date {
+    padding-left: 10px;
+}
