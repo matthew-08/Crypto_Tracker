@@ -34,3 +34,8 @@
 input.date {
     padding-left: 10px;
 }
+
+input[type='text'] {
+    padding-left: 10px;
+
+}

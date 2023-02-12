@@ -46,7 +46,7 @@ app.use('/get', cookieJwtAuth, require('./routes/getTransactions'))
 
 app.use('/add', cookieJwtAuth, require('./routes/addCoin'))
 
-app.use('/add', require('./routes/addTransaction'));
+app.use('/add', cookieJwtAuth, require('./routes/addTransaction'));
 
 app.use('/search', require('./routes/searchCoin'))
 

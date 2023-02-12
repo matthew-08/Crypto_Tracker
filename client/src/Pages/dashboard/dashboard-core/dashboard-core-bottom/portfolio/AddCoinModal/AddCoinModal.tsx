@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid';
 import { Input } from '../../../../../../Components/Input/Input';
 import { CoinData, ReducerProps } from '../../../../../../types/types';
 import styles from './modal.module.css';
-import { TransactionNote } from './TransactionNote/TransactionNote';
 
 const ACTIONS = {
   PRICE: 'price',
@@ -37,13 +36,14 @@ function reducerFunc(state: ReducerProps, action: Actions) {
   }
 }
 
-export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
+export function AddCoinModal({ coinData, closeOverlay }:{ coinData: CoinData,
+  closeOverlay: (arg: 'addCoin') => void }) {
   const [state, dispatch] = useReducer(reducerFunc, {
     price: '',
     quantity: '',
     date: '',
     note: '',
-  });
+  } as ReducerProps);
 
   const updateField = (type: ActionTypes, payload: string) => {
     dispatch({
@@ -52,6 +52,28 @@ export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
     });
     console.log(state);
   };
+
+  const handleSubmit = async () => {
+    type StateProperties = keyof typeof state;
+    const requiredFields = Object.keys(state) as StateProperties[];
+    const filterNote = requiredFields.filter((key) => key !== 'note');
+    const checkFields = filterNote.every((prop) => state[prop] !== '');
+    if (checkFields) {
+      const postTransaction = await fetch('http://localhost:8000/add/transaction', {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...state,
+          coin: coinData.id,
+        }),
+      });
+    }
+  };
+
   return (
     <div
       className={styles.modal}
@@ -71,6 +93,7 @@ export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
           sendInput={updateField}
           key="price"
           value={state.price}
+          inputType="number"
         />
         <Input
           date={false}
@@ -80,6 +103,7 @@ export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
           key="quantity"
           value={state.quantity}
           coinType={coinData.symbol}
+          inputType="number"
         />
         <label
           htmlFor="text"
@@ -107,6 +131,7 @@ export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
           type="date"
           value={state.date}
           key="Date"
+          inputType="date"
         />
         <Input
           labelText="Note (optional)"
@@ -115,6 +140,7 @@ export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
           key="Note"
           type="note"
           date={false}
+          inputType="text"
         />
         <div
           className={styles['buttons-container']}
@@ -122,12 +148,15 @@ export function AddCoinModal({ coinData }:{ coinData: CoinData }) {
           <button
             type="button"
             className={styles['cancel-button']}
+            onClick={() => closeOverlay('addCoin')}
+
           >
             Cancel
           </button>
           <button
             type="button"
             className={styles['submit-button']}
+            onClick={handleSubmit}
           >
             Submit
           </button>

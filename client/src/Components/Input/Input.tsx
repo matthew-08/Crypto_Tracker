@@ -10,11 +10,12 @@ interface InputProps {
   sendInput: (type: KeyOfReducerProps, payload: string) => void
   type: KeyOfReducerProps
   value: string,
+  inputType: 'date' | 'number' | 'text'
   coinType?: string,
 
 }
 export function Input({
-  labelText, date, sendInput, type, value, coinType,
+  labelText, date, sendInput, type, value, coinType, inputType,
 }: InputProps) {
   return (
     <div
@@ -50,8 +51,8 @@ export function Input({
           </span>
         ) : null}
         <input
-          type={date ? 'date' : 'number'}
-          required
+          type={inputType}
+          required={type !== 'note'}
           name="input"
           id="input"
           className={date ? styles.date : styles.input}

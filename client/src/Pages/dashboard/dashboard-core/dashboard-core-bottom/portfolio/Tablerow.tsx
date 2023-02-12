@@ -33,6 +33,14 @@ export function Tablerow({ coinData }:{ coinData: CoinData }) {
         })(option);
     }
   };
+
+  const closeOverlay = (options: keyof OverlayOptions) => {
+    if (options === 'editCoin') {
+      setOverlay({ ...overlay, editCoin: false });
+    } else {
+      setOverlay({ ...overlay, addCoin: false });
+    }
+  };
   return (
     <>
       {
@@ -41,6 +49,7 @@ export function Tablerow({ coinData }:{ coinData: CoinData }) {
     <Overlay>
       <AddCoinModal
         coinData={coinData}
+        closeOverlay={closeOverlay}
       />
     </Overlay>
     )
