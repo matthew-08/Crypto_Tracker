@@ -26,7 +26,8 @@ interface FormProps<T, K> {
 }
 
 export function FormComponent<T extends FormInputFields[number], K extends keyof T>({
-  header, headerSubtitle, buttonText, smallTextBottom, linkPath, formInputFields, apiCallback, errorMessage,
+  header, headerSubtitle, buttonText, smallTextBottom,
+  linkPath, formInputFields, apiCallback, errorMessage,
 }: FormProps<T, K>) {
   const [formFields, setFormFields] = useState<FormObject>({} as FormObject);
 

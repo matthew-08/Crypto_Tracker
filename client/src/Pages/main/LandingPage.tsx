@@ -1,11 +1,11 @@
-import React from 'react'
-import styles from './landingpage.module.css'
-import mainimg from './assets/main-img.svg'
+import React from 'react';
+import styles from './landingpage.module.css';
+import mainimg from './assets/main-img.svg';
 
-export const LandingPage = () => {
+export function LandingPage() {
   return (
     <main
-      className='main-page-container'
+      className="main-page-container"
     >
       <div
         className={styles.container}
@@ -15,13 +15,23 @@ export const LandingPage = () => {
         >
           <h2
             className={styles.header}
-          >Coin tracking <br />Safe, Reliable<br />  Start your free trial today.</h2>
+          >
+            Coin tracking
+            <br />
+            Safe, Reliable
+            <br />
+            {' '}
+            Start your free trial today.
+          </h2>
           <button
             className={styles.button}
-          >Sign Up Today</button>
+            type="button"
+          >
+            Sign Up Today
+          </button>
         </div>
         <img src={mainimg} alt="" />
       </div>
     </main>
-  )
+  );
 }

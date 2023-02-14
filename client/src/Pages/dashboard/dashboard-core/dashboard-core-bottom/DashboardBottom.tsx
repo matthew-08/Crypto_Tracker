@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styles from './dashboardbottom.module.css';
 import { SearchBar } from '../../components/searchbar/SearchBar';
 import { Cards } from './Cards/Cards';
-import { CoinData, ServerCoin, DetailedCoinData } from '../../../../types/types';
+import {
+  CoinData, ServerCoin, DetailedCoinData, Transaction,
+} from '../../../../types/types';
 import { Overlay } from '../../../../Components/Overlay/Overlay';
 import { Coin } from '../../components/searchbar/types/types';
 import { CoinDetails } from '../../../../Components/CoinDetails/CoinDetails';
@@ -13,9 +15,11 @@ export function DashboardBottom({
   userCoins,
   addToCoinList,
   userTransactions,
+  updateUser,
 }: { userCoins: CoinData[],
-  addToCoinList: (coindId: string) => Promise<void>,
-  userTransactions: object[]
+  addToCoinList: (coindId: string | number) => Promise<void>,
+  userTransactions: Transaction[],
+  updateUser: () => Promise<void>
 }) {
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
@@ -29,7 +33,6 @@ export function DashboardBottom({
       console.log(coin.coin_id);
       const fetchCoin = await fetch(`https://api.coingecko.com/api/v3/coins/${coin.coin_id}`).then((res) => res.json())
         .then((res: Record<string, any>) => {
-          console.log(res);
           const obj:DetailedCoinData = {
             id: res.id,
             image: res.image.large,
@@ -133,6 +136,7 @@ export function DashboardBottom({
             <Portfolio
               userCoins={userCoins}
               userTransactions={userTransactions}
+              updateUser={updateUser}
             />
           </div>
         </div>

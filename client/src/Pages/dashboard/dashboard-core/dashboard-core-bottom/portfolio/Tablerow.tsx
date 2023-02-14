@@ -1,23 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, version } from 'react';
 import styles from './portfolio.module.css';
 import add from './assets/add.svg';
 import trash from './assets/trash.svg';
 import edit from './assets/edit.svg';
 import { Overlay } from '../../../../../Components/Overlay/Overlay';
 import { AddCoinModal } from './AddCoinModal/AddCoinModal';
-
-import { CoinData } from '../../../../../types/types';
+import EditCoinModal from './EditCoinModal/EditCoinModal';
+import { Transaction, CoinData } from '../../../../../types/types';
+import DeleteCoin from './DeleteCoin/DeleteCoin';
 
 type OverlayOptions = {
   addCoin: boolean,
   editCoin: boolean,
+  deleteCoin: boolean,
 };
 
-export function Tablerow({ coinData }:{ coinData: CoinData }) {
+export function Tablerow({ coinData, updateUser }:
+{ coinData: CoinData, updateUser: () => Promise<void> }) {
   const [overlay, setOverlay] = useState<OverlayOptions>({
     addCoin: false,
     editCoin: false,
+    deleteCoin: false,
   });
+
+  const [editTransaction, setTransaction] = useState<null | Transaction>(null);
 
   const handleOverlay = (option: keyof OverlayOptions) => {
     switch (option) {
@@ -27,19 +33,33 @@ export function Tablerow({ coinData }:{ coinData: CoinData }) {
       case 'editCoin':
         setOverlay({ ...overlay, editCoin: !overlay.editCoin });
         break;
+      case 'deleteCoin':
+        setOverlay({ ...overlay, deleteCoin: !overlay.deleteCoin });
+        break;
       default:
         ((x: never) => {
-          throw new Error(`${x} was unhandled!`);
+          throw new Error(`${x} was unhandled!`); v;
         })(option);
     }
   };
 
   const closeOverlay = (options: keyof OverlayOptions) => {
+    console.log('check');
     if (options === 'editCoin') {
-      setOverlay({ ...overlay, editCoin: false });
+      setOverlay((prev) => ({ ...prev, editCoin: false }));
     } else {
-      setOverlay({ ...overlay, addCoin: false });
+      setOverlay((prev) => ({ ...prev, addCoin: false }));
     }
+    updateUser();
+  };
+
+  const handleEdit = (transaction:Transaction) => {
+    setOverlay((prev) => ({ ...prev, editCoin: false }));
+    setTransaction(transaction);
+    // set state transaction variable equal to a transaction
+    handleOverlay('addCoin');
+    // set addCoinmodal to true
+    // render addCoin modal
   };
   return (
     <>
@@ -47,13 +67,31 @@ export function Tablerow({ coinData }:{ coinData: CoinData }) {
       (overlay.addCoin || overlay.editCoin)
     && (
     <Overlay>
-      <AddCoinModal
-        coinData={coinData}
-        closeOverlay={closeOverlay}
-      />
+      {overlay.addCoin
+        ? (
+          <AddCoinModal
+            coinData={coinData}
+            closeOverlay={closeOverlay}
+            transaction={editTransaction && editTransaction}
+          />
+        )
+        : (
+          <EditCoinModal
+            coinData={coinData}
+            closeOverlay={closeOverlay}
+            handleEdit={handleEdit}
+          />
+        )}
     </Overlay>
     )
+
     }
+      {overlay.deleteCoin && (
+      <Overlay>
+        <DeleteCoin />
+      </Overlay>
+      )}
+
       <tr>
         <td
           className={styles['coin-name-dt']}

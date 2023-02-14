@@ -1,17 +1,15 @@
 .card {
-    background-color: rgb(20, 45, 76, 0.1);
-    min-height: 200px;
+    background-color: #253344;
     display: flex;
-    width: 80%;
-    max-width: 400px    ;
+    max-width: 400px;
     border-radius: 20px;
     scale: 1;
     transition: scale 100ms ease-in-out;
     cursor: pointer;
     padding: 1rem;
     flex-direction: column;
-    padding-bottom: 0;
     max-height: 200px;
+    color: white;
 }
 
 .header {
@@ -27,14 +25,14 @@
 }
 
 .cards {
-    display: flex;  
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr) );
     gap: 1rem;
     padding: 1.2rem;
     overflow-x: hidden;
     overflow-y: scroll;
     width: 72%;
-    justify-content: center;
+    background-color:  #1c2837;
 }
 
 .card-middle {

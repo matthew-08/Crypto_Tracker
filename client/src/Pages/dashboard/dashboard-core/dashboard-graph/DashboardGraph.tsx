@@ -13,6 +13,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
 import styles from './dashboardgraph.module.css';
+import useWindowDimensions from '../../../../Components/Hooks/useWindowDimensions';
 
 ChartJS.register(
   CategoryScale,
@@ -29,8 +30,12 @@ type ChartData = {
   x: number,
   y: string
 };
+ChartJS.defaults.color = '#fff';
+ChartJS.defaults.font.size = 16;
 
 export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
+  const { height, width } = useWindowDimensions();
+
   const [chartData, setChartData] = useState([] as ChartData[]);
   const fetchMarkChartData = async () => {
     const coinToFetch = coinToGraph;
@@ -52,7 +57,6 @@ export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
   }, []);
   const options = {
     responsive: true,
-    aspectRatio: 4,
   };
 
   const data = {

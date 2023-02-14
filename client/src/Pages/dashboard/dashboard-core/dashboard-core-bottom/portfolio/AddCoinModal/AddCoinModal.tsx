@@ -1,7 +1,8 @@
-import React, { useReducer } from 'react';
+import { invalid } from 'moment';
+import React, { useEffect, useReducer, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Input } from '../../../../../../Components/Input/Input';
-import { CoinData, ReducerProps } from '../../../../../../types/types';
+import { CoinData, ReducerProps, Transaction } from '../../../../../../types/types';
 import styles from './modal.module.css';
 
 const ACTIONS = {
@@ -9,6 +10,7 @@ const ACTIONS = {
   QUANTITY: 'quantity',
   DATE: 'date',
   NOTE: 'note',
+  SETALLFIELDS: 'setAllFields',
 } as const;
 
 type Keys = keyof typeof ACTIONS;
@@ -17,10 +19,24 @@ type MirrorObject = typeof ACTIONS;
 
 type ActionTypes = MirrorObject[Keys];
 
-type Actions = {
-  type: ActionTypes,
+type OmitSetAllFields = 'price' | 'quantity' | 'date' | 'note';
+
+type UpdateActions = {
+  type: OmitSetAllFields,
   payload: string
 };
+
+type SetAllFields = {
+  type: 'setAllFields'
+  payload: Transaction
+};
+
+type Actions = UpdateActions | SetAllFields;
+
+type OmitNote = Omit<ReducerProps, 'note'>;
+type KeyOfInvalidInput = keyof OmitNote;
+type InvalidInput = Record<keyof OmitNote, boolean>;
+
 function reducerFunc(state: ReducerProps, action: Actions) {
   switch (action.type) {
     case ACTIONS.PRICE:
@@ -31,21 +47,51 @@ function reducerFunc(state: ReducerProps, action: Actions) {
       return { ...state, quantity: action.payload };
     case ACTIONS.NOTE:
       return { ...state, note: action.payload };
+    case ACTIONS.SETALLFIELDS:
+      return {
+        ...state,
+        note: action.payload.note,
+        date: action.payload.date,
+        quantity: action.payload.quantity,
+        price: action.payload.price,
+      };
     default:
       return state;
   }
 }
 
-export function AddCoinModal({ coinData, closeOverlay }:{ coinData: CoinData,
-  closeOverlay: (arg: 'addCoin') => void }) {
+export function AddCoinModal({ coinData, closeOverlay, transaction }:{ coinData: CoinData,
+  closeOverlay: (arg: 'addCoin') => void,
+  // eslint-disable-next-line react/require-default-props
+  transaction?: Transaction | null
+}) {
+  const [haveTransaction, setHaveTransaction] = useState(false);
   const [state, dispatch] = useReducer(reducerFunc, {
     price: '',
     quantity: '',
     date: '',
     note: '',
   } as ReducerProps);
+  const [invalidInput, setInvalidInput] = useState({
+    price: false,
+    date: false,
+    quantity: false,
+  } as InvalidInput);
 
-  const updateField = (type: ActionTypes, payload: string) => {
+  // useEffect hook that sets state if the transaciton variable is available
+  useEffect(() => {
+    if (transaction) {
+      setHaveTransaction((prev) => true);
+      dispatch({
+        type: 'setAllFields',
+        payload: transaction,
+      });
+    }
+  }, []);
+  // If transaction not equal to null then we can pass a boolean to signify that we should
+  // pass a submit parameter
+
+  const updateField = (type: OmitSetAllFields, payload: string) => {
     dispatch({
       type,
       payload,
@@ -53,24 +99,42 @@ export function AddCoinModal({ coinData, closeOverlay }:{ coinData: CoinData,
     console.log(state);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (haveTransaction) => {
     type StateProperties = keyof typeof state;
     const requiredFields = Object.keys(state) as StateProperties[];
-    const filterNote = requiredFields.filter((key) => key !== 'note');
-    const checkFields = filterNote.every((prop) => state[prop] !== '');
-    if (checkFields) {
-      const postTransaction = await fetch('http://localhost:8000/add/transaction', {
-        credentials: 'include',
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...state,
-          coin: coinData.id,
-        }),
+    const filterNote:KeyOfInvalidInput[] = requiredFields
+      .filter((key) => key !== 'note') as KeyOfInvalidInput[];
+
+    const checkFields = filterNote.filter((prop) => state[prop] === '');
+    if (checkFields.length === 0) {
+      if (!transaction) {
+        const postTransaction = await fetch('http://localhost:8000/add/transaction', {
+          credentials: 'include',
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...state,
+            coin: coinData.id,
+          }),
+        }).then((res) => closeOverlay('addCoin'));
+      } else {
+        const updateTransaction = await fetch(`http://localhost:8000/update/transaction?transactionId=${transaction.transaction_id}
+          &quantity=${state.quantity}&note=${state.note}&date=${state.date}&price=${state.price}`, {
+          credentials: 'include',
+          method: 'PUT',
+        }).then((res) => closeOverlay('addCoin'));
+      }
+    } else {
+      Object.keys(invalidInput).forEach((key) => {
+        setInvalidInput((prev) => ({ ...prev, [key]: false }));
       });
+      checkFields.forEach((field) => {
+        setInvalidInput((prev) => ({ ...prev, [field]: true }));
+      });
+      console.log(invalidInput);
     }
   };
 
@@ -81,7 +145,11 @@ export function AddCoinModal({ coinData, closeOverlay }:{ coinData: CoinData,
       <header
         className={styles.header}
       >
-        <h1>Add Transaction</h1>
+        <h1>
+          {transaction ? 'Edit' : 'Add'}
+          {' '}
+          Transaction
+        </h1>
       </header>
       <section
         className={styles['inputs-container']}
@@ -94,6 +162,7 @@ export function AddCoinModal({ coinData, closeOverlay }:{ coinData: CoinData,
           key="price"
           value={state.price}
           inputType="number"
+          invalid={invalidInput.price}
         />
         <Input
           date={false}
@@ -104,6 +173,7 @@ export function AddCoinModal({ coinData, closeOverlay }:{ coinData: CoinData,
           value={state.quantity}
           coinType={coinData.symbol}
           inputType="number"
+          invalid={invalidInput.quantity}
         />
         <label
           htmlFor="text"
@@ -132,6 +202,7 @@ export function AddCoinModal({ coinData, closeOverlay }:{ coinData: CoinData,
           value={state.date}
           key="Date"
           inputType="date"
+          invalid={invalidInput.date}
         />
         <Input
           labelText="Note (optional)"
@@ -141,6 +212,7 @@ export function AddCoinModal({ coinData, closeOverlay }:{ coinData: CoinData,
           type="note"
           date={false}
           inputType="text"
+          invalid={false}
         />
         <div
           className={styles['buttons-container']}

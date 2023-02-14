@@ -1,12 +1,22 @@
-body,
-.App {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    flex-direction: column;
+@media screen and (max-width: 700px) {
+    body {
+        font-size: 12px
+    };
+}
 
+body {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body * {
+    box-sizing: border-box;
+}
+
+#root {
+    width: 100%;
+    overflow-y: scroll;
+    box-sizing: border-box;
 }
 
 :root {
@@ -16,6 +26,9 @@ body,
     --percent-green: #4eaf0a;
     --percent-red: #e15241;
 
+}
+* {
+    outline: 1px solid red;
 }
 
 body * {

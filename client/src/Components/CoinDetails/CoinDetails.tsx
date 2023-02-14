@@ -71,7 +71,12 @@ export function CoinDetails({ coinDetails, closeOverlay, addToCoinList }:
             <div
               className={styles.logo}
             >
-              <img src={coinDetails.image} alt="coin icon" />
+              <div
+                className={styles['img-container']}
+              >
+                <img src={coinDetails.image} alt="coin icon" />
+
+              </div>
               <div
                 className={styles['coin-name-container']}
               >

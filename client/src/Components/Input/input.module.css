@@ -21,6 +21,15 @@
     margin-top: 0.2rem;
 }
 
+.invalid-message {
+    position: absolute;
+    min-width: 20ch;
+    left: 18px;
+    bottom: -5px;
+    font-weight: 100;
+    font-family: sans-serif;
+}
+
 .usd {
     position: absolute;
     bottom: 26%;
@@ -38,4 +47,8 @@ input.date {
 input[type='text'] {
     padding-left: 10px;
 
+}
+
+input.invalid {
+    border: 4px solid red;
 }

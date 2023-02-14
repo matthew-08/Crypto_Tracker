@@ -28,7 +28,7 @@ export function Row({ arrayOfData }: { arrayOfData: MarketPercentage[] }) {
               label={data.label}
               number={data.percentage}
               labelFS="1.2rem"
-              numberFS="2rem"
+              numberFS="1.3rem"
             />
           );
         })

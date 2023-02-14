@@ -2,13 +2,24 @@ export interface UserInfo {
   user_name: string,
   email: string,
   coins: string[],
-  transactions: object[]
+  transactions: Transaction[]
 }
+export type Transaction = {
+  'transaction_id': string
+  'date': string
+  'coin': string
+  'quantity': string
+  'user_id': string
+  'note': string,
+  'price': string,
+};
+
 export type ButtonObject = {
   buttonText: string,
   image: string,
 };
 export type DropdownButtons = ButtonObject[];
+
 interface SimpleMarketData {
   current: number | string,
   low24: number | string,
@@ -49,12 +60,14 @@ export interface DetailedMarketData extends SimpleMarketData {
 
 }
 
+export type CoinId = string | number;
+
 export interface BaseCoinInfo {
   name: string
-  id: string | number,
+  id: CoinId
   symbol: string,
   image: string,
-  transactions: unknown,
+  transactions?: Transaction[] | [],
 }
 
 export interface CoinData extends BaseCoinInfo {

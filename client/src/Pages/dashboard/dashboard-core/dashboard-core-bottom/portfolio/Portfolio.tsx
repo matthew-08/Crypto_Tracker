@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-return-assign */
+import React, { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import styles from './portfolio.module.css';
-import { CoinData } from '../../../../../types/types';
+import { CoinData, Transaction, CoinId } from '../../../../../types/types';
 import { Tablerow } from './Tablerow';
 import { CoinConverter } from '../../../../../Components/CoinConverter/CoinConverter';
+import { CoinPercentage } from '../../../../../Components/CoinDetails/CoinPercentage/CoinPercentage';
 
 interface PortfolioInfo {
   totalBalance: number,
@@ -24,22 +27,43 @@ interface UserTransctions {
   quantity: number
 }
 
-export function Portfolio({ userCoins, userTransactions }: {
+export function Portfolio({ userCoins, userTransactions, updateUser }: {
   userCoins: CoinData[],
-  userTransactions: UserTransctions[],
+  userTransactions: Transaction[],
+  updateUser: () => Promise<void>
 }) {
-  const mergeCoins = () => {
-    // transactions, coin.id
-    userCoins.forEach((coin) => {
-      const getTransactions = userTransactions.filter(({ coin_id }) => coin_id === coin.id);
-      // eslint-disable-next-line no-param-reassign
-      coin.transactions = getTransactions;
-    });
-    console.log(userCoins);
-  };
-  useEffect(() => {
-    mergeCoins();
+  const [userStats, setUserStats] = useState({
+    total: 0,
+    '24hChange': 0,
   });
+  useEffect(() => {
+    console.log(userTransactions);
+    if (userTransactions && userTransactions.length > 0) {
+      const userTotal = userTransactions
+        .reduce((acc, { price, quantity }) => {
+        // eslint-disable-next-line no-param-reassign
+          acc += (Number(price) * Number(quantity));
+          return acc;
+        }, 0);
+      console.log(userTotal);
+      const transactionCoins = userTransactions.map((transaction) => transaction.coin);
+      const removeDuplications:CoinId[] = [...new Set(transactionCoins)];
+      const getTotalPercentageChange = userCoins.map((coin) => {
+        if (removeDuplications.includes(coin.id)) {
+          return coin.marketData.capPercentage;
+        }
+      }) as number[];
+      const finalPercentage = getTotalPercentageChange
+        .reduce((acc, total) => acc += total, 0);
+      setUserStats((prev) => ({
+        ...prev,
+        total: userTotal,
+        '24hChange': finalPercentage,
+      }));
+
+      console.log(userTotal);
+    }
+  }, [userTransactions]);
 
   return (
     <>
@@ -50,14 +74,24 @@ export function Portfolio({ userCoins, userTransactions }: {
           className={styles['stats-container']}
         >
           <p>Total Balance:</p>
-          <span>$10000</span>
+          <span
+            className={styles.total}
+          >
+            {' '}
+            $
+            {' '}
+            {userStats.total}
+          </span>
         </div>
 
         <div
           className={styles['stats-container']}
         >
-          <p>Total Balance:</p>
-          <span>$10000</span>
+          <p>24h Change:</p>
+          <CoinPercentage
+            percentage={userStats['24hChange']}
+            size="2rem"
+          />
         </div>
       </header>
       <table
@@ -80,6 +114,7 @@ export function Portfolio({ userCoins, userTransactions }: {
         </thead>
         {userCoins && userCoins.map((coin) => (
           <Tablerow
+            updateUser={updateUser}
             key={uuid()}
             coinData={coin}
           />

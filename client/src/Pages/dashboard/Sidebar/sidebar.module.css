@@ -1,11 +1,11 @@
 .sidebar {
     width: 15%;
-    background-color: var(--dark-blue);
+    background-color: #050513d2;
     color: white;
     display: flex;
     flex-direction: column;
+    height: 100%;
 } 
-
 
 
 .buttons-container {
@@ -35,7 +35,7 @@
     display: flex;
     justify-content: center;
     margin-top: auto;
-    background-color: rgb(128, 128, 128, 0.3);
+    background-color: #8080804d;
     align-items: center;
     padding: 0;
     padding: 1rem;

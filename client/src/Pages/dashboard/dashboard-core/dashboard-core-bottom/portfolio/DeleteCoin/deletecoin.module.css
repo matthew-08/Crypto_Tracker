@@ -1,0 +1,8 @@
+.modal {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    min-width: 35%;
+    max-height: 800px;
+}

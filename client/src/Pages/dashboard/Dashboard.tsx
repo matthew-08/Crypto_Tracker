@@ -9,8 +9,10 @@ import DashboardCore from './dashboard-core/DashboardCore';
 import { DashboardHeader } from './dashboard-header/DashboardHeader';
 import { UserInfo } from '../../types/types';
 import { Sidebar } from './Sidebar/Sidebar';
+import useWindowDimensions from '../../Components/Hooks/useWindowDimensions';
 
 export function Dashboard() {
+  const { width, height } = useWindowDimensions();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({} as UserInfo);
 
@@ -20,6 +22,7 @@ export function Dashboard() {
         credentials: 'include',
       });
       const parseUserInfo:UserInfo = await fetchUserInfo.json().then((res: UserInfo) => res);
+      console.log(parseUserInfo);
       return parseUserInfo;
     } catch (error) {
       return 'Problem fetching details';
@@ -52,11 +55,12 @@ export function Dashboard() {
     <main
       className={styles['dashboard-main']}
     >
-      <Sidebar />
+      {width >= 1200
+      && <Sidebar />}
       <section
         className={styles.main}
       >
-        {
+        {/* {
           userInfo
             ? (
               <DashboardCore
@@ -65,7 +69,7 @@ export function Dashboard() {
               />
             )
             : <Grid />
-}
+} */}
       </section>
     </main>
   );
