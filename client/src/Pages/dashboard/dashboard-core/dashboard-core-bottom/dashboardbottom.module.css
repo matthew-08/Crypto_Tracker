@@ -3,19 +3,23 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    overflow-y: hidden;
+    margin-bottom: 1rem;
 }
 
-.header {
-    width: 100%;
-    background-color: #0c131c;
-    height: 10%;
+/* .header {
+    background-color: var(--blue-two);
+    border-bottom: 1px solid #2e84bb;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 2px solid gray;
-    padding: 2rem;
+    padding: 1.2rem;
     color:white;
+} */
+
+@media(max-width:600px) {
+    .header {
+        padding: 0.5rem;
+    }
 }
 
 .header input {
@@ -32,6 +36,7 @@
     border-radius: 10px;
     cursor: pointer;
     color:white;
+    min-height: 100%;
 }
 
 .header button img {
@@ -40,17 +45,39 @@
 
 .main-container {
     display: flex;
+    background-color:  var(--blue-one);
+    padding: 1rem;
+    min-height: 40%;
+    flex-direction: row;
+    gap: 0.5rem ;
 }
 
 
 .portfolio {
     display: flex;
-    flex-grow: 1;
+    min-width: 100%;
     flex-direction: column;
+    background-color: var(--blue-two);
+    border: 2px solid var(--bright-blue);
+    border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 @media (max-width: 1200px) {
     .main-container {
         flex-direction: column;
     }
+    .portfolio {
+        max-width: 100%;
+    }
 }
+
+/* .recent-transactions {
+    flex-grow: 1;
+    padding: 1rem;
+    border: 2px solid var(--bright-blue);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+ */

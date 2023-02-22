@@ -15,6 +15,15 @@ type OverlayOptions = {
   deleteCoin: boolean,
 };
 
+const getTransactionTotal = (transactions: Transaction[]) => transactions.reduce((acc, curr) => {
+  if (curr.quantity && curr.price) {
+    acc += parseInt(curr.quantity * curr.price);
+  } else {
+    acc += 0;
+  }
+  return acc;
+}, 0);
+
 export function Tablerow({ coinData, updateUser }:
 { coinData: CoinData, updateUser: () => Promise<void> }) {
   const [overlay, setOverlay] = useState<OverlayOptions>({
@@ -44,7 +53,6 @@ export function Tablerow({ coinData, updateUser }:
   };
 
   const closeOverlay = (options: keyof OverlayOptions) => {
-    console.log('check');
     if (options === 'editCoin') {
       setOverlay((prev) => ({ ...prev, editCoin: false }));
     } else {
@@ -104,7 +112,16 @@ export function Tablerow({ coinData, updateUser }:
           {coinData.marketData.current}
         </td>
         <td>
-          1.2404t
+          {coinData.marketData.low24}
+        </td>
+        <td>
+          {coinData.marketData.high24}
+        </td>
+        <td>{coinData.transactions?.length || 0}</td>
+        <td>
+          $
+          {' '}
+          {coinData.transactions && getTransactionTotal(coinData.transactions)}
         </td>
         <td
           className={styles.buttons}

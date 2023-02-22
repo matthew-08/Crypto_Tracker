@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from './dashboardbottom.module.css';
 import { SearchBar } from '../../components/searchbar/SearchBar';
-import { Cards } from './Cards/Cards';
 import {
   CoinData, ServerCoin, DetailedCoinData, Transaction,
 } from '../../../../types/types';
@@ -10,16 +9,19 @@ import { Coin } from '../../components/searchbar/types/types';
 import { CoinDetails } from '../../../../Components/CoinDetails/CoinDetails';
 import graph from './assets/graph.svg';
 import { Portfolio } from './portfolio/Portfolio';
+import EditCoinModal from './portfolio/EditCoinModal/EditCoinModal';
 
 export function DashboardBottom({
   userCoins,
   addToCoinList,
   userTransactions,
   updateUser,
+  focusSearchBar,
 }: { userCoins: CoinData[],
   addToCoinList: (coindId: string | number) => Promise<void>,
   userTransactions: Transaction[],
-  updateUser: () => Promise<void>
+  updateUser: () => Promise<void>,
+  focusSearchBar: () => void
 }) {
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
@@ -30,7 +32,6 @@ export function DashboardBottom({
       return 'ok';
     }
     if (!overlay) {
-      console.log(coin.coin_id);
       const fetchCoin = await fetch(`https://api.coingecko.com/api/v3/coins/${coin.coin_id}`).then((res) => res.json())
         .then((res: Record<string, any>) => {
           const obj:DetailedCoinData = {
@@ -106,30 +107,10 @@ export function DashboardBottom({
       <section
         className={styles['dashboard-bottom']}
       >
-        <header
-          className={styles.header}
-        >
-          <button
-            type="button"
-            className={styles['graph-button']}
-          >
-            <img
-              src={graph}
-              alt="graph-icon"
-            />
-            Change Graph
-
-          </button>
-          <SearchBar
-            setOverlay={(coin:ServerCoin | false) => handleOverlay(coin)}
-          />
-        </header>
         <div
           className={styles['main-container']}
         >
-          <Cards
-            userCoins={userCoins}
-          />
+
           <div
             className={styles.portfolio}
           >
@@ -137,8 +118,18 @@ export function DashboardBottom({
               userCoins={userCoins}
               userTransactions={userTransactions}
               updateUser={updateUser}
+              focusSearchBar={focusSearchBar}
             />
           </div>
+          {/* <div
+            className={styles['recent-transactions']}
+          >
+            <EditCoinModal
+              closeOverlay={setOverlay}
+              coinData={coinData}
+
+            />
+          </div> */}
         </div>
       </section>
     </>

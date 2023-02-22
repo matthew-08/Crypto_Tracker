@@ -11,10 +11,19 @@ import { UserInfo } from '../../types/types';
 import { Sidebar } from './Sidebar/Sidebar';
 import useWindowDimensions from '../../Components/Hooks/useWindowDimensions';
 
-export function Dashboard() {
+export function Dashboard({ closeNav }: { closeNav: (arg: boolean) => void }) {
   const { width, height } = useWindowDimensions();
+  const [collapse, setCollapse] = useState(false);
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({} as UserInfo);
+
+  useEffect(() => {
+    if (width <= 1200) {
+      setCollapse(true);
+    } else {
+      setCollapse(false);
+    }
+  }, [width]);
 
   const getUserInfo = async ():Promise<UserInfo | string> => {
     try {
@@ -22,7 +31,6 @@ export function Dashboard() {
         credentials: 'include',
       });
       const parseUserInfo:UserInfo = await fetchUserInfo.json().then((res: UserInfo) => res);
-      console.log(parseUserInfo);
       return parseUserInfo;
     } catch (error) {
       return 'Problem fetching details';
@@ -32,13 +40,14 @@ export function Dashboard() {
   const reRender = async () => {
     getUserInfo().then((res: UserInfo | string) => {
       if (typeof res === 'string') {
-        return console.log(res);
+
       }
       return setUserInfo(res);
     });
   };
 
   useEffect(() => {
+    closeNav(false);
     try {
       getUserInfo().then((res: UserInfo | string) => {
         if (typeof res === 'string') {
@@ -51,16 +60,21 @@ export function Dashboard() {
       navigate('/signin');
     }
   }, []);
+
   return (
     <main
       className={styles['dashboard-main']}
     >
-      {width >= 1200
-      && <Sidebar />}
+      {!collapse
+      && (
+      <Sidebar
+        userInfo={userInfo}
+      />
+      )}
       <section
         className={styles.main}
       >
-        {/* {
+        {
           userInfo
             ? (
               <DashboardCore
@@ -69,7 +83,7 @@ export function Dashboard() {
               />
             )
             : <Grid />
-} */}
+}
       </section>
     </main>
   );

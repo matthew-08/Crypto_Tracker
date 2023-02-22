@@ -15,7 +15,7 @@ export function MarketInfoPercentage({ label, percentage }:
       </span>
       <CoinPercentage
         percentage={percentage}
-        size="1.3rem"
+        size="1rem"
       />
     </div>
   );

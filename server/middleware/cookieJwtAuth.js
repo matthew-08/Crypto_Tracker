@@ -4,9 +4,11 @@ require('dotenv').config();
 
 const cookieJwtAuth = async (req, res, next) => {
   const token = req.cookies.token;
-  console.log('in middleware')
   try {
     const user = await jwt.verify(token, process.env.SECRETKEY);
+    const getUserId = await (await pool.query('SELECT user_id FROM users WHERE user_name = $1', [user.username])).rows[0].user_id
+    console.log(getUserId);
+    res.locals.userId = getUserId
     res.locals.user = user.username;
   
     next();

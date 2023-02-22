@@ -1,0 +1,25 @@
+.main {
+    min-width: 100%;
+    min-height: 100vh;
+    background-color: var(--blue-one);
+    background-color: var(--blue-one);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.wave {
+    position: absolute;
+    bottom: -15%;
+    z-index: 2;
+}
+
+.wavetop {
+    top: -20%;
+    transform: rotate(180deg);
+    z-index: 1;
+    position: absolute;
+}

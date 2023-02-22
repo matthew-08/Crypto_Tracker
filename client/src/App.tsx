@@ -15,7 +15,7 @@ function App() {
   const isDashboard = pathname === '/Dashboard';
 
   const closeNav = () => {
-    setCloseNav(!cNav);
+    setCloseNav(true);
   };
 
   return (
@@ -33,7 +33,11 @@ function App() {
           />
           <Route
             path="/Dashboard"
-            element={<Dashboard />}
+            element={(
+              <Dashboard
+                closeNav={closeNav}
+              />
+)}
           />
           <Route
             path="/signIn"

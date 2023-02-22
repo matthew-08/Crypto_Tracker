@@ -1,30 +1,37 @@
 
 .header {
-    width: 100%;
+    gap: 0.5rem ;
     display: flex;
-    justify-content: space-around;
-    height: 30%;
-    padding: 1rem;
-}
-
-.stats-container {
-    display: flex;
-    padding: 1rem;
     flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem;
+    align-items: stretch;
     justify-content: center;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.stats-container p {
-    font-size: 1.5rem;
+.header h1 {
     margin: 0;
+    font-size: 1.5rem;
+    color: white;
 }
 
-.stats-container span {
-    font-family: sans-serif;
-    font-size: 2rem;
-    font-weight: 100;
+.top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.portfolio-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--blue-two);
+    padding: 0.5rem;
+    padding-bottom: none;
+    flex: 1;
+    border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    
 }
 
 th {
@@ -32,8 +39,8 @@ th {
 }
 
 .table thead th {
-    color: #4a4a4a;
-    background: #fff;
+    color: white;
+    background: #253344;
     font-size: 1rem;
     font-weight: 700;
     padding-left: 5px;
@@ -49,6 +56,8 @@ th {
 
 .table {
 border-collapse: collapse;
+overflow-x: scroll;
+width: 100%;
 }
 
 .table thead {
@@ -73,12 +82,15 @@ border-collapse: collapse;
     vertical-align: middle;
     padding: 0.5rem;
     font-size: 1rem;
+    color: white;
 }
 
 
 .buttons button img {
-    width: 1.4vw;
+
+    max-width: 30px;
     cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2638%) hue-rotate(329deg) brightness(111%) contrast(109%);
 }
 .buttons {
     width: 100px
@@ -88,7 +100,7 @@ border-collapse: collapse;
     background: none;
 }
 .coin-name-dt img {
-    max-width: 1vw;
+    max-width: 20px;
     vertical-align: middle;
     display: inline-block;
     margin-right: 0.2rem;
@@ -101,4 +113,35 @@ border-collapse: collapse;
 .coin-name-dt small {
     margin-left: 0.2rem;
     font-size: 0.7rem;
+}
+
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+tr:hover {
+    background-color: var(--blue-one)
+}
+
+.stats-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.button {
+    color: var(--blue-one);
+    padding: 0.6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: white;
+    font-size: 1rem;
+    border: 3px solid var(--bright-blue);
+    background-color: var(--bright-blue);
+    border-radius: 10px;
+    cursor: pointer;
+    min-width: 10%;
 }

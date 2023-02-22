@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Navigate, redirect, useNavigate } from 'react-router-dom';
 import { WavePage } from '../../Components/wavePage/WavePage';
 import { FormComponent } from '../../Components/FormComponent/FormComponent';
+import styles from './signin.module.css';
+import wave from './wave.svg';
+import wavewhite from './wavewhite.svg';
 
 export function SignIn({ closeNav }: { closeNav: () => void }) {
   const navigate = useNavigate();
@@ -35,7 +38,13 @@ export function SignIn({ closeNav }: { closeNav: () => void }) {
     }
   };
   return (
-    <WavePage>
+    <section
+      className={styles.main}
+    >
+      <img
+        src={wave}
+        className={styles.wavetop}
+      />
       <FormComponent
         buttonText="Sign In"
         smallTextBottom="Forgot your password?"
@@ -47,6 +56,11 @@ export function SignIn({ closeNav }: { closeNav: () => void }) {
         apiCallback={handleSignIn}
         key={2}
       />
-    </WavePage>
+      <img
+        src={wave}
+        className={styles.wave}
+      />
+    </section>
+
   );
 }

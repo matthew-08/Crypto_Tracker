@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { FormMethod, Link, redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { redirect } from 'react-router-dom';
 import styles from './signup.module.css';
-import wave from '../../assets/wave.svg';
-import { LandingPage } from '../main/LandingPage';
 import { FormComponent } from '../../Components/FormComponent/FormComponent';
+import { useNavigate } from "react-router-dom";
+
 
 interface FormFields {
   [key: string]: string | boolean
 }
 
 export function SignUp() {
+  const navigate = useNavigate()
   const [error, setError] = useState('');
 
   const handleUserAlreadyExists = (type:string) => {
@@ -36,6 +37,7 @@ export function SignUp() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials:'include',
         body: JSON.stringify(dataToPost),
       });
       await newUser.json().then((r) => {
@@ -44,11 +46,12 @@ export function SignUp() {
         } else if (r.type === 'email') {
           handleUserAlreadyExists('email');
         } else {
-          redirect;
+          console.log('redirect');
+          return navigate('/Dashboard')
         }
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -56,11 +59,6 @@ export function SignUp() {
     <main
       className={styles.main}
     >
-      <img
-        src={wave}
-        className={styles.wave}
-        alt="wave"
-      />
       <div
         className={styles.container}
       >

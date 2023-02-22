@@ -22,6 +22,7 @@ router.get('/dashboard', async (req, res) => {
     [user_id]
     );
     const parseTransactions = await getTransactions.rows
+    
     const combinedData = {
       transactions: parseTransactions,
       coins: parseJSON,

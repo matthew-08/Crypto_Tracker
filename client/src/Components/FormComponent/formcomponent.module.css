@@ -7,8 +7,52 @@
     align-items: center;
     gap: 0.5rem;
     padding: 2rem;
-    background-color: white;
+    background-color:var(--blue-two);
     border-radius: 10px;
+    color: white;
+    border: 2px solid var(--bright-blue);
+}
+
+@media (max-width: 1500px ) {
+    .form {
+        width: 30vw;
+    }
+    
+}
+@media (max-width: 1250px ) {
+    .form {
+        : 35vw;
+    }
+    
+}
+
+@media (max-width: 800px ) {
+    .form {
+        min-width: 80vw;
+    }
+    
+}
+
+@media (max-width: 650px ) {
+    .form {
+        width: 85vw;
+    }
+    
+}
+
+@media (max-width: 450px ) {
+    .form {
+        width: 90vw;
+    }
+    
+}
+
+
+@media (max-width: 1000px ) {
+    .form {
+        width: 45vw;
+    }
+    
 }
 
 .header {
@@ -28,7 +72,7 @@
 .form input {
     padding: 0.7rem;
     border: none;
-    background-color: rgb(228, 222, 222, 0.4);
+    background-color: rgba(63, 55, 55, 0.4);
     border-radius: 10px;
 
 }
@@ -46,11 +90,16 @@
     padding: 0.5rem;
     font-size: 1.2rem;
     border: none;
-    background-color: rgb(159, 211, 199, 0.7);
+    background-color: #2e84bb;
+    color: white;
     border-radius: 10px;
     cursor: pointer;
     margin-bottom: 1rem;
 
+}
+
+.register-button:hover {
+    background-color: rgb(46, 132, 187, 0.9);
 }
 
 .inputs input {
@@ -65,4 +114,10 @@ input.invalid {
     margin-right: auto;
     color: red;
 
+}
+
+
+.form a {
+    color: white;
+    border-bottom: 2px solid var(--bright-blue);
 }

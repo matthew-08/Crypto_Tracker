@@ -40,8 +40,15 @@ router.post('/createUser', async (req, res) => {
         userId,
       ]
     )
+    const token = jwt.sign({ username: username }, process.env.SECRETKEY, {
+      expiresIn: '1h',
+    });
+    console.log(token)
+    res.cookie('token', token, {
+      httpOnly: true,
+    });
     console.log(setDefaultCoins);
-    res.status(200).json({ a: a.rows[0] });
+    return res.status(200).json({ a: a.rows[0] });
   }
 });
 

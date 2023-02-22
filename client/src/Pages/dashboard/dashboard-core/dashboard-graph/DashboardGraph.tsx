@@ -31,10 +31,34 @@ type ChartData = {
   y: string
 };
 ChartJS.defaults.color = '#fff';
-ChartJS.defaults.font.size = 16;
 
 export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
   const { height, width } = useWindowDimensions();
+
+  /* const getAspectRatio = (w:number) => {
+    if (width >= 1600) {
+      return 3;
+    }
+    if (width >= 900) {
+      return 2;
+    }
+    if (width >= 730) {
+      return 1.8;
+    }
+    if (width >= 650) {
+      return 1.3;
+    }
+    if (width >= 400) {
+      return 0.8;
+    }
+    if (width >= 320) {
+      return 0.6;
+    }
+    return 0.5;
+  }; */
+
+  ChartJS.defaults.font.size = width >= 800 ? 15 : 12;
+  /*  ChartJS.defaults.aspectRatio = getAspectRatio(width as number); */
 
   const [chartData, setChartData] = useState([] as ChartData[]);
   const fetchMarkChartData = async () => {
@@ -48,7 +72,6 @@ export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
       .map((value:{ [key: string]: number }) => (
         { x: value[0], y: value[1].toFixed(2) }
       ));
-    await console.log(reducedChartData);
     setChartData(reducedChartData);
   };
 
@@ -60,7 +83,7 @@ export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
   };
 
   const data = {
-    labels: chartData.map((value) => moment(value.x).format('MMMM Do')),
+    labels: chartData.map((value) => moment(value.x).format('MMM DD')),
     datasets: [
       {
         label: coinToGraph,
@@ -72,18 +95,20 @@ export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
   };
 
   return (
-    <section
-      className={styles.container}
+
+    <div
+      className={styles.wrapper}
     >
       {
-        chartData
-        && (
-        <Line
-          options={options}
-          data={data}
-        />
-        )
-}
-    </section>
+          chartData
+          && (
+          <Line
+            options={options}
+            data={data}
+          />
+          )
+        }
+    </div>
+
   );
 }

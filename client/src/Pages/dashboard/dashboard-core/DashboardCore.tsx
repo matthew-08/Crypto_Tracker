@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { Blocks } from 'react-loader-spinner';
 import styles from './dashboardcore.module.css';
 import { DashboardBottom } from './dashboard-core-bottom/DashboardBottom';
-import { UserInfo, CoinData, Transaction } from '../../../types/types';
-import { UserInfoSection } from './UserInfo/UserInfoSection';
+import {
+  UserInfo, CoinData, Transaction, ServerCoin,
+  DetailedCoinData,
+} from '../../../types/types';
+import { UserInfoSection } from '../../../Components/UserInfo/UserInfoSection';
 import { DashboardGraph } from './dashboard-graph/DashboardGraph';
 import currencyAdjust from '../../../utils/currencyAdjust';
+import { Cards } from './Cards/Cards';
+import { SearchBar } from '../components/searchbar/SearchBar';
+import Notification from './Notification/Notification';
+import bell from '../assets/bell.svg';
+import friend from '../assets/friend.svg';
+import message from '../assets/message.svg';
+import setting from '../assets/settings.svg';
+import { Overlay } from '../../../Components/Overlay/Overlay';
+import { CoinDetails } from '../../../Components/CoinDetails/CoinDetails';
+import { fetchCoin } from '../../../apiCalls/fetchCoin';
 
 const combineTransactions = (
   transactions:Transaction[],
@@ -16,6 +30,9 @@ export default function DashboardCore({ userInfo, reRenderUser }:
   reRenderUser: () => Promise<void>
 }) {
   const [userCoins, setUserCoins] = useState([] as CoinData[]);
+  const [overlay, setOverlay] = useState(false);
+  const [coinData, setCoinData] = useState({} as DetailedCoinData);
+  const [searchBarFocus, setSearchBarFocus] = useState(false);
 
   const fetchCoins = async () => {
     try {
@@ -24,7 +41,7 @@ export default function DashboardCore({ userInfo, reRenderUser }:
       const res = await Promise.all(coins.map((c) => fetch(`https://api.coingecko.com/api/v3/coins/${c}?localization=false&tickers=false&market_data=true&developer_data=true`)));
       const resJson = await Promise.all(res.map((c) => c.json()))
         .then((response) => response.forEach((c) => {
-          const coinData: CoinData = {
+          const cData: CoinData = {
             name: c.name,
             id: c.id,
             symbol: c.symbol.toUpperCase(),
@@ -37,8 +54,7 @@ export default function DashboardCore({ userInfo, reRenderUser }:
             },
             transactions: combineTransactions(userInfo.transactions, c.id),
           };
-          result.push(coinData);
-          console.log(result);
+          result.push(cData);
           setUserCoins(result);
         }));
     } catch (error) {
@@ -46,9 +62,20 @@ export default function DashboardCore({ userInfo, reRenderUser }:
     }
   };
 
+  const handleOverlay = async (coin: ServerCoin | false) => {
+    if (typeof coin === 'boolean') {
+      return setOverlay(false);
+    }
+    if (!overlay) {
+      const fetchedCoinData = await fetchCoin(coin);
+      setOverlay(true);
+      return setCoinData(fetchedCoinData);
+    }
+    return setOverlay(false);
+  };
+
   useEffect(() => {
     if (userInfo.coins) {
-      console.log(userInfo);
       fetchCoins();
     }
   }, [userInfo]);
@@ -57,34 +84,90 @@ export default function DashboardCore({ userInfo, reRenderUser }:
     const addCoin = await fetch(`http://localhost:8000/add/coin?coinId=${coinId}`, {
       credentials: 'include',
       method: 'PUT',
-    }).then((res) => reRenderUser());
+    }).then((res) => {
+      setOverlay(false);
+      reRenderUser();
+    });
+  };
+
+  const focusSearchBar = () => {
+    console.log('check');
+    setSearchBarFocus(true);
   };
   return (
-    <>
+    <section
+      className={styles.core}
+    >
+      {overlay && (
+      <Overlay>
+        <CoinDetails
+          closeOverlay={handleOverlay}
+          addToCoinList={addToCoinList}
+          coinDetails={coinData}
+        />
+      </Overlay>
+      )}
       <header
         className={styles.header}
       >
-        <h1>Dashboard</h1>
-        <UserInfoSection
-          userInfo={userInfo}
-        />
 
-      </header>
-      {
-        userCoins.length >= 1
-        && (
-        <DashboardGraph
-          coinToGraph={userCoins[0].name}
+        <SearchBar
+          setOverlay={handleOverlay}
+          setSearchBarFocus={searchBarFocus}
         />
-        )
-}
+        <ul
+          className={styles.links}
+        >
+          <li>Home</li>
+          <li>Community</li>
+          <li>Discover</li>
+          <li>News</li>
+        </ul>
+        <div
+          className={styles.notifications}
+        >
+          <Notification
+            img={bell}
+            amountDisplay="4"
+          />
+          <Notification
+            img={message}
+          />
+          <Notification
+            img={friend}
+          />
+          <Notification
+            img={setting}
+          />
+        </div>
+      </header>
       <DashboardBottom
         userCoins={userCoins}
         addToCoinList={addToCoinList}
         userTransactions={userInfo.transactions}
         updateUser={reRenderUser}
+        focusSearchBar={focusSearchBar}
       />
-
-    </>
+      <section
+        className={styles['section-mid']}
+      >
+        {userCoins.length >= 1
+          ? (
+            <DashboardGraph
+              coinToGraph={userCoins[0].name}
+            />
+          )
+          : (
+            <Blocks
+              width="100%"
+              height="250"
+              color="blue"
+            />
+          )}
+        <Cards
+          userCoins={userCoins}
+        />
+      </section>
+    </section>
   );
 }

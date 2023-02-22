@@ -1,21 +1,37 @@
-    import React from 'react'
-import styles from './navbar.module.css'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './navbar.module.css';
 
-export const Navbar = () => {
+export function Navbar() {
+  const navigate = useNavigate();
+
+  const routeChange = (route: 'signIn' | 'signUp') => {
+    navigate(`/${route}`);
+  };
   return (
     <header>
-        <nav
+      <nav
         className={styles.nav}
+      >
+        <h1>Noic</h1>
+
+        <div
+          className={styles.buttons}
         >
-            <h1>A Logo</h1>
-            <ul
-            className={styles.options}
-            >
-                <li>Option 1</li>
-                <li>Option 2</li>
-                <li>Option 3</li>
-            </ul>
-        </nav>
+          <button
+            type="button"
+            onClick={() => routeChange('signIn')}
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            onClick={() => routeChange('signUp')}
+          >
+            Sign Up
+          </button>
+        </div>
+      </nav>
     </header>
-  )
+  );
 }

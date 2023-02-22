@@ -7,7 +7,7 @@ export interface UserInfo {
 export type Transaction = {
   'transaction_id': string
   'date': string
-  'coin': string
+  'coin': CoinId
   'quantity': string
   'user_id': string
   'note': string,
@@ -60,7 +60,7 @@ export interface DetailedMarketData extends SimpleMarketData {
 
 }
 
-export type CoinId = string | number;
+export type CoinId = string;
 
 export interface BaseCoinInfo {
   name: string

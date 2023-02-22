@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuid4 } from 'uuid';
 import styles from './cards.module.css';
-import currencyAdjust from '../../../../../utils/currencyAdjust';
+import currencyAdjust from '../../../../utils/currencyAdjust';
 import { Card } from './Card';
-import { CoinData } from '../../../../../types/types';
+import { CoinData } from '../../../../types/types';
 
 export function Cards({ userCoins }: { userCoins: CoinData[] }) {
   const [passedUserCoins, setPassedUserCoins] = useState<CoinData[]>([] as CoinData[]);
@@ -14,7 +14,7 @@ export function Cards({ userCoins }: { userCoins: CoinData[] }) {
   }, []);
 
   useEffect(() => {
-    console.log(userCoins);
+
   }, [userCoins]);
 
   return (

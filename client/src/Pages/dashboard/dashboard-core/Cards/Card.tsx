@@ -1,14 +1,13 @@
 import React from 'react';
 import styles from './cards.module.css';
-import { CoinData } from '../../../../../types/types';
-import { MarketInfoPercentage } from '../../../../../Components/CoinDetails/MarketInfoPercentage/MarketInfoPercentage';
+import { CoinData } from '../../../../types/types';
+import { MarketInfoPercentage } from '../../../../Components/CoinDetails/MarketInfoPercentage/MarketInfoPercentage';
 
 interface CardProps {
   coinData: CoinData
 }
 
 export function Card({ coinData }: CardProps) {
-  console.log(coinData.marketData.high24);
   return (
     <div
       className={styles.card}
@@ -64,15 +63,7 @@ export function Card({ coinData }: CardProps) {
       >
         <div
           className={styles['market-data-bottom']}
-        >
-          <b>24H Low / 24H High:</b>
-          {' '}
-          {coinData.marketData.low24}
-          {' '}
-          /
-          {' '}
-          {coinData.marketData.high24}
-        </div>
+        />
       </div>
 
     </div>

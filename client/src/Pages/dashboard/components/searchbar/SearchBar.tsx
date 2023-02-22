@@ -7,7 +7,10 @@ import styles from './searchbar.module.css';
 import { SearchDropdown } from './SearchDropdown';
 import { Coin } from './types/types';
 
-export function SearchBar({ setOverlay }:{ setOverlay: (coin: ServerCoin | false) => void }) {
+export function SearchBar({ setOverlay, setSearchBarFocus }:
+{ setOverlay: (coin: ServerCoin | false) => void,
+  setSearchBarFocus: boolean
+}) {
   const [input, setInput] = useState('');
   const [coins, setCoins] = useState<ServerCoin[]>([]);
   const [dropdown, enableDropdown] = useState(false);
@@ -33,6 +36,10 @@ export function SearchBar({ setOverlay }:{ setOverlay: (coin: ServerCoin | false
   };
   useEffect(() => {
     document.body.addEventListener('click', checkInputFocus);
+    if (searchInput && setSearchBarFocus) {
+      console.log('focus');
+      searchInput.current.focus();
+    }
 
     return () => document.body.removeEventListener('click', checkInputFocus);
   }, []);

@@ -54,7 +54,8 @@ export default function EditCoinModal({
                 className={styles['table-container']}
               >
                 <table
-                  className={styles.table}
+                  className={styles['edit-table']}
+                  id={styles['edit-table']}
                 >
                   <thead>
                     <tr>

@@ -1,7 +1,24 @@
+
+button {
+    cursor: pointer;
+}
 .main-container {
     display: flex;
     flex-direction: column;
     background-color: white;
+    padding: 1rem;
+    padding-bottom: none;
+    border-radius: 10px;
+    position: relative;
+}
+
+.price-main {
+    font-size: 1.5rem;
+    font-family: sans-serif;
+}
+
+.main-container * {
+    margin: 0;
 }
 
 .logo img {
@@ -9,9 +26,123 @@
 }
 
 .img-container {
-    max-width: 120px;
+    max-width: 60px;
+    display: flex;
+    align-items: center;
 }
 
 .logo {
     display: flex;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    align-items: center;
+}
+.logo small {
+    font-size: 0.8rem;
+}
+
+.header-top {
+    display: flex;
+    gap: 1rem;
+}
+
+.coin-name-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 2rem;
+}
+
+.coin-name-container > p {
+    font-size: 2rem;
+}
+
+.button-cont {
+    margin-left: auto;
+    position: absolute;
+    right: 0;
+    top: -4%;
+}
+.exit-button {
+    border: none;
+    background: none;
+    font-size: 3rem;
+    color: var(--bright-blue)
+}
+
+.header-bottom {
+    display: flex;
+}
+.bottom-info {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+    border-bottom: 1px solid grey;
+    padding: 1rem;
+    width: 100%;
+}
+.bottom-info span {
+    font-size: 0.8rem;
+}
+
+.main-price-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-bottom {
+    display: flex;
+    gap: 1rem   ;
+    flex-wrap: wrap;
+}
+
+@media(max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .container-bottom {
+        flex-direction: column;
+        align-items: center;
+    }
+    .button-cont {
+        top: -3%;
+    }
+}
+
+.bottom-info-right {
+    min-height: 100%;
+}
+
+.footer {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-container {
+    padding-bottom: none !important;
+}
+
+.buttons-container button {
+    background-color: var(--bright-blue);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem;
+    min-width: 40%;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.buttons-container {
+    display: flex;
+    width: 50%;
 }

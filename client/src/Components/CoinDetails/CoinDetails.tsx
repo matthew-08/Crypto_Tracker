@@ -13,7 +13,7 @@ import { CoinConverter } from '../CoinConverter/CoinConverter';
 
 export function CoinDetails({ coinDetails, closeOverlay, addToCoinList }:
 { coinDetails: DetailedCoinData,
-  closeOverlay: (arg0: boolean) => void
+  closeOverlay: (arg0: false) => void
   addToCoinList: (coinId: string | number) => Promise<void>
 }) {
   const [percentageRows, setPercentageRows] = useState([] as MarketPercentage[][]);
@@ -65,41 +65,40 @@ export function CoinDetails({ coinDetails, closeOverlay, addToCoinList }:
         <div
           className={styles['header-top']}
         >
+
           <div
-            className={styles['header-top-left']}
+            className={styles.logo}
           >
             <div
-              className={styles.logo}
+              className={styles['img-container']}
             >
-              <div
-                className={styles['img-container']}
-              >
-                <img src={coinDetails.image} alt="coin icon" />
+              <img src={coinDetails.image} alt="coin icon" />
 
-              </div>
-              <div
-                className={styles['coin-name-container']}
-              >
-                <p>{coinDetails.name}</p>
-                <small>{coinDetails.symbol.toUpperCase()}</small>
-              </div>
             </div>
             <div
-              className={styles['main-price-container']}
+              className={styles['coin-name-container']}
             >
-              <span
-                className={styles['price-main']}
-              >
-                {`$${coinDetails.marketData.current}`}
-              </span>
-              <CoinPercentage
-                percentage={coinDetails.marketData.percent24h.usd}
-                size="2rem"
-              />
+              <p>{coinDetails.name}</p>
+              <small>{coinDetails.symbol.toUpperCase()}</small>
             </div>
-
           </div>
-          <div>
+          <div
+            className={styles['main-price-container']}
+          >
+            <span
+              className={styles['price-main']}
+            >
+              {`$${coinDetails.marketData.current}`}
+            </span>
+            <CoinPercentage
+              percentage={coinDetails.marketData.percent24h.usd}
+              size="1.5rem"
+            />
+          </div>
+
+          <div
+            className={styles['button-cont']}
+          >
             <button
               type="button"
               className={styles['exit-button']}
@@ -135,7 +134,7 @@ export function CoinDetails({ coinDetails, closeOverlay, addToCoinList }:
             />
 
           </div>
-          <CoinConverter />
+
         </div>
 
       </header>
@@ -247,7 +246,6 @@ export function CoinDetails({ coinDetails, closeOverlay, addToCoinList }:
           />
         </div>
       </div>
-
       <div
         className={styles.footer}
       >
@@ -259,11 +257,6 @@ export function CoinDetails({ coinDetails, closeOverlay, addToCoinList }:
         <div
           className={styles['buttons-container']}
         >
-          <button
-            type="button"
-          >
-            Like
-          </button>
           <button
             type="button"
             onClick={() => {

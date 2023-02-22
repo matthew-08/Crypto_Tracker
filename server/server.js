@@ -13,7 +13,7 @@ app.use(cookies());
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:8000', 'http://localhost:5173'],
+    origin: ['http://localhost:8000', 'http://localhost:5173', 'http://localhost:5174'],
     methods: ['GET', 'PUT', 'POST'],
     credentials: true,
     /* allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'], */

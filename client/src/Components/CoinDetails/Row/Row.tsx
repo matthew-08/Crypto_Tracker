@@ -27,8 +27,8 @@ export function Row({ arrayOfData }: { arrayOfData: MarketPercentage[] }) {
               key={uuid()}
               label={data.label}
               number={data.percentage}
-              labelFS="1.2rem"
-              numberFS="1.3rem"
+              labelFS="1rem"
+              numberFS="1rem"
             />
           );
         })
