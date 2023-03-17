@@ -34,9 +34,8 @@ app.get('/add', async (req, res) => {
   await coin.then(res => handle())
 })
 
-app.use('/auth', require('./routes/signup'));
 
-app.use('/auth', require('./routes/signin'));
+app.use('/auth', require('./routes/auth'));
 
 app.use('/get', cookieJwtAuth, require('./routes/getDashboard'));
 
