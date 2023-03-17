@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: ['http://localhost:8000', 'http://localhost:5173', 'http://localhost:5174'],
-    methods: ['GET', 'PUT', 'POST'],
+    methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true,
     /* allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'], */
     /* maxAge: 600,
@@ -42,17 +42,12 @@ app.use('/get', cookieJwtAuth, require('./routes/getDashboard'));
 
 app.use('/get', cookieJwtAuth, require('./routes/getCoins'));
 
-app.use('/get', cookieJwtAuth, require('./routes/getTransactions'))
+app.use('/transactions', cookieJwtAuth, require('./routes/transactions'))
 
 app.use('/add', cookieJwtAuth, require('./routes/addCoin'))
 
-app.use('/add', cookieJwtAuth, require('./routes/addTransaction'));
-
 app.use('/search', require('./routes/searchCoin'))
 
-app.use('/delete', require('./routes/deleteTransaction'))
-
-app.use('/update', require('./routes/editTransaction'))
 
 app.listen(process.env.PORT, () =>
   console.log(`Sever listening on ${process.env.PORT}`)

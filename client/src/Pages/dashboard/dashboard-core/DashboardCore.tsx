@@ -35,7 +35,6 @@ export default function DashboardCore({
   const [userCoins, setUserCoins] = useState([] as CoinData[]);
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
-  const [searchBarFocus, setSearchBarFocus] = useState(false);
 
   const fetchCoins = async () => {
     try {
@@ -104,10 +103,6 @@ export default function DashboardCore({
     });
   };
 
-  const focusSearchBar = () => {
-    console.log('check');
-    setSearchBarFocus(true);
-  };
   return (
     <section className={styles.core}>
       {overlay && (
@@ -120,10 +115,7 @@ export default function DashboardCore({
         </Overlay>
       )}
       <header className={styles.header}>
-        <SearchBar
-          setOverlay={handleOverlay}
-          setSearchBarFocus={searchBarFocus}
-        />
+        <SearchBar setOverlay={handleOverlay} />
         <ul className={styles.links}>
           <li>Home</li>
           <li>Community</li>
@@ -131,7 +123,7 @@ export default function DashboardCore({
           <li>News</li>
         </ul>
         <div className={styles.notifications}>
-          <Notification img={bell} amountDisplay="4" />
+          <Notification img={bell} amountDisplay={4} />
           <Notification img={message} />
           <Notification img={friend} />
           <Notification img={setting} />
@@ -142,7 +134,6 @@ export default function DashboardCore({
         addToCoinList={addToCoinList}
         userTransactions={userInfo.transactions}
         updateUser={reRenderUser}
-        focusSearchBar={focusSearchBar}
       />
       <section className={styles['section-mid']}>
         {userCoins.length >= 1 ? (

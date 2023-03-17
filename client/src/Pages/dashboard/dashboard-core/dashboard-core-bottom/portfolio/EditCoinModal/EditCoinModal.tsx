@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { dateFormat } from 'dateformat';
+import dateFormat from 'dateformat';
 import styles from './editcoinmodal.module.css';
 import { CoinData, Transaction } from '../../../../../../types/types';
 import edit from '../assets/edit.svg';
@@ -17,7 +17,17 @@ export default function EditCoinModal({
   closeOverlay,
   handleEdit,
 }: ModalProps) {
-  const handleDelete = async (arg: Transaction) => {};
+  const handleDelete = async (arg: Transaction) => {
+    await fetch(
+      `http://localhost:8000/transactions?transactionId=${arg.transaction_id}`,
+      {
+        credentials: 'include',
+        method: 'DELETE',
+      }
+    ).then(() => {
+      return closeOverlay('editCoin');
+    });
+  };
   return (
     <div className={styles.modal}>
       <header className={styles.header}>

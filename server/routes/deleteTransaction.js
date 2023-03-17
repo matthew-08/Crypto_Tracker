@@ -8,7 +8,7 @@ router.delete('/transaction', async (req, res) => {
     const deleteTransaction = await pool.query('DELETE FROM user_transactions WHERE transaction_id = $1',
     [transactionId])
 
-    await console.log(deleteTransaction);
+    return res.status(200).end()
 })
 
 module.exports = router

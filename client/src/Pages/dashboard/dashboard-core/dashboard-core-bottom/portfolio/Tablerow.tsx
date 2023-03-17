@@ -54,7 +54,6 @@ export function Tablerow({
       default:
         ((x: never) => {
           throw new Error(`${x} was unhandled!`);
-          v;
         })(option);
     }
   };
@@ -97,7 +96,7 @@ export function Tablerow({
       )}
       {overlay.deleteCoin && (
         <Overlay>
-          <DeleteCoin />
+          <DeleteCoin closeOverlay={closeOverlay} coin={coinData} />
         </Overlay>
       )}
 
@@ -122,7 +121,7 @@ export function Tablerow({
           <button type="button" onClick={() => handleOverlay('editCoin')}>
             <img src={edit} alt="" />
           </button>
-          <button type="button">
+          <button type="button" onClick={() => handleOverlay('deleteCoin')}>
             <img src={trash} alt="" />
           </button>
         </td>

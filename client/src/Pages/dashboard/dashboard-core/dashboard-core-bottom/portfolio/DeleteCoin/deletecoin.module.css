@@ -2,7 +2,44 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
     min-width: 35%;
     max-height: 800px;
+}
+
+.modal>h1 {
+    margin: auto;
+    font-size: 3rem;
+    margin-top: 1rem;
+    color: tomato;
+}
+
+.modal p {
+    margin: 0;
+    margin: auto;
+    font-size: 1.1rem;
+}
+.modal p:last-child {
+    margin-bottom: 3rem;
+}
+
+.button-grp {
+    display: flex;
+    margin-top: 5rem;
+    margin: auto;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.button-grp button {
+    margin-top: 2rem;
+    padding: 1rem;
+    min-width: 30%;
+    border: none;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+.button-grp button:last-child {
+    background-color: tomato;  
+    color: white
 }

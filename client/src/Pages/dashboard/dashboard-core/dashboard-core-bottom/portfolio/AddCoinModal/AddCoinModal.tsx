@@ -118,7 +118,7 @@ export function AddCoinModal({
     if (checkFields.length === 0) {
       if (!transaction) {
         const postTransaction = await fetch(
-          'http://localhost:8000/add/transaction',
+          'http://localhost:8000/transactions',
           {
             credentials: 'include',
             method: 'POST',
@@ -134,7 +134,7 @@ export function AddCoinModal({
         ).then((res) => closeOverlay('addCoin'));
       } else {
         const updateTransaction = await fetch(
-          `http://localhost:8000/update/transaction?transactionId=${transaction.transaction_id}
+          `http://localhost:8000/transactions?transactionId=${transaction.transaction_id}
           &quantity=${state.quantity}&note=${state.note}&date=${state.date}&price=${state.price}`,
           {
             credentials: 'include',

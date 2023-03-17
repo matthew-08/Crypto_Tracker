@@ -12,18 +12,17 @@ export function Portfolio({
   userCoins,
   userTransactions,
   updateUser,
-  focusSearchBar,
 }: {
   userCoins: CoinData[];
   userTransactions: Transaction[];
   updateUser: () => Promise<void>;
-  focusSearchBar: () => void;
 }) {
   const [userStats, setUserStats] = useState({
     total: 0,
     '24hChange': 0,
   });
   useEffect(() => {
+    console.log(userTransactions);
     if (userCoins.length > 0 && userTransactions.length > 0) {
       /* addTransactions(userCoins, userTransactions); */
       const userTotal = userTransactions.reduce((acc, { price, quantity }) => {
@@ -45,11 +44,16 @@ export function Portfolio({
         (acc, total) => (acc += total),
         0
       );
-      console.log(userTransactions);
       setUserStats((prev) => ({
         ...prev,
         total: userTotal,
         '24hChange': finalPercentage,
+      }));
+    } else {
+      setUserStats((prev) => ({
+        ...prev,
+        total: 0,
+        '24hChange': 0,
       }));
     }
   }, [userTransactions, userCoins]);

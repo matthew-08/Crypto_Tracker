@@ -19,13 +19,11 @@ export function DashboardBottom({
   addToCoinList,
   userTransactions,
   updateUser,
-  focusSearchBar,
 }: {
   userCoins: CoinData[];
   addToCoinList: (coindId: string | number) => Promise<void>;
   userTransactions: Transaction[];
   updateUser: () => Promise<void>;
-  focusSearchBar: () => void;
 }) {
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
@@ -125,7 +123,6 @@ export function DashboardBottom({
               userCoins={userCoins}
               userTransactions={userTransactions}
               updateUser={updateUser}
-              focusSearchBar={focusSearchBar}
             />
           </div>
           {/* <div
