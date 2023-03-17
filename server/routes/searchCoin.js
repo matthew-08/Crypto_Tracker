@@ -9,6 +9,6 @@ module.exports = router.get('/coins', async (req, res) => {
         const data = await pool.query('SELECT * FROM coins WHERE LOWER(coin_name) LIKE LOWER($1) LIMIT 10',[searchParameter + '%'])
         res.status(200).json(data)
     } catch (error) {
-        
+        res.status(404).json({error: error})
     }
 })

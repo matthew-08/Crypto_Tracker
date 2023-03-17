@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const pool = require('../db');
 const jwt = require('jsonwebtoken');
-const cookieJwtAuth = require('../middleware/cookieJwtAuth');
+const userInfoSchema = require('../models/userInfo')
 
 router.get('/dashboard', async (req, res) => {
   try {
@@ -23,14 +23,14 @@ router.get('/dashboard', async (req, res) => {
     );
     const parseTransactions = await getTransactions.rows
     
-    const combinedData = {
-      transactions: parseTransactions,
-      coins: parseJSON,
-      user_name: user.rows[0].user_name,
-      email: user.rows[0].email,
-    }
-    console.log(combinedData);
-    res.status(200).json(combinedData);
+    const userInfo = userInfoSchema(
+      parseTransactions,
+      parseJSON,
+      user.rows[0].user_name,
+      user.rows[0].email,
+    )
+
+    res.status(200).json(userInfo);
   } catch (error) {
     console.error(error);
   }

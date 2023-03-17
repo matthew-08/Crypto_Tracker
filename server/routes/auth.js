@@ -17,14 +17,10 @@ router.post('/signIn', async (req, res) => {
 
   const comparePassword = await bcrypt.compare(password, user.rows[0].password);
 
-  console.log('this is compare password')
-  console.log(comparePassword)
   if (comparePassword) {
     const token = await jwt.sign({ username: username }, process.env.SECRETKEY, {
       expiresIn: '1h',
     })
-    console.log(token);
-    console.log('adding token')
     res.cookie('token', token, {
       httpOnly: true,
     });
@@ -34,7 +30,6 @@ router.post('/signIn', async (req, res) => {
     return res.status(404).json({ status: 'password' })
   }
 
-  /* res.send(200).json({ comparePassword }); */
 });
 router.post('/createUser', async (req, res) => {
   const { username, email, password } = req.body;
