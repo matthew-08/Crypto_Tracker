@@ -22,12 +22,18 @@ export function Portfolio({
     '24hChange': 0,
   });
   useEffect(() => {
-    console.log(userTransactions);
     if (userCoins.length > 0 && userTransactions.length > 0) {
-      /* addTransactions(userCoins, userTransactions); */
-      const userTotal = userTransactions.reduce((acc, { price, quantity }) => {
+      const userTotal = userTransactions.reduce((acc, { coin, quantity }) => {
         // eslint-disable-next-line no-param-reassign
-        acc += Number(price) * Number(quantity);
+        const findCoin = userCoins.find((c) => c.id === coin);
+        let current = findCoin?.marketData.current;
+        if (current && typeof current === 'string') {
+          console.log('hello');
+          current = current.replace('$', '');
+          current = current.replace(',', '');
+        }
+        console.log(current);
+        acc += Number(current) * Number(quantity);
         return acc;
       }, 0);
       const transactionCoins = userTransactions.map(
@@ -44,18 +50,18 @@ export function Portfolio({
         (acc, total) => (acc += total),
         0
       );
-      setUserStats((prev) => ({
+      console.log(finalPercentage);
+      return setUserStats((prev) => ({
         ...prev,
         total: userTotal,
         '24hChange': finalPercentage,
       }));
-    } else {
-      setUserStats((prev) => ({
-        ...prev,
-        total: 0,
-        '24hChange': 0,
-      }));
     }
+    return setUserStats((prev) => ({
+      ...prev,
+      total: 0,
+      '24hChange': 0,
+    }));
   }, [userTransactions, userCoins]);
 
   return (

@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import styles from './coinpercent.module.css';
 import arrow from '../assets/arrow.svg';
 
-export function CoinPercentage({ percentage, size }
-: { percentage: number | string, size: number | string }) {
+export function CoinPercentage({
+  percentage,
+  size,
+}: {
+  percentage: number | string;
+  size: number | string;
+}) {
   const [negative, setNegative] = useState(false);
   const [number, setNumber] = useState('');
 
@@ -19,13 +24,13 @@ export function CoinPercentage({ percentage, size }
   }, []);
 
   return (
-    <div
-      className={styles.container}
-    >
+    <div className={styles.container}>
       <img
         src={arrow}
         alt="arrow"
-        className={negative ? styles['negative-arrow'] : styles['positive-arrow']}
+        className={
+          negative ? styles['negative-arrow'] : styles['positive-arrow']
+        }
       />
       <span
         className={negative ? styles.negative : styles.positive}
@@ -33,7 +38,6 @@ export function CoinPercentage({ percentage, size }
       >
         {`${number}%`}
       </span>
-
     </div>
   );
 }

@@ -9,7 +9,7 @@ interface Props {
 
 export default function DeleteCoin({ closeOverlay, coin }: Props) {
   const handleDelete = async () => {
-    await fetch(`http://localhost:8000/coins?coinId=${coin.name}`, {
+    await fetch(`http://localhost:8000/coins?coinId=${coin.id}`, {
       method: 'DELETE',
       credentials: 'include',
     });

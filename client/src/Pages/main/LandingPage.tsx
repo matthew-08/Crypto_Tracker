@@ -8,7 +8,6 @@ import instagram from './assets/instagram.svg';
 import { Logo } from './components/Logo';
 import facebook from './assets/facebook.svg';
 import { Footer } from './Footer/Footer';
-import { Column } from './Footer/Column/Column';
 import { FeatureSectionRight } from './FeatureSection/FeatureSectionRight';
 import paper from './assets/paper.svg';
 import portfolio from './assets/portfolio.png';
@@ -17,8 +16,8 @@ import chart from './assets/cryptochart.png';
 import chartlogo from './assets/chart.svg';
 import coindetails from './assets/coindetails.png';
 import coin from './assets/coin.svg';
+import maincoin from '../../assets/coin.svg';
 
-const allLogos = ['twitter', 'instagram', 'amazon', 'facebook'];
 const logoImages = {
   twitter,
   instagram,
@@ -31,6 +30,9 @@ export function LandingPage() {
   return (
     <div className={styles['main-page-container']}>
       <div className={styles['page-top']}>
+        <div>
+          <img src={maincoin} width="100px" alt="main-logo" />
+        </div>
         <h2>Noic Crypto Tracker</h2>
         <h2>Try it now</h2>
         <p>Easily track your favorite coins</p>

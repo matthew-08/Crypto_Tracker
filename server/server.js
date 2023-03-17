@@ -26,20 +26,18 @@ app.get('/add', async (req, res) => {
   const allCoins = await fetch('https://api.coingecko.com/api/v3/coins/list')
   const parseAllCoins = await allCoins.json()
   const coin = await parseAllCoins
+  await coin.then(res => handle())
   const handle = async () => {
     for(let i = 0; i <= mapAllCoins.length; i++) {
       await pool.query('INSERT INTO coins (coin_id, coin_symbol, coin_name) VALUES ($1, $2, $3)',[coin.id, coin.symbol,coin.name])
     }
   }
-  await coin.then(res => handle())
 })
 
 
 app.use('/auth', require('./routes/auth'));
 
 app.use('/get', cookieJwtAuth, require('./routes/getDashboard'));
-
-app.use('/get', cookieJwtAuth, require('./routes/getCoins'));
 
 app.use('/transactions', cookieJwtAuth, require('./routes/transactions'))
 

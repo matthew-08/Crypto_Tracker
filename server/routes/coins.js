@@ -2,7 +2,7 @@ const router = require('express').Router();
 const pool = require('../db');
 
 router.delete('/', async (req, res) => {
-    const coinId = req.query.coinId.toLowerCase()
+    const coinId = req.query.coinId
     const userId = res.locals.userId
     console.log(res.locals)
     await pool.query(`
@@ -18,7 +18,7 @@ router.delete('/', async (req, res) => {
     (coins, $1) 
     WHERE user_id = $2
     `,[coinId, userId])
-
+    console.log(coinId);
     return res.status(200).json(coinId);
 })
 
@@ -37,5 +37,17 @@ router.put('/', async (req, res) => {
     return res.status(200).json(coinId);
 
 })
+
+router.get('/add', async (req, res) => {
+    const allCoins = await fetch('https://api.coingecko.com/api/v3/coins/list')
+    const parseAllCoins = await allCoins.json()
+    const coin = await parseAllCoins
+    await coin.then(res => handle())
+    const handle = async () => {
+      for(let i = 0; i <= mapAllCoins.length; i++) {
+        await pool.query('INSERT INTO coins (coin_id, coin_symbol, coin_name) VALUES ($1, $2, $3)',[coin.id, coin.symbol,coin.name])
+      }
+    }
+  })
 
 module.exports = router
