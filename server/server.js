@@ -48,6 +48,8 @@ app.use('/add', cookieJwtAuth, require('./routes/addCoin'))
 
 app.use('/search', require('./routes/searchCoin'))
 
+app.use('/coin', require('./routes/coins'))
+
 
 app.listen(process.env.PORT, () =>
   console.log(`Sever listening on ${process.env.PORT}`)

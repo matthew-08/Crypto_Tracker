@@ -8,6 +8,12 @@ interface Props {
 }
 
 export default function DeleteCoin({ closeOverlay, coin }: Props) {
+  const handleDelete = async () => {
+    await fetch(`http://localhost:8000/coins?coinId=${coin.name}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+  };
   return (
     <section className={styles.modal}>
       <h1>Delete Coin</h1>
@@ -18,7 +24,9 @@ export default function DeleteCoin({ closeOverlay, coin }: Props) {
         <button type="submit" onClick={() => closeOverlay('delete')}>
           Cancel
         </button>
-        <button type="submit">Confirm</button>
+        <button type="submit" onClick={handleDelete}>
+          Confirm
+        </button>
       </div>
     </section>
   );
