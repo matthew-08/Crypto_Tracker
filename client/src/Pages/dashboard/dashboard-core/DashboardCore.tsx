@@ -92,7 +92,7 @@ export default function DashboardCore({
 
   const addToCoinList = async (coinId: string | number) => {
     const addCoin = await fetch(
-      `http://localhost:8000/add/coin?coinId=${coinId}`,
+      `http://localhost:8000/coins?coinId=${coinId}`,
       {
         credentials: 'include',
         method: 'PUT',

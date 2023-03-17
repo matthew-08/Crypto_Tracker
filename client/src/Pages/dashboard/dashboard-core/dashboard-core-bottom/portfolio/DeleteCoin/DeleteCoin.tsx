@@ -3,7 +3,7 @@ import { CoinData } from '../../../../../../types/types';
 import styles from './deletecoin.module.css';
 
 interface Props {
-  closeOverlay: (arg0: 'delete') => void;
+  closeOverlay: (arg0: 'deleteCoin') => void;
   coin: CoinData;
 }
 
@@ -13,6 +13,7 @@ export default function DeleteCoin({ closeOverlay, coin }: Props) {
       method: 'DELETE',
       credentials: 'include',
     });
+    closeOverlay('deleteCoin');
   };
   return (
     <section className={styles.modal}>

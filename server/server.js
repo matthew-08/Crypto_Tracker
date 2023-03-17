@@ -44,11 +44,9 @@ app.use('/get', cookieJwtAuth, require('./routes/getCoins'));
 
 app.use('/transactions', cookieJwtAuth, require('./routes/transactions'))
 
-app.use('/add', cookieJwtAuth, require('./routes/addCoin'))
-
 app.use('/search', require('./routes/searchCoin'))
 
-app.use('/coin', require('./routes/coins'))
+app.use('/coins', cookieJwtAuth, require('./routes/coins'))
 
 
 app.listen(process.env.PORT, () =>

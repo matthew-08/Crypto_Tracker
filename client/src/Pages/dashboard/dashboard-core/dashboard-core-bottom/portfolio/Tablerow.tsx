@@ -61,8 +61,11 @@ export function Tablerow({
   const closeOverlay = (options: keyof OverlayOptions) => {
     if (options === 'editCoin') {
       setOverlay((prev) => ({ ...prev, editCoin: false }));
-    } else {
+    } else if (options === 'addCoin') {
       setOverlay((prev) => ({ ...prev, addCoin: false }));
+    } else {
+      setOverlay((prev) => ({ ...prev, deleteCoin: false }));
+      updateUser();
     }
     updateUser();
   };
