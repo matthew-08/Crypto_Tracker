@@ -1,8 +1,11 @@
-import { invalid } from 'moment';
 import React, { useEffect, useReducer, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Input } from '../../../../../../Components/Input/Input';
-import { CoinData, ReducerProps, Transaction } from '../../../../../../types/types';
+import {
+  CoinData,
+  ReducerProps,
+  Transaction,
+} from '../../../../../../types/types';
 import styles from './modal.module.css';
 
 const ACTIONS = {
@@ -22,13 +25,13 @@ type ActionTypes = MirrorObject[Keys];
 type OmitSetAllFields = 'price' | 'quantity' | 'date' | 'note';
 
 type UpdateActions = {
-  type: OmitSetAllFields,
-  payload: string
+  type: OmitSetAllFields;
+  payload: string;
 };
 
 type SetAllFields = {
-  type: 'setAllFields'
-  payload: Transaction
+  type: 'setAllFields';
+  payload: Transaction;
 };
 
 type Actions = UpdateActions | SetAllFields;
@@ -60,10 +63,15 @@ function reducerFunc(state: ReducerProps, action: Actions) {
   }
 }
 
-export function AddCoinModal({ coinData, closeOverlay, transaction }:{ coinData: CoinData,
-  closeOverlay: (arg: 'addCoin') => void,
+export function AddCoinModal({
+  coinData,
+  closeOverlay,
+  transaction,
+}: {
+  coinData: CoinData;
+  closeOverlay: (arg: 'addCoin') => void;
   // eslint-disable-next-line react/require-default-props
-  transaction?: Transaction | null
+  transaction?: Transaction | null;
 }) {
   const [haveTransaction, setHaveTransaction] = useState(false);
   const [state, dispatch] = useReducer(reducerFunc, {
@@ -102,30 +110,37 @@ export function AddCoinModal({ coinData, closeOverlay, transaction }:{ coinData:
   const handleSubmit = async (haveTransaction) => {
     type StateProperties = keyof typeof state;
     const requiredFields = Object.keys(state) as StateProperties[];
-    const filterNote:KeyOfInvalidInput[] = requiredFields
-      .filter((key) => key !== 'note') as KeyOfInvalidInput[];
+    const filterNote: KeyOfInvalidInput[] = requiredFields.filter(
+      (key) => key !== 'note'
+    ) as KeyOfInvalidInput[];
 
     const checkFields = filterNote.filter((prop) => state[prop] === '');
     if (checkFields.length === 0) {
       if (!transaction) {
-        const postTransaction = await fetch('http://localhost:8000/add/transaction', {
-          credentials: 'include',
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ...state,
-            coin: coinData.id,
-          }),
-        }).then((res) => closeOverlay('addCoin'));
+        const postTransaction = await fetch(
+          'http://localhost:8000/add/transaction',
+          {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ...state,
+              coin: coinData.id,
+            }),
+          }
+        ).then((res) => closeOverlay('addCoin'));
       } else {
-        const updateTransaction = await fetch(`http://localhost:8000/update/transaction?transactionId=${transaction.transaction_id}
-          &quantity=${state.quantity}&note=${state.note}&date=${state.date}&price=${state.price}`, {
-          credentials: 'include',
-          method: 'PUT',
-        }).then((res) => closeOverlay('addCoin'));
+        const updateTransaction = await fetch(
+          `http://localhost:8000/update/transaction?transactionId=${transaction.transaction_id}
+          &quantity=${state.quantity}&note=${state.note}&date=${state.date}&price=${state.price}`,
+          {
+            credentials: 'include',
+            method: 'PUT',
+          }
+        ).then((res) => closeOverlay('addCoin'));
       }
     } else {
       Object.keys(invalidInput).forEach((key) => {
@@ -134,26 +149,15 @@ export function AddCoinModal({ coinData, closeOverlay, transaction }:{ coinData:
       checkFields.forEach((field) => {
         setInvalidInput((prev) => ({ ...prev, [field]: true }));
       });
-      console.log(invalidInput);
     }
   };
 
   return (
-    <div
-      className={styles.modal}
-    >
-      <header
-        className={styles.header}
-      >
-        <h1>
-          {transaction ? 'Edit' : 'Add'}
-          {' '}
-          Transaction
-        </h1>
+    <div className={styles.modal}>
+      <header className={styles.header}>
+        <h1>{transaction ? 'Edit' : 'Add'} Transaction</h1>
       </header>
-      <section
-        className={styles['inputs-container']}
-      >
+      <section className={styles['inputs-container']}>
         <Input
           date={false}
           labelText="Price Per Coin"
@@ -175,23 +179,18 @@ export function AddCoinModal({ coinData, closeOverlay, transaction }:{ coinData:
           inputType="number"
           invalid={invalidInput.quantity}
         />
-        <label
-          htmlFor="text"
-          className={styles.label}
-        >
-          <span
-            className={styles.usd}
-          >
-            USD
-            {' '}
-            $
-          </span>
+        <label htmlFor="text" className={styles.label}>
+          <span className={styles.usd}>USD $</span>
           Total
           <input
             type="text"
             disabled
             className={styles['total-container']}
-            value={state.quantity && state.price ? Number(state.quantity) * Number(state.price) : ''}
+            value={
+              state.quantity && state.price
+                ? Number(state.quantity) * Number(state.price)
+                : ''
+            }
           />
         </label>
         <Input
@@ -214,14 +213,11 @@ export function AddCoinModal({ coinData, closeOverlay, transaction }:{ coinData:
           inputType="text"
           invalid={false}
         />
-        <div
-          className={styles['buttons-container']}
-        >
+        <div className={styles['buttons-container']}>
           <button
             type="button"
             className={styles['cancel-button']}
             onClick={() => closeOverlay('addCoin')}
-
           >
             Cancel
           </button>
@@ -234,7 +230,6 @@ export function AddCoinModal({ coinData, closeOverlay, transaction }:{ coinData:
           </button>
         </div>
       </section>
-
     </div>
   );
 }

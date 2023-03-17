@@ -13,50 +13,22 @@ import { SidebarButton } from '../../../Components/SidebarButton/SidebarButton';
 import { UserInfo } from '../../../types/types';
 import { UserInfoSection } from '../../../Components/UserInfo/UserInfoSection';
 
-export function Sidebar({ userInfo }: { userInfo:UserInfo }) {
+export function Sidebar({ userInfo }: { userInfo: UserInfo }) {
   return (
     <AnimatePresence>
-      <aside
-        className={styles.sidebar}
-        /* initial={{ width: 0 }} */
-        /* animate={{ width: 100 }} */
-       /*  exit={{ opacity: 1, width: 0 }} */
-      >
+      <aside className={styles.sidebar}>
         <DashboardHeader />
         <div>
-          <UserInfoSection
-            userInfo={userInfo}
-          />
+          <UserInfoSection userInfo={userInfo} />
         </div>
-        <div
-          className={
-        styles['buttons-container']
-      }
-        >
-          <SidebarButton
-            buttonText="My Account"
-            img={account}
-          />
-          <SidebarButton
-            buttonText="My Activity"
-            img={activity}
-          />
-          <SidebarButton
-            buttonText="Refer a Friend"
-            img={friend}
-          />
-          <SidebarButton
-            buttonText="Support"
-            img={support}
-          />
-          <SidebarButton
-            buttonText="Blog"
-            img={blog}
-          />
+        <div className={styles['buttons-container']}>
+          <SidebarButton buttonText="My Account" img={account} />
+          <SidebarButton buttonText="My Activity" img={activity} />
+          <SidebarButton buttonText="Refer a Friend" img={friend} />
+          <SidebarButton buttonText="Support" img={support} />
+          <SidebarButton buttonText="Blog" img={blog} />
         </div>
-        <footer
-          className={styles.footer}
-        >
+        <footer className={styles.footer}>
           <a href="https://github.com/matthew-08">
             <img src={github} alt="githib-link" />
           </a>

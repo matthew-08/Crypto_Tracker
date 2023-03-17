@@ -23,12 +23,12 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  Legend,
+  Legend
 );
 
 type ChartData = {
-  x: number,
-  y: string
+  x: number;
+  y: string;
 };
 ChartJS.defaults.color = '#fff';
 
@@ -66,12 +66,16 @@ export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
     if (typeof coinToFetch === 'string') {
       coinToFetch.toLowerCase();
     }
-    const marketChartData = await fetch(`https://api.coingecko.com/api/v3/coins/${coinToFetch.toLowerCase()}/market_chart?vs_currency=usd&days=7&interval=daiy`);
+    const marketChartData = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coinToFetch.toLowerCase()}/market_chart?vs_currency=usd&days=7&interval=daiy`
+    );
     const parsedData = await marketChartData.json();
-    const reducedChartData:ChartData[] = await parsedData.prices
-      .map((value:{ [key: string]: number }) => (
-        { x: value[0], y: value[1].toFixed(2) }
-      ));
+    const reducedChartData: ChartData[] = await parsedData.prices.map(
+      (value: { [key: string]: number }) => ({
+        x: value[0],
+        y: value[1].toFixed(2),
+      })
+    );
     setChartData(reducedChartData);
   };
 
@@ -95,20 +99,8 @@ export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
   };
 
   return (
-
-    <div
-      className={styles.wrapper}
-    >
-      {
-          chartData
-          && (
-          <Line
-            options={options}
-            data={data}
-          />
-          )
-        }
+    <div className={styles.wrapper}>
+      {chartData && <Line options={options} data={data} />}
     </div>
-
   );
 }

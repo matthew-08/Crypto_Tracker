@@ -55,6 +55,7 @@
     width: 100%;
     display: block;
     min-width: 100%;
+    font-family: sans-serif;
 }
 #edit-table thead th {
     color: #4a4a4a;
@@ -70,6 +71,8 @@
     line-height: 0;
     border-bottom: 1px solid #e5e7eb;
     border-top: 1px solid #e5e7eb;
+    font-family: sans-serif;
+
 }
 .edit-table thead {
     max-height: 40px;
@@ -85,6 +88,8 @@
     height: 14px;
     white-space: nowrap;
     border-bottom: 1px solid #e5e7eb;
+    font-family: sans-serif;
+
 }
 
 .table tr td {
@@ -93,6 +98,8 @@
     vertical-align: middle;
     padding: 0.5rem;
     font-size: 1rem;
+    font-family: sans-serif;
+
 }
 
 .table tr:hover {
@@ -119,4 +126,14 @@
     right: 0;
     top: -40%;
     cursor: pointer;
+    filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(272deg) brightness(109%) contrast(101%);
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+}
+
+.icon-btn img {
+    filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(272deg) brightness(109%) contrast(101%);
 }

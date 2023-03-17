@@ -37,7 +37,7 @@
 .img-container img,
 .img-container-left img
 {
-    width: 80%
+    width: 80%;
 }
 
 .big-img-container {
@@ -48,6 +48,10 @@
     position: relative;
     background-color: var(--blue-two);
     border-radius: 10px;
+}
+
+.big-img-container img {
+    border-radius: 15px;
 }
 
 .title {

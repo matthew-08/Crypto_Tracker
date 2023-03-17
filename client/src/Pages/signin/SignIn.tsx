@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import { Navigate, redirect, useNavigate } from 'react-router-dom';
-import { WavePage } from '../../Components/wavePage/WavePage';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FormComponent } from '../../Components/FormComponent/FormComponent';
 import styles from './signin.module.css';
-import wave from './wave.svg';
-import wavewhite from './wavewhite.svg';
 
 export function SignIn({ closeNav }: { closeNav: () => void }) {
   const navigate = useNavigate();
   const [error, setError] = useState('');
-  const handleSignIn = async (
-    data:{ username: string, password: string, [key: string]: string },
-  ) => {
+  const handleSignIn = async (data: {
+    username: string;
+    password: string;
+    [key: string]: string;
+  }) => {
     const { username, password } = data;
     const dataToPost = {
       username,
@@ -33,34 +32,23 @@ export function SignIn({ closeNav }: { closeNav: () => void }) {
         closeNav();
         return navigate('/Dashboard');
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
-    <section
-      className={styles.main}
-    >
-      <img
-        src={wave}
-        className={styles.wavetop}
-      />
+    <section className={styles.main}>
       <FormComponent
         buttonText="Sign In"
         smallTextBottom="Forgot your password?"
         headerSubtitle="Please sign in below"
-        formInputFields={['email', 'username', 'password']}
+        formInputFields={['username', 'password']}
         header="Sign-In"
         linkPath="/ok"
         errorMessage={error}
         apiCallback={handleSignIn}
         key={2}
       />
-      <img
-        src={wave}
-        className={styles.wave}
-      />
     </section>
-
   );
 }

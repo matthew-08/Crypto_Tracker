@@ -10,22 +10,28 @@ import { Transaction, CoinData } from '../../../../../types/types';
 import DeleteCoin from './DeleteCoin/DeleteCoin';
 
 type OverlayOptions = {
-  addCoin: boolean,
-  editCoin: boolean,
-  deleteCoin: boolean,
+  addCoin: boolean;
+  editCoin: boolean;
+  deleteCoin: boolean;
 };
 
-const getTransactionTotal = (transactions: Transaction[]) => transactions.reduce((acc, curr) => {
-  if (curr.quantity && curr.price) {
-    acc += parseInt(curr.quantity * curr.price);
-  } else {
-    acc += 0;
-  }
-  return acc;
-}, 0);
+const getTransactionTotal = (transactions: Transaction[]) =>
+  transactions.reduce((acc, curr) => {
+    if (curr.quantity && curr.price) {
+      acc += parseInt(curr.quantity * curr.price);
+    } else {
+      acc += 0;
+    }
+    return acc;
+  }, 0);
 
-export function Tablerow({ coinData, updateUser }:
-{ coinData: CoinData, updateUser: () => Promise<void> }) {
+export function Tablerow({
+  coinData,
+  updateUser,
+}: {
+  coinData: CoinData;
+  updateUser: () => Promise<void>;
+}) {
   const [overlay, setOverlay] = useState<OverlayOptions>({
     addCoin: false,
     editCoin: false,
@@ -47,7 +53,8 @@ export function Tablerow({ coinData, updateUser }:
         break;
       default:
         ((x: never) => {
-          throw new Error(`${x} was unhandled!`); v;
+          throw new Error(`${x} was unhandled!`);
+          v;
         })(option);
     }
   };
@@ -61,7 +68,7 @@ export function Tablerow({ coinData, updateUser }:
     updateUser();
   };
 
-  const handleEdit = (transaction:Transaction) => {
+  const handleEdit = (transaction: Transaction) => {
     setOverlay((prev) => ({ ...prev, editCoin: false }));
     setTransaction(transaction);
     // set state transaction variable equal to a transaction
@@ -71,76 +78,51 @@ export function Tablerow({ coinData, updateUser }:
   };
   return (
     <>
-      {
-      (overlay.addCoin || overlay.editCoin)
-    && (
-    <Overlay>
-      {overlay.addCoin
-        ? (
-          <AddCoinModal
-            coinData={coinData}
-            closeOverlay={closeOverlay}
-            transaction={editTransaction && editTransaction}
-          />
-        )
-        : (
-          <EditCoinModal
-            coinData={coinData}
-            closeOverlay={closeOverlay}
-            handleEdit={handleEdit}
-          />
-        )}
-    </Overlay>
-    )
-
-    }
+      {(overlay.addCoin || overlay.editCoin) && (
+        <Overlay>
+          {overlay.addCoin ? (
+            <AddCoinModal
+              coinData={coinData}
+              closeOverlay={closeOverlay}
+              transaction={editTransaction && editTransaction}
+            />
+          ) : (
+            <EditCoinModal
+              coinData={coinData}
+              closeOverlay={closeOverlay}
+              handleEdit={handleEdit}
+            />
+          )}
+        </Overlay>
+      )}
       {overlay.deleteCoin && (
-      <Overlay>
-        <DeleteCoin />
-      </Overlay>
+        <Overlay>
+          <DeleteCoin />
+        </Overlay>
       )}
 
       <tr>
-        <td
-          className={styles['coin-name-dt']}
-        >
+        <td className={styles['coin-name-dt']}>
           <img src={coinData.image} alt="coin-img" />
           {coinData.name}
           <small>{coinData.symbol.toUpperCase()}</small>
         </td>
-        <td>
-          {coinData.marketData.current}
-        </td>
-        <td>
-          {coinData.marketData.low24}
-        </td>
-        <td>
-          {coinData.marketData.high24}
-        </td>
+        <td>{coinData.marketData.current}</td>
+        <td>{coinData.marketData.low24}</td>
+        <td>{coinData.marketData.high24}</td>
         <td>{coinData.transactions?.length || 0}</td>
         <td>
-          $
-          {' '}
+          ${' '}
           {coinData.transactions && getTransactionTotal(coinData.transactions)}
         </td>
-        <td
-          className={styles.buttons}
-        >
-          <button
-            type="button"
-            onClick={() => handleOverlay('addCoin')}
-          >
+        <td className={styles.buttons}>
+          <button type="button" onClick={() => handleOverlay('addCoin')}>
             <img src={add} alt="" />
           </button>
-          <button
-            type="button"
-            onClick={() => handleOverlay('editCoin')}
-          >
+          <button type="button" onClick={() => handleOverlay('editCoin')}>
             <img src={edit} alt="" />
           </button>
-          <button
-            type="button"
-          >
+          <button type="button">
             <img src={trash} alt="" />
           </button>
         </td>

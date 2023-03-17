@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import styles from './dashboardbottom.module.css';
 import { SearchBar } from '../../components/searchbar/SearchBar';
 import {
-  CoinData, ServerCoin, DetailedCoinData, Transaction,
+  CoinData,
+  ServerCoin,
+  DetailedCoinData,
+  Transaction,
 } from '../../../../types/types';
 import { Overlay } from '../../../../Components/Overlay/Overlay';
 import { Coin } from '../../components/searchbar/types/types';
@@ -17,24 +20,28 @@ export function DashboardBottom({
   userTransactions,
   updateUser,
   focusSearchBar,
-}: { userCoins: CoinData[],
-  addToCoinList: (coindId: string | number) => Promise<void>,
-  userTransactions: Transaction[],
-  updateUser: () => Promise<void>,
-  focusSearchBar: () => void
+}: {
+  userCoins: CoinData[];
+  addToCoinList: (coindId: string | number) => Promise<void>;
+  userTransactions: Transaction[];
+  updateUser: () => Promise<void>;
+  focusSearchBar: () => void;
 }) {
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
 
   // eslint-disable-next-line consistent-return
-  const handleOverlay = async (coin:ServerCoin | false) => {
+  const handleOverlay = async (coin: ServerCoin | false) => {
     if (typeof coin === 'boolean') {
       return 'ok';
     }
     if (!overlay) {
-      const fetchCoin = await fetch(`https://api.coingecko.com/api/v3/coins/${coin.coin_id}`).then((res) => res.json())
+      const fetchCoin = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${coin.coin_id}`
+      )
+        .then((res) => res.json())
         .then((res: Record<string, any>) => {
-          const obj:DetailedCoinData = {
+          const obj: DetailedCoinData = {
             id: res.id,
             image: res.image.large,
             name: res.name,
@@ -64,14 +71,20 @@ export function DashboardBottom({
                 usd: res.market_data.price_change_percentage_1h_in_currency.usd,
               },
               percent24h: {
-                btc: res.market_data.price_change_percentage_24h_in_currency.btc,
-                eth: res.market_data.price_change_percentage_24h_in_currency.eth,
-                usd: res.market_data.price_change_percentage_24h_in_currency.usd,
+                btc: res.market_data.price_change_percentage_24h_in_currency
+                  .btc,
+                eth: res.market_data.price_change_percentage_24h_in_currency
+                  .eth,
+                usd: res.market_data.price_change_percentage_24h_in_currency
+                  .usd,
               },
               percent30d: {
-                btc: res.market_data.price_change_percentage_30d_in_currency.btc,
-                eth: res.market_data.price_change_percentage_30d_in_currency.eth,
-                usd: res.market_data.price_change_percentage_30d_in_currency.usd,
+                btc: res.market_data.price_change_percentage_30d_in_currency
+                  .btc,
+                eth: res.market_data.price_change_percentage_30d_in_currency
+                  .eth,
+                usd: res.market_data.price_change_percentage_30d_in_currency
+                  .usd,
               },
               percent7d: {
                 btc: res.market_data.price_change_percentage_7d_in_currency.btc,
@@ -82,7 +95,8 @@ export function DashboardBottom({
               allTimeHigh: res.market_data.ath.usd,
               allTimeLow: res.market_data.atl.usd,
               circulating_supply: res.market_data.circulating_supply,
-              market_cap_change_percentage_24h: res.market_cap_change_percentage_24h,
+              market_cap_change_percentage_24h:
+                res.market_cap_change_percentage_24h,
             },
           };
           setOverlay(true);
@@ -96,24 +110,17 @@ export function DashboardBottom({
   return (
     <>
       {overlay && (
-      <Overlay>
-        <CoinDetails
-          coinDetails={coinData}
-          closeOverlay={() => setOverlay(false)}
-          addToCoinList={addToCoinList}
-        />
-      </Overlay>
-      ) }
-      <section
-        className={styles['dashboard-bottom']}
-      >
-        <div
-          className={styles['main-container']}
-        >
-
-          <div
-            className={styles.portfolio}
-          >
+        <Overlay>
+          <CoinDetails
+            coinDetails={coinData}
+            closeOverlay={() => setOverlay(false)}
+            addToCoinList={addToCoinList}
+          />
+        </Overlay>
+      )}
+      <section className={styles['dashboard-bottom']}>
+        <div className={styles['main-container']}>
+          <div className={styles.portfolio}>
             <Portfolio
               userCoins={userCoins}
               userTransactions={userTransactions}

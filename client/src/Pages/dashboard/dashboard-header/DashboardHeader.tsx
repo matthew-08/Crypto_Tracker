@@ -5,15 +5,10 @@ import hamburger from './assets/hamburger.png';
 
 export function DashboardHeader() {
   return (
-    <header
-      className={styles.header}
-    >
+    <header className={styles.header}>
       <h2>Nioc</h2>
       {/* <img src={coin} alt="main-logo" /> */}
-      <button
-        className={styles.closebutton}
-        type="button"
-      >
+      <button className={styles.closebutton} type="button">
         <img src={hamburger} alt="" />
       </button>
     </header>

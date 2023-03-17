@@ -1,8 +1,9 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 import styles from './landingpage.module.css';
-import mainimg from './assets/main-img.svg';
 import twitter from './assets/twitter.svg';
-import amazing from './assets/amazon.svg';
+import amazon from './assets/amazon.svg';
 import instagram from './assets/instagram.svg';
 import { Logo } from './components/Logo';
 import facebook from './assets/facebook.svg';
@@ -17,14 +18,19 @@ import chartlogo from './assets/chart.svg';
 import coindetails from './assets/coindetails.png';
 import coin from './assets/coin.svg';
 
+const allLogos = ['twitter', 'instagram', 'amazon', 'facebook'];
+const logoImages = {
+  twitter,
+  instagram,
+  amazon,
+  facebook,
+};
+
 export function LandingPage() {
+  const navigate = useNavigate();
   return (
-    <div
-      className={styles['main-page-container']}
-    >
-      <div
-        className={styles['page-top']}
-      >
+    <div className={styles['main-page-container']}>
+      <div className={styles['page-top']}>
         <h2>Noic Crypto Tracker</h2>
         <h2>Try it now</h2>
         <p>Easily track your favorite coins</p>
@@ -33,31 +39,17 @@ export function LandingPage() {
       <button
         type="button"
         className={styles.button}
+        onClick={() => navigate('/signIn')}
       >
         Try it free!
       </button>
-
       <h2>(Un)Official Partner Of:</h2>
-      <div
-        className={styles.logos}
-      >
-        <Logo
-          img={twitter}
-        />
-
-        <Logo
-          img={instagram}
-        />
-        <Logo
-          img={amazing}
-        />
-        <Logo
-          img={facebook}
-        />
+      <div className={styles.logos}>
+        {Object.values(logoImages).map((logoSrc) => (
+          <Logo key={uuid()} img={logoSrc} />
+        ))}
       </div>
-      <main
-        className={styles.features}
-      >
+      <main className={styles.features}>
         <FeatureSectionRight
           featureImg={chart}
           featureTopLogo={chartlogo}
