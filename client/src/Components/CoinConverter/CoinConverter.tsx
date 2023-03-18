@@ -1,14 +1,5 @@
-import React from 'react';
 import styles from './coinconverter.module.css';
 import exchangeIcon from './assets/exchange.svg';
-
-interface Props {
-  coinToConvert?: {
-    coin: string;
-    value: number;
-    usdValue: number;
-  };
-}
 
 export function CoinConverter() {
   return (

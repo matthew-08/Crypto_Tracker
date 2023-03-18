@@ -5,6 +5,10 @@ import {
   ReducerProps,
   Transaction,
 } from '../../../../../../types/types';
+import {
+  postTransaction,
+  updateTranasction,
+} from '../../../../../../utils/transactionHandler';
 import styles from './modal.module.css';
 
 const ACTIONS = {
@@ -88,25 +92,22 @@ export function AddCoinModal({
   // useEffect hook that sets state if the transaciton variable is available
   useEffect(() => {
     if (transaction) {
-      setHaveTransaction((prev) => true);
+      setHaveTransaction(() => true);
       dispatch({
         type: 'setAllFields',
         payload: transaction,
       });
     }
   }, []);
-  // If transaction not equal to null then we can pass a boolean to signify that we should
-  // pass a submit parameter
 
   const updateField = (type: OmitSetAllFields, payload: string) => {
     dispatch({
       type,
       payload,
     });
-    console.log(state);
   };
 
-  const handleSubmit = async (haveTransaction) => {
+  const handleSubmit = async () => {
     type StateProperties = keyof typeof state;
     const requiredFields = Object.keys(state) as StateProperties[];
     const filterNote: KeyOfInvalidInput[] = requiredFields.filter(
@@ -116,30 +117,21 @@ export function AddCoinModal({
     const checkFields = filterNote.filter((prop) => state[prop] === '');
     if (checkFields.length === 0) {
       if (!transaction) {
-        const postTransaction = await fetch(
-          'http://localhost:8000/transactions',
-          {
-            credentials: 'include',
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              ...state,
-              coin: coinData.id,
-            }),
-          }
-        ).then((res) => closeOverlay('addCoin'));
+        await postTransaction({
+          body: {
+            ...state,
+            coin: coinData.id,
+          },
+          type: 'post',
+        }).then(() => closeOverlay('addCoin'));
       } else {
-        const updateTransaction = await fetch(
-          `http://localhost:8000/transactions?transactionId=${transaction.transaction_id}
-          &quantity=${state.quantity}&note=${state.note}&date=${state.date}&price=${state.price}`,
-          {
-            credentials: 'include',
-            method: 'PUT',
-          }
-        ).then((res) => closeOverlay('addCoin'));
+        await updateTranasction({
+          body: {
+            ...state,
+            transaction_id: transaction.transaction_id,
+          },
+          type: 'update',
+        }).then(() => closeOverlay('addCoin'));
       }
     } else {
       Object.keys(invalidInput).forEach((key) => {

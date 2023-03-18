@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './stats.module.css';
 import { CoinPercentage } from '../../../../../../Components/CoinDetails/CoinPercentage/CoinPercentage';
 
@@ -9,8 +8,6 @@ interface Props {
 }
 
 export function Stats({ title, data, type }: Props) {
-  console.log(type);
-  console.log(data);
   return (
     <div className={styles['stats-container']}>
       <p className={styles.title}>{title}</p>

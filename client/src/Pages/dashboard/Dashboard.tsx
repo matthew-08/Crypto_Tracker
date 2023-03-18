@@ -25,7 +25,7 @@ export function Dashboard({ closeNav }: { closeNav: (arg: boolean) => void }) {
 
   const getUserInfo = async (): Promise<UserInfo | string> => {
     try {
-      const fetchUserInfo = await fetch(`${apiURL}get/dashboard`, {
+      const fetchUserInfo = await fetch(`${apiURL}/get/dashboard`, {
         credentials: 'include',
       });
       const parseUserInfo: UserInfo = await fetchUserInfo

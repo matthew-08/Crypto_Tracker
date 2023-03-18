@@ -1,3 +1,4 @@
+import { CoinId, Transaction } from '../types/types';
 import apiURL from './apiURL';
 
 type PostTransaction = {
@@ -7,6 +8,7 @@ type PostTransaction = {
     quantity: string;
     date: string;
     note: string;
+    coin: CoinId;
   };
 };
 const HTTPVerbs = {
@@ -51,4 +53,11 @@ const updateTranasction = async ({ body, type }: UpdateTransction) => {
   );
 };
 
-export { postTransaction, updateTranasction };
+const deleteTransaction = async (arg0: Transaction['transaction_id']) => {
+  await fetch(`${apiURL}/transactions?transactionId=${arg0}`, {
+    credentials: 'include',
+    method: 'DELETE',
+  });
+};
+
+export { postTransaction, updateTranasction, deleteTransaction };

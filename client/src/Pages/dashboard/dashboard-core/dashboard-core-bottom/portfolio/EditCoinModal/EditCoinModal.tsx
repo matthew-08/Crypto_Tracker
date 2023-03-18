@@ -5,6 +5,7 @@ import styles from './editcoinmodal.module.css';
 import { CoinData, Transaction } from '../../../../../../types/types';
 import edit from '../assets/edit.svg';
 import trash from '../assets/trash.svg';
+import { deleteTransaction } from '../../../../../../utils/transactionHandler';
 
 interface ModalProps {
   coinData: CoinData;
@@ -18,13 +19,7 @@ export default function EditCoinModal({
   handleEdit,
 }: ModalProps) {
   const handleDelete = async (arg: Transaction) => {
-    await fetch(
-      `http://localhost:8000/transactions?transactionId=${arg.transaction_id}`,
-      {
-        credentials: 'include',
-        method: 'DELETE',
-      }
-    ).then(() => {
+    await deleteTransaction(arg.transaction_id).then(() => {
       return closeOverlay('editCoin');
     });
   };
