@@ -3,11 +3,8 @@ const pool = require('../db');
 
 router.get('/', async (req, res) => {
     const getUser = res.locals.user;
-    const test = 'tesla'
     const fetchTransactions = await pool.query('SELECT transaction_id, date, coin, quantity FROM users JOIN user_transactions ON users.user_id = user_transactions.user_id WHERE users.user_name = $1', [test]);
-    console.log(fetchTransactions.rows)
-    /* const fetchTransactions = await pool.query('SELECT * FROM user_transactions WHERE user_id = $1', [searchParameter]);
-    await console.log(fetchTransactions.rows) */
+    return res.status(200).json(fetchTransactions)
 })
 
 router.delete('/', async (req, res) => {
@@ -29,7 +26,12 @@ router.put('/', async(req, res) => {
 
     const editTransaction = await 
     pool.query(
-        'UPDATE user_transactions SET quantity = $2, price = $3, date = $4, note = $5 WHERE transaction_id = $1',
+        `UPDATE user_transactions 
+        SET quantity = $2, 
+        price = $3, 
+        date = $4, 
+        note = $5 
+        WHERE transaction_id = $1`,
         [
             transactionId,
             quantity,

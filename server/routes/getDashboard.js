@@ -1,13 +1,14 @@
 const router = require('express').Router();
 const pool = require('../db');
-const jwt = require('jsonwebtoken');
 const userInfoSchema = require('../models/userInfo')
 
 router.get('/dashboard', async (req, res) => {
   try {
     const getUser = res.locals.user;
     const user = await pool.query(
-      'SELECT user_name, email, user_id FROM users where user_name = $1',
+      `SELECT user_name, email, user_id 
+      FROM users 
+      WHERE user_name = $1`,
       [getUser]
     );
     const user_id = await user.rows[0].user_id;
