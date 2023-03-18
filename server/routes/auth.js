@@ -23,7 +23,7 @@ router.post('/signIn', async (req, res) => {
     })
     res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 3600 * 4,
+      maxAge: 3600 * 60 * 60,
       sameSite: 'none',
       secure: true,
     });
@@ -79,7 +79,7 @@ router.post('/createUser', async (req, res) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 3600 * 4,
+      maxAge: 3600 * 60 * 60,
       sameSite: 'none',
       secure: true,
     });
