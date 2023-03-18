@@ -34,7 +34,7 @@ router.get('/dashboard', async (req, res) => {
 
     res.status(200).json(userInfo);
   } catch (error) {
-    console.error(error);
+    return res.status(404).end()
   }
 });
 

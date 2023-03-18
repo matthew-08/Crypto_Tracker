@@ -30,7 +30,6 @@ const authHanlder = async ({ body, mainPath, subPath }: Auth) => {
       method: HTTPVerbs[subPath],
       body: JSON.stringify(body),
       credentials: 'include',
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },

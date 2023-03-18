@@ -19,7 +19,7 @@ router.post('/signIn', async (req, res) => {
 
   if (comparePassword) {
     const token = await jwt.sign({ username: username }, process.env.SECRETKEY, {
-      expiresIn: '4h',
+      expiresIn: '1h',
     })
     res.cookie('token', token, {
       httpOnly: true,
@@ -74,7 +74,7 @@ router.post('/createUser', async (req, res) => {
     )
 
     const token = jwt.sign({ username: username }, process.env.SECRETKEY, {
-      expiresIn: '4h',
+      expiresIn: '1h',
     });
 
     res.cookie('token', token, {
