@@ -74,12 +74,9 @@ const fetchAllCoins = async (userInfo: UserInfo) => {
 };
 
 const searchCoins = async (input: string) => {
-  const matchingCoins = await fetch(
-    `http://localhost:8000/search/coins?coin=${input}`,
-    {
-      credentials: 'include',
-    }
-  );
+  const matchingCoins = await fetch(`${apiURL}/search/coins?coin=${input}`, {
+    credentials: 'include',
+  });
   const parseCoins: ParsedCoins = await matchingCoins.json();
   const extractArray = await parseCoins.rows;
   return extractArray;
