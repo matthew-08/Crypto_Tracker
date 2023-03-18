@@ -5,6 +5,7 @@ const userInfoSchema = require('../models/userInfo')
 router.get('/dashboard', async (req, res) => {
   try {
     const getUser = res.locals.user;
+    console.log(getUser)
     const user = await pool.query(
       `SELECT user_name, email, user_id 
       FROM users 
