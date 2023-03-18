@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Blocks } from 'react-loader-spinner';
 import styles from './dashboardcore.module.css';
 import { DashboardBottom } from './dashboard-core-bottom/DashboardBottom';
@@ -21,6 +21,7 @@ import setting from '../assets/settings.svg';
 import { Overlay } from '../../../Components/Overlay/Overlay';
 import { CoinDetails } from '../../../Components/CoinDetails/CoinDetails';
 import { fetchCoin } from '../../../apiCalls/fetchCoin';
+import coinHandler from '../../../utils/coinsHandler';
 
 const combineTransactions = (transactions: Transaction[], coinId: string) =>
   transactions.filter(({ coin }) => coin === coinId);
@@ -91,13 +92,10 @@ export default function DashboardCore({
   }, [userInfo]);
 
   const addToCoinList = async (coinId: string | number) => {
-    const addCoin = await fetch(
-      `http://localhost:8000/coins?coinId=${coinId}`,
-      {
-        credentials: 'include',
-        method: 'PUT',
-      }
-    ).then((res) => {
+    coinHandler({
+      coinId,
+      mainPath: 'coins',
+    }).then((res) => {
       setOverlay(false);
       reRenderUser();
     });
