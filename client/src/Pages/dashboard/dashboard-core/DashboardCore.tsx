@@ -5,12 +5,10 @@ import { DashboardBottom } from './dashboard-core-bottom/DashboardBottom';
 import {
   UserInfo,
   CoinData,
-  Transaction,
   ServerCoin,
   DetailedCoinData,
 } from '../../../types/types';
 import { DashboardGraph } from './dashboard-graph/DashboardGraph';
-import currencyAdjust from '../../../utils/currencyAdjust';
 import { Cards } from './Cards/Cards';
 import { SearchBar } from '../components/searchbar/SearchBar';
 import Notification from './Notification/Notification';
@@ -23,9 +21,6 @@ import { CoinDetails } from '../../../Components/CoinDetails/CoinDetails';
 import { fetchCoin } from '../../../apiCalls/fetchCoin';
 import coinHandler, { fetchAllCoins } from '../../../utils/coinsHandler';
 
-const combineTransactions = (transactions: Transaction[], coinId: string) =>
-  transactions.filter(({ coin }) => coin === coinId);
-
 export default function DashboardCore({
   userInfo,
   reRenderUser,
@@ -36,13 +31,17 @@ export default function DashboardCore({
   const [userCoins, setUserCoins] = useState([] as CoinData[]);
   const [overlay, setOverlay] = useState(false);
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
+  const [coinToGraph, setCoinToGraph] = useState<CoinData['name'] | null>(null);
 
   const fetchCoins = async () => {
-    const usersCoins = userInfo.coins;
-    const coins = await fetchAllCoins(usersCoins);
+    const coins = await fetchAllCoins(userInfo);
     if (coins) {
       setUserCoins(coins);
     }
+  };
+
+  const handleSetCoin = (cName: CoinData['name']) => {
+    setCoinToGraph(cName);
   };
 
   const handleOverlay = async (coin: ServerCoin | false) => {
@@ -54,6 +53,7 @@ export default function DashboardCore({
       setOverlay(true);
       return setCoinData(fetchedCoinData);
     }
+    return 1.3;
     return setOverlay(false);
   };
 
@@ -67,11 +67,12 @@ export default function DashboardCore({
     coinHandler({
       coinId,
       mainPath: 'coins',
-    }).then((res) => {
+    }).then(() => {
       setOverlay(false);
       reRenderUser();
     });
   };
+  console.log(userCoins);
 
   return (
     <section className={styles.core}>
@@ -107,11 +108,11 @@ export default function DashboardCore({
       />
       <section className={styles['section-mid']}>
         {userCoins.length >= 1 ? (
-          <DashboardGraph coinToGraph={userCoins[0].name} />
+          <DashboardGraph coinToGraph={coinToGraph || userCoins[0].name} />
         ) : (
           <Blocks width="100%" height="250" color="blue" />
         )}
-        <Cards userCoins={userCoins} />
+        <Cards setGraphCoin={handleSetCoin} userCoins={userCoins} />
       </section>
     </section>
   );

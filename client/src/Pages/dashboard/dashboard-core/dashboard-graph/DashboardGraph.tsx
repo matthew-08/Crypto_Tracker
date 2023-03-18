@@ -81,7 +81,7 @@ export function DashboardGraph({ coinToGraph }: { coinToGraph: string }) {
 
   useEffect(() => {
     fetchMarkChartData();
-  }, []);
+  }, [coinToGraph]);
   const options = {
     responsive: true,
   };

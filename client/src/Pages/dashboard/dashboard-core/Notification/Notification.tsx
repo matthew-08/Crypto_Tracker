@@ -2,10 +2,11 @@ import styles from './notification.module.css';
 
 export default function Notification({
   img,
-  amountDisplay,
+  amountDisplay = null,
 }: {
   img: string;
-  amountDisplay: number | 'undefined';
+  // eslint-disable-next-line react/require-default-props
+  amountDisplay?: number | null;
 }) {
   return (
     <div className={styles.container}>

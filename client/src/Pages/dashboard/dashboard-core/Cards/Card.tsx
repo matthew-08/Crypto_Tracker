@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import styles from './cards.module.css';
 import { CoinData } from '../../../../types/types';
@@ -5,11 +7,12 @@ import { MarketInfoPercentage } from '../../../../Components/CoinDetails/MarketI
 
 interface CardProps {
   coinData: CoinData;
+  setGraphCoin: (arg0: string) => void;
 }
 
-export function Card({ coinData }: CardProps) {
+export function Card({ coinData, setGraphCoin }: CardProps) {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => setGraphCoin(coinData.name)}>
       <header className={styles.header}>
         <div className={styles['coin-name']}>{coinData.name}</div>
         <div className={styles['card-right']}>

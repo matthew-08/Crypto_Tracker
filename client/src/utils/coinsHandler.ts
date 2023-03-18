@@ -1,4 +1,4 @@
-import { CoinData } from '../types/types';
+import { CoinData, UserInfo, ParsedCoins } from '../types/types';
 import apiURL from './apiURL';
 import currencyAdjust from './currencyAdjust';
 import combineTransactions from './combineTransactions';
@@ -20,7 +20,8 @@ const coinHandler = async ({ mainPath, coinId }: Args) => {
   }
 };
 
-const fetchAllCoins = async (coins: string[]) => {
+const fetchAllCoins = async (userInfo: UserInfo) => {
+  const { coins, transactions } = userInfo;
   try {
     const result: CoinData[] = [];
     const res = await Promise.all(
@@ -43,7 +44,7 @@ const fetchAllCoins = async (coins: string[]) => {
             high24: currencyAdjust(c.market_data.high_24h.usd),
             capPercentage: c.market_data.market_cap_change_percentage_24h,
           },
-          transactions: combineTransactions(userInfo.transactions, c.id),
+          transactions: combineTransactions(transactions, c.id),
         };
         result.push(cData);
         return result;
@@ -55,5 +56,17 @@ const fetchAllCoins = async (coins: string[]) => {
   }
 };
 
+const searchCoins = async (input: string) => {
+  const matchingCoins = await fetch(
+    `http://localhost:8000/search/coins?coin=${input}`,
+    {
+      credentials: 'include',
+    }
+  );
+  const parseCoins: ParsedCoins = await matchingCoins.json();
+  const extractArray = await parseCoins.rows;
+  return extractArray;
+};
+
 export default coinHandler;
-export { fetchAllCoins };
+export { fetchAllCoins, searchCoins };

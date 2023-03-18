@@ -1,6 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import styles from './sidebar.module.css';
 import { DashboardHeader } from '../dashboard-header/DashboardHeader';
 import github from './assets/github.svg';
