@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import millify from 'millify';

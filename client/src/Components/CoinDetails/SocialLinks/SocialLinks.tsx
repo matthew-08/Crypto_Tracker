@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './sociallinks.module.css';
 import facebook from './assets/facebook.svg';
 import reddit from './assets/reddit.svg';

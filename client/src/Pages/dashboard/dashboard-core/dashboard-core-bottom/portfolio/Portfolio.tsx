@@ -28,11 +28,9 @@ export function Portfolio({
         const findCoin = userCoins.find((c) => c.id === coin);
         let current = findCoin?.marketData.current;
         if (current && typeof current === 'string') {
-          console.log('hello');
           current = current.replace('$', '');
           current = current.replace(',', '');
         }
-        console.log(current);
         acc += Number(current) * Number(quantity);
         return acc;
       }, 0);

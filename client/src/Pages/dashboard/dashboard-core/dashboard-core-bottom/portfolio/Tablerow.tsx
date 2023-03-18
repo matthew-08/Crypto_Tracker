@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { useState, version } from 'react';
 import styles from './portfolio.module.css';
 import add from './assets/add.svg';
@@ -18,7 +19,7 @@ type OverlayOptions = {
 const getTransactionTotal = (transactions: Transaction[]) =>
   transactions.reduce((acc, curr) => {
     if (curr.quantity && curr.price) {
-      acc += parseInt(curr.quantity * curr.price);
+      acc += Number(curr.quantity) * Number(curr.price);
     } else {
       acc += 0;
     }

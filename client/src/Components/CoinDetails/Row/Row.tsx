@@ -1,4 +1,3 @@
-import React from 'react';
 import { v4 as uuid } from 'uuid';
 import styles from './row.module.css';
 import { MarketPercentage } from '../../../types/types';
