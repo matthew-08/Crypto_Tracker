@@ -30,7 +30,7 @@ export function Sidebar({ userInfo }: { userInfo: UserInfo }) {
         </div>
         <footer className={styles.footer}>
           <a href="https://github.com/matthew-08">
-            <img src={github} alt="githib-link" />
+            <img src={github} alt="github link" />
           </a>
         </footer>
       </aside>
