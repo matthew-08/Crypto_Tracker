@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-    PROCESS.ENV.FRONTEND
+    process.env.FRONTEND
   ],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true,
