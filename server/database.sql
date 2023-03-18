@@ -12,7 +12,3 @@ CREATE TABLE coins (
     coin_name VARCHAR(255) NOT NULL,
     PRIMARY KEY(coin_id)
 );
-
-alter table coins alter coin_id drop not null,
-                alter coin_symbol drop not null,
-                alter coin_name drop not null;
