@@ -26,7 +26,6 @@ router.post('/signIn', async (req, res) => {
       maxAge: 3600 * 4,
       sameSite: 'none',
       secure: true,
-      domain: 'noic-matthew-08.vercel.app'
     });
     return res.status(200).json({ username: username });
   }
@@ -83,7 +82,6 @@ router.post('/createUser', async (req, res) => {
       maxAge: 3600 * 4,
       sameSite: 'none',
       secure: true,
-      domain: 'noic-matthew-08.vercel.app'
     });
     return res.status(200).json({ a: insertNewUser.rows[0] });
   }
