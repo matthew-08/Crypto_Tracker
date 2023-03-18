@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormComponent } from '../../Components/FormComponent/FormComponent';
+import authHanlder from '../../utils/authHandler';
 import styles from './signin.module.css';
 
 export function SignIn({ closeNav }: { closeNav: () => void }) {
@@ -10,6 +11,7 @@ export function SignIn({ closeNav }: { closeNav: () => void }) {
     username: string;
     password: string;
     [key: string]: string;
+    // eslint-disable-next-line consistent-return
   }) => {
     const { username, password } = data;
     const dataToPost = {
@@ -17,23 +19,18 @@ export function SignIn({ closeNav }: { closeNav: () => void }) {
       password,
     };
     try {
-      const userSignIn = await fetch('http://localhost:8000/auth/signIn', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(dataToPost),
+      const fetchUser = authHanlder({
+        body: dataToPost,
+        mainPath: 'auth',
+        subPath: 'signIn',
       });
-      const ok = await userSignIn.json().then((res) => res);
-      await console.log(ok);
-      if (ok.username === username) {
+      const checkUser: { username: string } = await fetchUser;
+      if (checkUser.username === username) {
         closeNav();
         return navigate('/Dashboard');
       }
     } catch (err) {
-      console.log(err);
+      return console.log(err);
     }
   };
   return (

@@ -43,7 +43,7 @@ export function SearchBar({
   useEffect(() => {
     document.body.addEventListener('click', checkInputFocus);
     if (searchInput && setSearchBarFocus) {
-      searchInput.current!.focus();
+      searchInput.current.focus();
     }
 
     return () => document.body.removeEventListener('click', checkInputFocus);

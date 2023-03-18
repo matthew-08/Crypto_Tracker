@@ -32,6 +32,7 @@ router.post('/signIn', async (req, res) => {
 
 });
 router.post('/createUser', async (req, res) => {
+  console.log('in auth')
   const { username, email, password } = req.body;
 
   const doesEmailExist = await pool.query(
