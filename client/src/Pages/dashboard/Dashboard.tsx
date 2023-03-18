@@ -7,6 +7,7 @@ import DashboardCore from './dashboard-core/DashboardCore';
 import { UserInfo } from '../../types/types';
 import { Sidebar } from './Sidebar/Sidebar';
 import useWindowDimensions from '../../Components/Hooks/useWindowDimensions';
+import apiURL from '../../utils/apiURL';
 
 export function Dashboard({ closeNav }: { closeNav: (arg: boolean) => void }) {
   const { width, height } = useWindowDimensions();
@@ -24,7 +25,7 @@ export function Dashboard({ closeNav }: { closeNav: (arg: boolean) => void }) {
 
   const getUserInfo = async (): Promise<UserInfo | string> => {
     try {
-      const fetchUserInfo = await fetch('http://localhost:8000/get/dashboard', {
+      const fetchUserInfo = await fetch(`${apiURL}get/dashboard`, {
         credentials: 'include',
       });
       const parseUserInfo: UserInfo = await fetchUserInfo

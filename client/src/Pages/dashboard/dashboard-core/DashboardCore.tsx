@@ -64,6 +64,7 @@ export default function DashboardCore({
 
   const addToCoinList = async (coinId: string | number) => {
     coinHandler({
+      type: 'put',
       coinId,
       mainPath: 'coins',
     }).then(() => {

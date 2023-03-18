@@ -1,5 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import { v4 as uuid } from 'uuid';
+import { useEffect, useReducer, useState } from 'react';
 import { Input } from '../../../../../../Components/Input/Input';
 import {
   CoinData,

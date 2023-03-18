@@ -1,5 +1,6 @@
 import React from 'react';
 import { CoinData } from '../../../../../../types/types';
+import coinHandler from '../../../../../../utils/coinsHandler';
 import styles from './deletecoin.module.css';
 
 interface Props {
@@ -9,9 +10,10 @@ interface Props {
 
 export default function DeleteCoin({ closeOverlay, coin }: Props) {
   const handleDelete = async () => {
-    await fetch(`http://localhost:8000/coins?coinId=${coin.id}`, {
-      method: 'DELETE',
-      credentials: 'include',
+    await coinHandler({
+      coinId: coin.id,
+      type: 'delete',
+      mainPath: 'coins',
     });
     closeOverlay('deleteCoin');
   };
@@ -22,7 +24,7 @@ export default function DeleteCoin({ closeOverlay, coin }: Props) {
       <p>This will remove all associated transactions from your history</p>
       <p>Click confirm to continue</p>
       <div className={styles['button-grp']}>
-        <button type="submit" onClick={() => closeOverlay('delete')}>
+        <button type="submit" onClick={() => closeOverlay('deleteCoin')}>
           Cancel
         </button>
         <button type="submit" onClick={handleDelete}>

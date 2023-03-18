@@ -58,15 +58,6 @@ export function DashboardBottom({
               updateUser={updateUser}
             />
           </div>
-          {/* <div
-            className={styles['recent-transactions']}
-          >
-            <EditCoinModal
-              closeOverlay={setOverlay}
-              coinData={coinData}
-
-            />
-          </div> */}
         </div>
       </section>
     </>

@@ -12,14 +12,25 @@ import combineTransactions from './combineTransactions';
 type AddCoin = {
   mainPath: 'coins';
   coinId: string | number;
+  type: 'put';
 };
-type Args = AddCoin;
+type DeleteCoin = {
+  mainPath: 'coins';
+  coinId: string | number;
+  type: 'delete';
+};
 
-const coinHandler = async ({ mainPath, coinId }: Args) => {
+const HTTPVerbs = {
+  delete: 'DELETE',
+  put: 'POST',
+};
+type Args = AddCoin | DeleteCoin;
+
+const coinHandler = async ({ mainPath, coinId, type }: Args) => {
   try {
     await fetch(`${apiURL}/${mainPath}?coinId=${coinId}`, {
       credentials: 'include',
-      method: 'PUT',
+      method: HTTPVerbs[type],
     });
   } catch (error) {
     console.log(error);
