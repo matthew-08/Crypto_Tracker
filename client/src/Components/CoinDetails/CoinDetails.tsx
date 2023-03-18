@@ -10,10 +10,8 @@ import {
 import styles from './coindetails.module.css';
 import { CoinPercentage } from './CoinPercentage/CoinPercentage';
 import { MarketInfo } from './MarketInfo/MarketInfo';
-import { MarketInfoPercentage } from './MarketInfoPercentage/MarketInfoPercentage';
 import { Row } from './Row/Row';
 import { SocialLinks } from './SocialLinks/SocialLinks';
-import { CoinConverter } from '../CoinConverter/CoinConverter';
 
 export function CoinDetails({
   coinDetails,

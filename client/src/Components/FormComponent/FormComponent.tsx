@@ -94,23 +94,6 @@ export function FormComponent<
     return valid;
   };
 
-  /* const postNewUser = async () => {
-        const data = {
-            username: formFields.username,
-            email: formFields.email,
-            password: formFields.password
-        }
-        const newUser = await fetch('http://localhost:8000/auth/createUser', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-
-        })
-    } */
-
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (checkForm(formFields)) {
