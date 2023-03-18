@@ -12,7 +12,9 @@ app.use(cookies());
 app.use(express.json());
 app.use(
   cors({
-    origin: ['http://localhost:8000', 'http://localhost:5173', 'http://localhost:5174'],
+    origin: [
+    PROCESS.ENV.FRONTEND
+  ],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true,
     exposedHeaders: ["set-cookie"]
