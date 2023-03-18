@@ -1,15 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  CoinData,
-  ServerCoin,
-  ServerResponse,
-  ParsedCoins,
-} from '../../../../types/types';
+import { useState, useEffect, useRef } from 'react';
+import { ServerCoin } from '../../../../types/types';
 import { searchCoins } from '../../../../utils/coinsHandler';
 import searchIcon from '../../assets/search.svg';
 import styles from './searchbar.module.css';
 import { SearchDropdown } from './SearchDropdown';
-import { Coin } from './types/types';
 
 export function SearchBar({
   setOverlay,

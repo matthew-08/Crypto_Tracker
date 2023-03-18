@@ -1,24 +1,16 @@
-import React from 'react'
-import styles from './wavepage.module.css'
-import wave from '../../assets/wave.svg'
+import React from 'react';
+import styles from './wavepage.module.css';
+import wave from '../../assets/wave.svg';
 
-type WavePage = {
-  children: React.ReactNode
-}
+type Props = {
+  children: React.ReactNode;
+};
 
-export const WavePage = (props: WavePage) => {
+export function WavePage({ children }: Props) {
   return (
-    <main
-    className={styles.main}
->
-    <img src={wave}
-        className={styles.wave}
-    />
-    <div
-        className={styles.container}
-    >
-      {props.children}
-    </div>
+    <main className={styles.main}>
+      <img src={wave} className={styles.wave} alt="wave" />
+      <div className={styles.container}>{children}</div>
     </main>
-  )
+  );
 }

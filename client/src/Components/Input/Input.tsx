@@ -5,23 +5,30 @@ import { ReducerProps } from '../../types/types';
 type KeyOfReducerProps = keyof ReducerProps;
 
 interface InputProps {
-  labelText: string,
-  date: boolean,
-  sendInput: (type: KeyOfReducerProps, payload: string) => void
-  type: KeyOfReducerProps
-  value: string,
-  inputType: 'date' | 'number' | 'text'
-  coinType?: string,
-  invalid: boolean,
-
+  labelText: string;
+  date: boolean;
+  sendInput: (type: KeyOfReducerProps, payload: string) => void;
+  type: KeyOfReducerProps;
+  value: string;
+  inputType: 'date' | 'number' | 'text';
+  // eslint-disable-next-line react/require-default-props
+  coinType?: string;
+  invalid: boolean;
 }
 export function Input({
-  labelText, date, sendInput, type, value, coinType, inputType, invalid,
+  labelText,
+  date,
+  sendInput,
+  type,
+  value,
+  coinType,
+  inputType,
+  invalid,
 }: InputProps) {
   const [inputStyles, setStyles] = useState({ styles: styles.input });
   const [invalidInput, setInvalidInput] = useState(false);
   useEffect(() => {
-    const arrayOfStyles:string[] = [];
+    const arrayOfStyles: string[] = [];
     if (date) {
       arrayOfStyles.push(styles.date);
     }
@@ -36,37 +43,13 @@ export function Input({
   }, [date, invalid]);
 
   return (
-    <div
-      className={styles.container}
-    >
-
-      <label
-        htmlFor="input"
-        className={styles.label}
-      >
-        {labelText}
-        {' '}
-        {type !== 'note' && (
-        <span
-          className={styles.required}
-        >
-          *
-
-        </span>
-        )}
-        {type === 'price' ? (
-          <span
-            className={styles.usd}
-          >
-            USD
-          </span>
-        ) : null}
+    <div className={styles.container}>
+      <label htmlFor="input" className={styles.label}>
+        {labelText}{' '}
+        {type !== 'note' && <span className={styles.required}>*</span>}
+        {type === 'price' ? <span className={styles.usd}>USD</span> : null}
         {type === 'quantity' ? (
-          <span
-            className={styles.usd}
-          >
-            {coinType}
-          </span>
+          <span className={styles.usd}>{coinType}</span>
         ) : null}
         <input
           type={inputType}
@@ -78,11 +61,9 @@ export function Input({
           onChange={(e) => sendInput(type, e.target.value)}
         />
         {invalidInput && (
-        <small
-          className={styles['invalid-message']}
-        >
-          This field is required
-        </small>
+          <small className={styles['invalid-message']}>
+            This field is required
+          </small>
         )}
       </label>
     </div>

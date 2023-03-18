@@ -53,7 +53,6 @@ export default function DashboardCore({
       setOverlay(true);
       return setCoinData(fetchedCoinData);
     }
-    return 1.3;
     return setOverlay(false);
   };
 
@@ -72,7 +71,6 @@ export default function DashboardCore({
       reRenderUser();
     });
   };
-  console.log(userCoins);
 
   return (
     <section className={styles.core}>

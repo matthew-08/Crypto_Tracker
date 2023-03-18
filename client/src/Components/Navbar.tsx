@@ -10,24 +10,14 @@ export function Navbar() {
   };
   return (
     <header>
-      <nav
-        className={styles.nav}
-      >
+      <nav className={styles.nav}>
         <h1>Noic</h1>
 
-        <div
-          className={styles.buttons}
-        >
-          <button
-            type="button"
-            onClick={() => routeChange('signIn')}
-          >
+        <div className={styles.buttons}>
+          <button type="button" onClick={() => routeChange('signIn')}>
             Login
           </button>
-          <button
-            type="button"
-            onClick={() => routeChange('signUp')}
-          >
+          <button type="button" onClick={() => routeChange('signUp')}>
             Sign Up
           </button>
         </div>
