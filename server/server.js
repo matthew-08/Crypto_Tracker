@@ -15,8 +15,12 @@ app.use(
     origin: ['http://localhost:8000', 'http://localhost:5173', 'http://localhost:5174'],
     methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true,
+    exposedHeaders: ["set-cookie"]
   })
 );
+
+app.set('trust proxy', 1);
+
 
 
 
