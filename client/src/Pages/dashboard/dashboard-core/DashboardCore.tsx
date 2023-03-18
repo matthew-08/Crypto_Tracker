@@ -21,7 +21,7 @@ import setting from '../assets/settings.svg';
 import { Overlay } from '../../../Components/Overlay/Overlay';
 import { CoinDetails } from '../../../Components/CoinDetails/CoinDetails';
 import { fetchCoin } from '../../../apiCalls/fetchCoin';
-import coinHandler from '../../../utils/coinsHandler';
+import coinHandler, { fetchAllCoins } from '../../../utils/coinsHandler';
 
 const combineTransactions = (transactions: Transaction[], coinId: string) =>
   transactions.filter(({ coin }) => coin === coinId);
@@ -38,38 +38,10 @@ export default function DashboardCore({
   const [coinData, setCoinData] = useState({} as DetailedCoinData);
 
   const fetchCoins = async () => {
-    try {
-      const { coins } = userInfo;
-      const result: CoinData[] = [];
-      const res = await Promise.all(
-        coins.map((c) =>
-          fetch(
-            `https://api.coingecko.com/api/v3/coins/${c}?localization=false&tickers=false&market_data=true&developer_data=true`
-          )
-        )
-      );
-      const resJson = await Promise.all(res.map((c) => c.json())).then(
-        (response) =>
-          response.forEach((c) => {
-            const cData: CoinData = {
-              name: c.name,
-              id: c.id,
-              symbol: c.symbol.toUpperCase(),
-              image: c.image.large,
-              marketData: {
-                current: currencyAdjust(c.market_data.current_price.usd),
-                low24: currencyAdjust(c.market_data.low_24h.usd),
-                high24: currencyAdjust(c.market_data.high_24h.usd),
-                capPercentage: c.market_data.market_cap_change_percentage_24h,
-              },
-              transactions: combineTransactions(userInfo.transactions, c.id),
-            };
-            result.push(cData);
-            setUserCoins(result);
-          })
-      );
-    } catch (error) {
-      console.log(error);
+    const usersCoins = userInfo.coins;
+    const coins = await fetchAllCoins(usersCoins);
+    if (coins) {
+      setUserCoins(coins);
     }
   };
 
