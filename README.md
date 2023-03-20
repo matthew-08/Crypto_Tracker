@@ -1,5 +1,4 @@
 # Noic
-Full-Stack cryptocurrency portfolio.
 <br>
 Go to [live app](https://noic-matthew-08.vercel.app/)
 <br>
@@ -14,4 +13,13 @@ Noic is a cryptocurrency portfolio and price tracker which uses the following te
 - Node.JS
 - Express.JS
 - JSON Web Tokens
+- ChartJS
 
+## Notable Features:
+
+- Create, edit, and delete transactions.
+- Accurate and up-to-date coin data provided by Coingecko API.
+- Search through over 12,000 popular coins and see their market data.
+- Authentication and persistant sessions implemented with JSON Web Tokens.
+- Uses ChartJS to provide market data charts for any coin.
+- Responsive design.
