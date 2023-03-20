@@ -28,7 +28,7 @@ router.put('/', async (req, res) => {
     const getUserId = await (await pool.query(`
     SELECT user_id 
     FROM users 
-    'WHERE user_name = $1
+    WHERE user_name = $1
     `,[user])).rows[0].user_id
     const addToArray = await pool.query(`
     UPDATE user_coins 
