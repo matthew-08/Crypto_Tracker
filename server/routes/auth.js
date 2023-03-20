@@ -77,6 +77,9 @@ router.post('/createUser', async (req, res) => {
       expiresIn: '1h',
     });
 
+    console.log(req)
+    console.lo("AUTH")
+
     res.cookie('token', token, {
       httpOnly: true,
       maxAge: 3600 * 60 * 60,
