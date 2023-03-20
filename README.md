@@ -1,5 +1,4 @@
 # Noic
-<br>
 Go to [live app](https://noic-matthew-08.vercel.app/)
 <br>
 Note:  *Due to limitations on the amount of API calls Coingecko allows per day, the application could be missing some functionalties.*
