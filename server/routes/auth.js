@@ -49,19 +49,28 @@ router.post('/createUser', async (req, res) => {
   );
 
   if (doesEmailExist.rows.length !== 0) {
+    console.log('email exists')
     return res.status(402).json({ type: 'email' });
   } else if (doesUsernameExist.rows.length !== 0) {
+    console.log('username exists')
+
     return res.status(402).json({ type: 'username' });
   } else {
     const saltRounds = 10;
 
+    console.log('doing salt rounds')
+
     const salt = await bcrypt.genSalt(saltRounds);
     const encryptedPass = await bcrypt.hash(password, salt);
 
+    console.log('finished salt rounds')
     const insertNewUser = await pool.query(
       'INSERT INTO users (user_name, email, password) VALUES ($1, $2, $3) RETURNING email, user_id',
       [username, email, encryptedPass]
     );
+
+    console.log('new user inserted')
+
     const userId = await insertNewUser.rows[0].user_id
     
     const setDefaultCoins = await pool.query(
@@ -77,8 +86,10 @@ router.post('/createUser', async (req, res) => {
       expiresIn: '1h',
     });
 
-    console.log(req)
-    console.lo("AUTH")
+    console.log('token signed')
+
+
+    console.lo("AUTH FINISHED COOKIE BEING SET")
 
     res.cookie('token', token, {
       httpOnly: true,
