@@ -89,7 +89,7 @@ router.post('/createUser', async (req, res) => {
     console.log('token signed')
 
 
-    console.lo("AUTH FINISHED COOKIE BEING SET")
+    console.log("AUTH FINISHED COOKIE BEING SET")
 
     res.cookie('token', token, {
       httpOnly: true,
