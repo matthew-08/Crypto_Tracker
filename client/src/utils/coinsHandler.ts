@@ -22,7 +22,7 @@ type DeleteCoin = {
 
 const HTTPVerbs = {
   delete: 'DELETE',
-  put: 'POST',
+  put: 'PUT',
 };
 type Args = AddCoin | DeleteCoin;
 
