@@ -37,7 +37,7 @@ app.use('/search', require('./routes/searchCoin'))
 app.use('/coins', cookieJwtAuth, require('./routes/coins'))
 
 
-app.listen(`0.0.0.0:${PORT}`, () =>
+app.listen(`0.0.0.0:${process.env.PORT}`, () =>
   console.log(`Sever listening`)
 );
 
