@@ -1,6 +1,8 @@
 # Noic
-Full-Stack cryptocurrency portfolio and price tracker.
+Full-Stack cryptocurrency portfolio.
+<br>
 Go to [live app](https://noic-matthew-08.vercel.app/)
+<br>
 Note:  *Due to limitations on the amount of API calls Coingecko allows per day, the application could be missing some functionalties.*
 
 
