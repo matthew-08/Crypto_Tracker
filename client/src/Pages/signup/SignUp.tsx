@@ -35,6 +35,7 @@ export function SignUp() {
         mainPath: 'auth',
         subPath: 'createUser',
       }).then((r: { type: string }) => {
+        console.log(r);
         if (r.type === 'username') {
           return handleUserAlreadyExists('username');
         }
