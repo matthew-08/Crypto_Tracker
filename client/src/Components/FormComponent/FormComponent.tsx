@@ -103,7 +103,6 @@ export function FormComponent<
   };
 
   const handleInput = (e: string, input: string) => {
-    console.log(formFields);
     return setFormFields({ ...formFields, [input]: e });
   };
   const getType = (input: string): string => {
