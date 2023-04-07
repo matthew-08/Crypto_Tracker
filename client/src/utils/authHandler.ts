@@ -36,6 +36,7 @@ const authHanlder = async ({ body, mainPath, subPath }: Auth) => {
     });
     return await data.json();
   } catch (error) {
+    console.log(error);
     return {
       status: 'error',
     };
