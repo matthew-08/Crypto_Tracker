@@ -1,0 +1,40 @@
+services:
+  db:
+    image: matthew08/noic-db
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server/db
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: 5432
+    volumes:
+      - noic-db:/var/lib/postgresql/data
+  api:
+    depends_on:
+      - db
+    image: matthew08/noic-api
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DATABASE: coin_tracker
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: db
+      PORT: 3000
+      SECRETKEY: secret
+      FRONTEND: http://localhost:5173
+    ports:
+      - 3000:3000
+  frontend:
+    image: matthew08/noic-frontend
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    environment:
+      VITE_API_URL: http://localhost:3000
+    ports:
+      - 5173:5173
+volumes:
+  noic-db:

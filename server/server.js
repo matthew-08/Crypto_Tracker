@@ -38,6 +38,6 @@ app.use('/coins', cookieJwtAuth, require('./routes/coins'))
 
 
 app.listen(`${process.env.PORT}`, () =>
-  console.log(`Sever listening`)
+  console.log(`Sever listening, on ${process.env.PORT}`)
 );
 
