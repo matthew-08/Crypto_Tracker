@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const pool = require('../db');
+const pool = require('../db/db');
 
 router.delete('/', async (req, res) => {
     const coinId = req.query.coinId

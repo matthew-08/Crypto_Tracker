@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const pool = require('../db');
+const pool = require('../db/db');
 require('dotenv').config();
 
 const cookieJwtAuth = async (req, res, next) => {

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const pool = require('../db');
+const pool = require('../db/db');
 
 router.get('/', async (req, res) => {
     const getUser = res.locals.user;
